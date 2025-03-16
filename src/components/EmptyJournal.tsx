@@ -5,8 +5,6 @@ import { ISODateString } from '@/types/dtos/date';
 import { CalendarUtils } from 'react-native-calendars';
 import { useToastController } from '@tamagui/toast';
 import * as S from './EmptyJournal.styled';
-import { XStack } from 'tamagui';
-import { ShakeEmoji } from '@/components/ShakeEmoji';
 import { memo } from 'react';
 
 interface Props {
@@ -20,10 +18,7 @@ export const EmptyJournal = memo(({ date }: Props) => {
 
   return isToday ? (
     <S.TodayContainer key={date}>
-      <XStack>
-        <S.TodayTitle>{t('common.fallback.today')}</S.TodayTitle>
-        <ShakeEmoji emoji="✏" />
-      </XStack>
+      <S.TodayTitle>{t('common.fallback.today')}</S.TodayTitle>
       <S.WriteButton
         icon={Plus}
         onPress={() => router.push('/(tabs)/write/mood_select')}

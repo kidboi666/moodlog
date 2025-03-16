@@ -1,4 +1,3 @@
-import { GardenSection } from '@/screens/garden/GardenSection';
 import { StatsContainer } from '@/screens/stats/StatsContainer';
 import { ScrollView } from 'tamagui';
 import { useScroll } from '@/store/hooks/useScroll';
@@ -15,9 +14,6 @@ export default function RecordScreen() {
       <S.CardContainer edges={['top', 'bottom']} padded>
         <FadeIn delay={CARD_DELAY.FIRST}>
           <StatsContainer />
-        </FadeIn>
-        <FadeIn delay={CARD_DELAY.SECOND}>
-          <GardenSection />
         </FadeIn>
         <FadeIn delay={CARD_DELAY.THIRD}>
           <CurrentMonth />
