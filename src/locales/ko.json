@@ -71,6 +71,7 @@
     "title": "기록"
   },
   "records": {
+    "title": "통계",
     "stats": {
       "totalCount": {
         "title": "전체 기록",
@@ -174,6 +175,7 @@
     "signup": "가입하기"
   },
   "settings": {
+    "title": "설정",
     "theme": {
       "title": "다크 모드",
       "light": "밝은 테마",

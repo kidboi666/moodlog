@@ -1,5 +1,5 @@
 import {
-  H2,
+  H1,
   H4,
   Separator as TamaguiSeparator,
   styled,
@@ -17,7 +17,7 @@ export const WelcomeEmojiBox = styled(XStack, {
   items: 'flex-end',
 });
 
-export const WelcomeTitleText = styled(H2, {
+export const WelcomeTitleText = styled(H1, {
   lineHeight: HOME_HEADER_LINE_HEIGHT,
 });
 

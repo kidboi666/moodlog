@@ -11,11 +11,10 @@ export const ENTER_STYLE = {
 export const ENTER_STYLE_KEY = ['opacity', 'transform'];
 
 export const PRESS_STYLE = {
-  opacity: 0.5,
-  bg: 'rgba(0, 0, 0, 0.8)',
+  bg: '$gray10',
 } as const;
 
-export const PRESS_STYLE_KEY = ['opacity', 'backgroundColor'];
+export const PRESS_STYLE_KEY = ['backgroundColor'];
 
 export const FALL_STYLE = {
   y: -Dimensions.get('window').height,

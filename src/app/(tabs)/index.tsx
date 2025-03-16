@@ -76,7 +76,7 @@ export default function HomeScreen() {
             </Fragment>
           ))
         ) : (
-          <EmptyJournal date={dailyJournals} />
+          <EmptyJournal isToday={!!dailyJournals.length} />
         )}
       </Container>
     </ScrollView>

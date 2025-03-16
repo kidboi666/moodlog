@@ -19,7 +19,7 @@ interface Props {
 }
 
 const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);
-const END_POSITION = -100;
+const END_POSITION = -80;
 
 export const JournalCard = ({ journal, onDelete }: Props) => {
   const [isPress, setIsPress] = useState(false);

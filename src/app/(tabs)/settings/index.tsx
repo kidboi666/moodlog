@@ -1,18 +1,18 @@
-import { Container } from '@/components/layouts/containers/Container';
-import { ScrollView, Separator, YStack } from 'tamagui';
+import { H1, ScrollView, Separator, YStack } from 'tamagui';
 import { Globe, Moon } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { FadeIn } from '@/components/FadeIn';
-
 import { CARD_DELAY } from '@/constants/time';
 import { NavigationSettingItem } from '@/components/NavigationSettingItem';
+import * as S from '@/styles/settings/Settings.styled';
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
 
   return (
     <ScrollView>
-      <Container edges={['top']} padded>
+      <S.Container edges={['top']} padded>
+        <H1>{t('settings.title')}</H1>
         <YStack>
           {/* Theme Setting */}
           <FadeIn delay={CARD_DELAY.FIRST}>
@@ -33,7 +33,7 @@ export default function SettingsScreen() {
             />
           </FadeIn>
         </YStack>
-      </Container>
+      </S.Container>
     </ScrollView>
   );
 }

@@ -8,22 +8,25 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ENTER_STYLE, PRESS_STYLE } from '@/constants/styles';
+import { ENTER_STYLE } from '@/constants/styles';
 import { RenderTime } from '@/components/RenderTime';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const Container = styled(View, {
-  position: 'relative',
-  width: '100%',
+  animation: 'quick',
+  enterStyle: ENTER_STYLE,
 });
 
 export const CardContainer = styled(Card, {
   group: true,
-  flex: 1,
-  bg: '$gray4',
   animation: 'quick',
-  enterStyle: ENTER_STYLE,
-  pressStyle: PRESS_STYLE,
+  pressStyle: {
+    bg: '$gray8',
+  },
+  flex: 1,
+  position: 'relative',
+  width: '100%',
+  bg: '$gray4',
   rounded: '$8',
 });
 
