@@ -12,6 +12,11 @@ import { ENTER_STYLE, PRESS_STYLE } from '@/constants/styles';
 import { RenderTime } from '@/components/RenderTime';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
+export const Container = styled(View, {
+  position: 'relative',
+  width: '100%',
+});
+
 export const CardContainer = styled(Card, {
   group: true,
   flex: 1,
@@ -20,15 +25,6 @@ export const CardContainer = styled(Card, {
   enterStyle: ENTER_STYLE,
   pressStyle: PRESS_STYLE,
   rounded: '$8',
-  l: 0,
-
-  variants: {
-    isLongPress: {
-      true: {
-        l: -8,
-      },
-    },
-  } as const,
 });
 
 export const CardHeader = styled(Card.Header, {
@@ -101,4 +97,29 @@ export const ImageCoverGradient = styled(LinearGradient, {
 export const RightChevronButton = styled(Button, {
   unstyled: true,
   p: '$4',
+});
+
+export const ActionBox = styled(XStack, {
+  r: 0,
+  position: 'absolute',
+  height: '100%',
+  items: 'center',
+  justify: 'center',
+  px: 16,
+  z: -1,
+});
+
+export const DeleteButton = styled(Button, {
+  size: '$3',
+  circular: true,
+  chromeless: true,
+  scaleIcon: 1.5,
+  bg: '$red10',
+  color: 'white',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.2,
+  shadowRadius: 1.5,
+  elevation: 2,
+  pressStyle: { bg: '$red11' },
 });

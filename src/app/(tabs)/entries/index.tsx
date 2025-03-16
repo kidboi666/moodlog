@@ -1,12 +1,6 @@
-import {
-  getCountOfNextMonth,
-  getCountOfPrevMonth,
-  getMonthStringWithoutYear,
-} from '@/utils/common';
-import React, { Fragment, useMemo, useTransition } from 'react';
+import React, { Fragment } from 'react';
 import { useJournal } from '@/store/hooks/useJournal';
-import { useDate } from '@/store/hooks/useDate';
-import { ScrollView, Separator, useTheme, YStack } from 'tamagui';
+import { ScrollView } from 'tamagui';
 import { JournalCard } from '@/components/JournalCard';
 import { FadeIn } from '@/components/FadeIn';
 import { EmptyJournal } from '@/components/EmptyJournal';
@@ -16,35 +10,8 @@ import * as S from '@/styles/entries/Entries.styled';
 import { useTranslation } from 'react-i18next';
 
 export default function EntriesScreen() {
-  const theme = useTheme();
-  const {
-    selectedMonth,
-    selectedYear,
-    selectedDate,
-    currentMonth,
-    onSelectedDateChange,
-    onSelectedMonthChange,
-  } = useDate('entries');
-  const { dailyJournals, journals, getDateCountsForMonth } =
-    useJournal('entries');
-  const pastScrollRange = getCountOfPrevMonth(selectedDate);
-  const futureScrollRange = getCountOfNextMonth(selectedDate);
-  const {t} = useTranslation()
-
-  const dateCounts = useMemo(() => {
-    return getDateCountsForMonth(
-      selectedYear,
-      selectedMonth
-        ? getMonthStringWithoutYear(selectedMonth)
-        : currentMonth + 1,
-    );
-  }, [
-    journals,
-    selectedMonth,
-    selectedYear,
-    currentMonth,
-    getDateCountsForMonth,
-  ]);
+  const { monthlyJournals } = useJournal('entries');
+  const { t } = useTranslation();
 
   return (
     <ScrollView>
@@ -54,34 +21,18 @@ export default function EntriesScreen() {
           <GardenSection />
         </FadeIn>
 
-        {/*<CalendarListBase*/}
-        {/*  dateCounts={dateCounts}*/}
-        {/*  onSelectedDateChange={onSelectedDateChange}*/}
-        {/*  onSelectedMonthChange={onSelectedMonthChange}*/}
-        {/*  selectedDate={selectedDate}*/}
-        {/*  pastScrollRange={pastScrollRange}*/}
-        {/*  futureScrollRange={futureScrollRange}*/}
-        {/*  theme={{*/}
-        {/*    calendarBackground: theme.background.val,*/}
-        {/*    monthTextColor: theme.gray11.val,*/}
-        {/*    textMonthFontWeight: '800',*/}
-        {/*  }}*/}
-        {/*/>*/}
         <FadeIn delay={CARD_DELAY.SECOND}>
-          <YStack>
-            {Array.isArray(dailyJournals) ? (
-              dailyJournals.map((journal, index) => (
+          <S.JournalWrapper>
+            {Array.isArray(monthlyJournals) ? (
+              monthlyJournals.map(journal => (
                 <Fragment key={journal.id}>
-                  {index > 0 && <Separator />}
-                  <FadeIn delay={100 * (index + 1)}>
-                    <JournalCard journal={journal} />
-                  </FadeIn>
+                  <JournalCard journal={journal} />
                 </Fragment>
               ))
             ) : (
-              <EmptyJournal date={dailyJournals} />
+              <EmptyJournal isToday={false} />
             )}
-          </YStack>
+          </S.JournalWrapper>
         </FadeIn>
       </S.Container>
     </ScrollView>

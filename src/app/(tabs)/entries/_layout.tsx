@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'tamagui';
+import React from 'react';
 
 export default function EntriesLayout() {
   const theme = useTheme();
