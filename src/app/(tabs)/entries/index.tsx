@@ -3,7 +3,7 @@ import {
   getCountOfPrevMonth,
   getMonthStringWithoutYear,
 } from '@/utils/common';
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useMemo, useTransition } from 'react';
 import { useJournal } from '@/store/hooks/useJournal';
 import { useDate } from '@/store/hooks/useDate';
 import { ScrollView, Separator, useTheme, YStack } from 'tamagui';
@@ -13,6 +13,7 @@ import { EmptyJournal } from '@/components/EmptyJournal';
 import { GardenSection } from '@/screens/garden/GardenSection';
 import { CARD_DELAY } from '@/constants/time';
 import * as S from '@/styles/entries/Entries.styled';
+import { useTranslation } from 'react-i18next';
 
 export default function EntriesScreen() {
   const theme = useTheme();
@@ -28,6 +29,7 @@ export default function EntriesScreen() {
     useJournal('entries');
   const pastScrollRange = getCountOfPrevMonth(selectedDate);
   const futureScrollRange = getCountOfNextMonth(selectedDate);
+  const {t} = useTranslation()
 
   const dateCounts = useMemo(() => {
     return getDateCountsForMonth(
@@ -47,7 +49,7 @@ export default function EntriesScreen() {
   return (
     <ScrollView>
       <S.Container edges={['top']} padded>
-        <S.Title>웃쨔</S.Title>
+        <S.Title>{t('entries.title')}</S.Title>
         <FadeIn delay={CARD_DELAY.FIRST}>
           <GardenSection />
         </FadeIn>

@@ -17,8 +17,8 @@ import * as S from './GardenSection.styled';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =
-    useDate('statistic');
-  const { getEmotionForDate, getJournalsByMonth } = useJournal('statistic');
+  useDate('entries');
+  const { getEmotionForDate, getJournalsByMonth } = useJournal('entries');
 
   const months = useMemo(
     () =>

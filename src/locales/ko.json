@@ -67,6 +67,9 @@
       }
     }
   },
+  "entries": {
+    "title": "기록"
+  },
   "records": {
     "stats": {
       "totalCount": {
