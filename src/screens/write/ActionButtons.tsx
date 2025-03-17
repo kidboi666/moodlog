@@ -2,7 +2,7 @@ import { Check, ImagePlus, Timer } from '@tamagui/lucide-icons';
 import React, { memo } from 'react';
 import { Nullable } from '@/types/utils';
 import * as S from './ActionButtons.styled';
-import { XGroup } from 'tamagui';
+import { Button, XGroup } from 'tamagui';
 
 interface Props {
   onImageUriChange: () => Promise<Nullable<void>>;
@@ -15,15 +15,19 @@ export const ActionButtons = memo(
     return (
       <S.XGroupContainer>
         <XGroup.Item>
-          <S.AddImageButton onPress={onImageUriChange} icon={ImagePlus} />
+          <Button onPress={onImageUriChange} icon={ImagePlus}>
+            사진 추가
+          </Button>
         </XGroup.Item>
-        <S.VerticalSeparator />
+        <S.Separator />
         <XGroup.Item>
-          <S.TimeStampButton onPress={onTimeStamp} icon={Timer} />
+          <Button onPress={onTimeStamp} icon={Timer}>
+            타임 스탬프
+          </Button>
         </XGroup.Item>
-        <S.VerticalSeparator />
+        <S.Separator />
         <XGroup.Item>
-          <S.SubmitButton onPress={onSubmit} icon={Check} />
+          <Button onPress={onSubmit} icon={Check} />
         </XGroup.Item>
       </S.XGroupContainer>
     );
