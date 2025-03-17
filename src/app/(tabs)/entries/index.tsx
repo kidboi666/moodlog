@@ -10,9 +10,8 @@ import * as S from '@/styles/entries/Entries.styled';
 import { useTranslation } from 'react-i18next';
 
 export default function EntriesScreen() {
-  const { monthlyJournals } = useJournal('entries');
+  const { monthlyJournals, removeJournal } = useJournal('entries');
   const { t } = useTranslation();
-
   return (
     <ScrollView>
       <S.Container edges={['top']} padded>
@@ -24,11 +23,21 @@ export default function EntriesScreen() {
         <FadeIn delay={CARD_DELAY.SECOND}>
           <S.JournalWrapper>
             {Array.isArray(monthlyJournals) ? (
-              monthlyJournals.map(journal => (
-                <Fragment key={journal.id}>
-                  <JournalCard journal={journal} />
-                </Fragment>
-              ))
+              monthlyJournals.map(journal => {
+                const { content, imageUri, id, createdAt, emotion } = journal;
+                return (
+                  <Fragment key={id}>
+                    <JournalCard
+                      id={id}
+                      content={content}
+                      imageUri={imageUri}
+                      createdAt={createdAt}
+                      emotion={emotion}
+                      onDelete={removeJournal}
+                    />
+                  </Fragment>
+                );
+              })
             ) : (
               <EmptyJournal isToday={false} />
             )}

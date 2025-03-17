@@ -14,8 +14,8 @@ export const CollapsedContent = memo(({ journalStats }: Props) => {
   return (
     <S.ViewContainer>
       <S.YStackContainer>
-        <H3>{t('records.stats.totalCount.title')}</H3>
-        <Text>{t('records.stats.totalCount.description')}</Text>
+        <H3>{t('statistics.totalCount.title')}</H3>
+        <Text>{t('statistics.totalCount.description')}</Text>
       </S.YStackContainer>
       <XStack>
         <S.StackContainer>

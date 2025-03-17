@@ -4,9 +4,11 @@ import { ProgressGraph } from '@/screens/stats/emotion-average/ProgressGraph';
 import { EmotionType } from '@/types/enums';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import * as S from './ExpandedContent.styled';
+import { useTranslation } from 'react-i18next';
 
 export const ExpandedContent = () => {
   const { emotionStats } = useStatistics();
+  const { t } = useTranslation();
 
   const { scoreBoard } = emotionStats;
   let emotionTotalScore = 0;
@@ -19,8 +21,8 @@ export const ExpandedContent = () => {
     <S.ViewContainer>
       <S.YStackContainer>
         <S.TitleBox>
-          <H3>감정 분포</H3>
-          <Text>지금까지 작성한 감정 분포 그래프</Text>
+          <H3>{t('statistics.mood.title')}</H3>
+          <Text>{t('statistics.mood.description')}</Text>
         </S.TitleBox>
         <S.MoodGraphBox>
           {Object.entries(scoreBoard).map(([type, countScore], i) => (

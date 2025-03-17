@@ -38,7 +38,7 @@ export default function TabsLayout() {
         <TabTrigger name="home" href="/" />
         <TabTrigger name="entries" href="/entries" />
         <TabTrigger name="write" href="/write/mood_select" />
-        <TabTrigger name="record" href="/record" />
+        <TabTrigger name="statistics" href="/statistics" />
         <TabTrigger name="settings" href="/settings" />
         <TabTrigger name="journal" href="/journal/[journalId]" />
       </TabList>

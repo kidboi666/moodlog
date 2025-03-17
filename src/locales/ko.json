@@ -68,58 +68,56 @@
     }
   },
   "entries": {
-    "title": "기록"
-  },
-  "records": {
-    "title": "통계",
-    "stats": {
-      "totalCount": {
-        "title": "전체 기록",
-        "description": "지금까지 작성한 일기 갯수",
-        "daysSinceSignup": {
-          "title": "일기를 작성하기 시작한지",
-          "description": "{{date}}일 째"
-        },
-        "frequency": {
-          "title": "평균 작성 빈도",
-          "description": "보통 {{date}}일 간격으로 일기를 작성헀어요.",
-          "everyDay": "보통 매일 일기를 작성했어요."
-        },
-        "mostDay": {
-          "title": "가장 많이 작성한 요일",
-          "description": "주로 {{day}}요일에 일기를 작성했어요."
-        },
-        "expressiveMonth": {
-          "title": "가장 많이 작성한 달",
-          "description": "{{month}}엔 총 {{count}}개의 일기를 작성했어요."
-        }
-      },
-      "emotion": {
-        "title": "대표 감정",
-        "description": "나를 대표하는 감정"
-      },
-      "currentMonth": {
-        "title": "{{month}}의 기록",
-        "description": "이번 달 작성한 일기의 갯수",
-        "journalCount": {
-          "title": "{{month}}의 작성한 일기 갯수",
-          "description": "{{count}} 개"
-        },
-        "frequency": {
-          "title": "{{month}} 평균 작성 빈도",
-          "description": "{{month}}엔 보통 {{date}}일 간격으로 일기를 작성했어요.",
-          "everyDay": "{{month}}엔 보통 매일 일기를 작성헀어요."
-        },
-        "mostDay": {
-          "title": "{{month}} 동안 가장 많이 작성한 요일",
-          "description": "{{month}}엔 주로 {{day}}요일에 일기를 작성했어요."
-        },
-        "emotion": "{{month}} 대표 감정"
-      }
-    },
+    "title": "기록",
     "garden": {
       "title": "기록 한눈에 보기",
       "description": "년도 별, 월 별 당신이 기록한 날의 감정을 확인하세요."
+    }
+  },
+  "statistics": {
+    "title": "통계",
+    "totalCount": {
+      "title": "전체 기록",
+      "description": "지금까지 작성한 일기 갯수",
+      "daysSinceSignup": {
+        "title": "일기를 작성하기 시작한지",
+        "description": "{{date}}일 째"
+      },
+      "frequency": {
+        "title": "평균 작성 빈도",
+        "description": "보통 {{date}}일 간격으로 일기를 작성헀어요.",
+        "everyDay": "보통 매일 일기를 작성했어요."
+      },
+      "mostDay": {
+        "title": "가장 많이 작성한 요일",
+        "description": "주로 {{day}}요일에 일기를 작성했어요."
+      },
+      "expressiveMonth": {
+        "title": "가장 많이 작성한 달",
+        "description": "{{month}}엔 총 {{count}}개의 일기를 작성했어요."
+      }
+    },
+    "mood": {
+      "title": "대표 감정",
+      "description": "나를 대표하는 감정"
+    },
+    "currentMonth": {
+      "title": "{{month}}의 기록",
+      "description": "이번 달 작성한 일기의 갯수",
+      "journalCount": {
+        "title": "{{month}}의 작성한 일기 갯수",
+        "description": "{{count}} 개"
+      },
+      "frequency": {
+        "title": "{{month}} 평균 작성 빈도",
+        "description": "{{month}}엔 보통 {{date}}일 간격으로 일기를 작성했어요.",
+        "everyDay": "{{month}}엔 보통 매일 일기를 작성헀어요."
+      },
+      "mostDay": {
+        "title": "{{month}} 동안 가장 많이 작성한 요일",
+        "description": "{{month}}엔 주로 {{day}}요일에 일기를 작성했어요."
+      },
+      "emotion": "{{month}} 대표 감정"
     }
   },
   "emotions": {

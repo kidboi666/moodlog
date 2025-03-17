@@ -31,42 +31,42 @@ export const ExpandedContent = memo(
       <S.ViewContainer>
         <S.DaysSinceSignupBox>
           <S.DaysSinceSignupTitle>
-            {t('records.stats.totalCount.daysSinceSignup.title')}
+            {t('statistics.totalCount.daysSinceSignup.title')}
           </S.DaysSinceSignupTitle>
           <S.DaysSinceSignupDescription>
-            {t('records.stats.totalCount.daysSinceSignup.description', {
+            {t('statistics.totalCount.daysSinceSignup.description', {
               date: daysSinceSignup,
             })}
           </S.DaysSinceSignupDescription>
         </S.DaysSinceSignupBox>
         <S.FrequencyBox>
           <S.FrequencyTitle>
-            {t('records.stats.totalCount.frequency.title')}
+            {t('statistics.totalCount.frequency.title')}
           </S.FrequencyTitle>
           <S.FrequencyDescription>
             {totalFrequency === 0
-              ? t('records.stats.totalCount.frequency.everyDay')
-              : t('records.stats.totalCount.frequency.description', {
+              ? t('statistics.totalCount.frequency.everyDay')
+              : t('statistics.totalCount.frequency.description', {
                   date: totalFrequency,
                 })}
           </S.FrequencyDescription>
         </S.FrequencyBox>
         <S.MostDayBox>
           <S.MostDayTitle>
-            {t('records.stats.totalCount.mostDay.title')}
+            {t('statistics.totalCount.mostDay.title')}
           </S.MostDayTitle>
           <S.MostDayDescription>
-            {t('records.stats.totalCount.mostDay.description', {
+            {t('statistics.totalCount.mostDay.description', {
               day: t(`calendar.days.${totalActiveDay}`),
             })}
           </S.MostDayDescription>
         </S.MostDayBox>
         <S.ExpressiveMonthBox>
           <S.ExpressiveMonthTitle>
-            {t('records.stats.totalCount.expressiveMonth.title')}
+            {t('statistics.totalCount.expressiveMonth.title')}
           </S.ExpressiveMonthTitle>
           <S.ExpressiveMonthDescription>
-            {t('records.stats.totalCount.expressiveMonth.description', {
+            {t('statistics.totalCount.expressiveMonth.description', {
               month: t(
                 `calendar.months.${getMonthStringWithoutYear(expressiveMonthStats.month)}`,
               ),

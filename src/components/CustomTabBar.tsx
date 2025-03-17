@@ -135,9 +135,13 @@ export const CustomTabBar = () => {
             </S.WriteInnerBox>
           </S.WriteButton>
         </TabTrigger>
-        <TabTrigger name="record" asChild onPress={() => navigateTo('/record')}>
+        <TabTrigger
+          name="statistics"
+          asChild
+          onPress={() => navigateTo('/statistics')}
+        >
           <S.RecordButton
-            isTabActive={isTabActive('/record')}
+            isTabActive={isTabActive('/statistics')}
             icon={FileChartColumnIncreasing}
           />
         </TabTrigger>

@@ -7,14 +7,14 @@ import { CARD_DELAY } from '@/constants/time';
 import * as S from '@/styles/record/Record.styled';
 import { useTranslation } from 'react-i18next';
 
-export default function RecordScreen() {
+export default function StatisticsScreen() {
   const { onScroll } = useScroll();
   const { t } = useTranslation();
 
   return (
     <ScrollView onScroll={onScroll} scrollEventThrottle={16}>
       <S.CardContainer edges={['top', 'bottom']} padded>
-        <H1>{t('records.title')}</H1>
+        <H1>{t('statistics.title')}</H1>
         <FadeIn delay={CARD_DELAY.FIRST}>
           <StatsContainer />
         </FadeIn>

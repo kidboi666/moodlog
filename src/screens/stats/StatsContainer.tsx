@@ -1,5 +1,5 @@
 import { useStatistics } from '@/store/hooks/useStatistics';
-import { EmotionAverage } from '@/screens/stats/emotion-average/EmotionAverage';
+import { MoodAverage } from '@/screens/stats/emotion-average/MoodAverage';
 import { TotalCount } from '@/screens/stats/total-count/TotalCount';
 import { useUser } from '@/store/hooks/useUser';
 import * as S from './StatsContainer.styled';
@@ -18,7 +18,7 @@ export const StatsContainer = () => {
           daysSinceSignup={daysSinceSignup}
           journalStats={journalStats}
         />
-        <EmotionAverage signatureEmotion={signatureEmotion} />
+        <MoodAverage signatureEmotion={signatureEmotion} />
       </S.XStackContainer>
     </S.YStackContainer>
   );

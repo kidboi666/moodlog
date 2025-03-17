@@ -18,11 +18,11 @@ export const CollapsedContent = ({ selectedMonthStats }: Props) => {
     <S.ViewContainer>
       <S.TitleBox>
         <H3>
-          {t('records.stats.currentMonth.title', {
+          {t('statistics.stats.currentMonth.title', {
             month: t(`calendar.months.${month}`),
           })}
         </H3>
-        <Text>{t('records.stats.currentMonth.description')}</Text>
+        <Text>{t('statistics.stats.currentMonth.description')}</Text>
       </S.TitleBox>
       <XStack>
         <S.CountBox>

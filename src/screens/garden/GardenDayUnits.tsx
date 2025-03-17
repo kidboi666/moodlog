@@ -1,8 +1,9 @@
 import { WEEK_DAY } from '@/constants/date';
 import { useTranslation } from 'react-i18next';
 import * as S from './GardenDayUnits.styled';
+import { memo } from 'react';
 
-export const GardenDayUnits = () => {
+export const GardenDayUnits = memo(() => {
   const { t } = useTranslation();
   return (
     <S.DaysContainer>
@@ -14,4 +15,4 @@ export const GardenDayUnits = () => {
       </S.DaysBox>
     </S.DaysContainer>
   );
-};
+});

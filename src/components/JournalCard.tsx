@@ -1,91 +1,95 @@
 import { AnimatePresence, useControllableState, useEvent } from 'tamagui';
-import { Journal } from '@/types/entries';
 import { emotionTheme } from '@/constants/themes';
 import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
+import { memo } from 'react';
+import { Emotion } from '@/types/entries';
+import { Nullable } from '@/types/utils';
 
 interface Props {
-  journal: Journal;
+  content: string;
+  id: string;
+  createdAt: string;
+  imageUri: Nullable<string>;
+  emotion: Emotion;
   onDelete?: (id: string) => void;
 }
 
 const positions = { left: { x: -80 }, right: { x: 0 } };
 
-export const JournalCard = ({ journal, onDelete }: Props) => {
-  const router = useRouter();
-  const [positionI, setPositionI] = useControllableState<'left' | 'right'>({
-    strategy: 'most-recent-wins',
-    defaultProp: 'right',
-  });
-  const position = positions[positionI];
+export const JournalCard = memo(
+  ({ content, id, createdAt, imageUri, emotion, onDelete }: Props) => {
+    const router = useRouter();
+    const [positionI, setPositionI] = useControllableState<'left' | 'right'>({
+      strategy: 'most-recent-wins',
+      defaultProp: 'right',
+    });
+    const position = positions[positionI];
 
-  const handleDelete = useEvent(() => {
-    if (onDelete) {
-      onDelete(journal.id);
-    }
-    setPositionI('right');
-  });
-
-  const handleSwipeLeft = useEvent(() => {
-    setPositionI('left');
-  });
-
-  const handleSwipeRight = useEvent(() => {
-    if (positionI === 'left') {
+    const handleDelete = useEvent(() => {
+      if (onDelete) {
+        onDelete(id);
+      }
       setPositionI('right');
-    }
-  });
+    });
 
-  const navigateToDetail = useEvent(() => {
-    if (positionI === 'left') {
-      handleSwipeRight();
-    } else {
-      router.push({
-        pathname: '/(tabs)/journal/[journalId]',
-        params: { journalId: journal.id },
-      });
-    }
-  });
+    const handleSwipeLeft = useEvent(() => {
+      setPositionI('left');
+    });
 
-  return (
-    <S.Container>
-      <S.ActionBox>
-        <S.DeleteButton icon={Trash} onPress={handleDelete} />
-      </S.ActionBox>
+    const handleSwipeRight = useEvent(() => {
+      if (positionI === 'left') {
+        setPositionI('right');
+      }
+    });
 
-      <S.CardContainer
-        animation="quick"
-        onPress={navigateToDetail}
-        onLongPress={handleSwipeLeft}
-        {...position}
-      >
-        <S.CardHeader>
-          <S.Content>
-            <S.MoodBar
-              moodColor={
-                emotionTheme[journal.emotion.type][journal.emotion.level]
-              }
-            />
-            <S.JournalContentBox>
-              <S.TimeText createdAt={journal.createdAt} />
-              <S.JournalContentText>
-                {journal.content ?? ''}
-              </S.JournalContentText>
-            </S.JournalContentBox>
-            <S.RightChevronButton icon={ChevronRight} />
-          </S.Content>
-        </S.CardHeader>
+    const navigateToDetail = useEvent(() => {
+      if (positionI === 'left') {
+        handleSwipeRight();
+      } else {
+        router.push({
+          pathname: '/journal/[journalId]',
+          params: { journalId: id },
+        });
+      }
+    });
 
-        {journal.imageUri && (
-          <S.CardBackground>
-            <S.JournalCoverImage source={{ uri: journal.imageUri }} />
-            <AnimatePresence>
-              <S.ImageCoverGradient />
-            </AnimatePresence>
-          </S.CardBackground>
-        )}
-      </S.CardContainer>
-    </S.Container>
-  );
-};
+    return (
+      <S.Container>
+        <S.ActionBox>
+          <S.DeleteButton icon={Trash} onPress={handleDelete} />
+        </S.ActionBox>
+
+        <S.CardContainer
+          animation="quick"
+          onPress={navigateToDetail}
+          onLongPress={handleSwipeLeft}
+          {...position}
+        >
+          <S.CardHeader>
+            <S.Content>
+              <S.MoodBar
+                moodColor={emotionTheme[emotion?.type]?.[emotion?.level]}
+              />
+              <S.JournalContentBox>
+                <S.TimeText createdAt={createdAt} />
+                <S.JournalContentText>{content ?? ''}</S.JournalContentText>
+              </S.JournalContentBox>
+              <S.RightChevronButton icon={ChevronRight} />
+            </S.Content>
+          </S.CardHeader>
+
+          {imageUri && (
+            <S.CardBackground>
+              <S.JournalCoverImage source={{ uri: imageUri }} />
+              <AnimatePresence>
+                <S.ImageCoverGradient />
+              </AnimatePresence>
+            </S.CardBackground>
+          )}
+        </S.CardContainer>
+      </S.Container>
+    );
+  },
+);

@@ -32,7 +32,7 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
         )}
       >
         <S.SignatureEmotionLabel>
-          {t('records.stats.currentMonth.emotion', { month })}
+          {t('statistics.stats.currentMonth.emotion', { month })}
         </S.SignatureEmotionLabel>
         <S.SignatureEmotionValue>
           {signatureEmotion
@@ -44,10 +44,10 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
       <S.StatsDetailContainer>
         <S.StatsSectionBox>
           <S.StatsSectionTitle>
-            {t('records.stats.currentMonth.journalCount.title', { month })}
+            {t('statistics.stats.currentMonth.journalCount.title', { month })}
           </S.StatsSectionTitle>
           <S.StatsSectionDescription>
-            {t(`records.stats.currentMonth.journalCount.description`, {
+            {t(`statistics.stats.currentMonth.journalCount.description`, {
               count,
             })}
           </S.StatsSectionDescription>
@@ -55,12 +55,12 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
 
         <S.StatsSectionBox>
           <S.StatsSectionTitle>
-            {t('records.stats.currentMonth.frequency.title', { month })}
+            {t('statistics.stats.currentMonth.frequency.title', { month })}
           </S.StatsSectionTitle>
           <S.StatsSectionDescription>
             {frequency === 0
-              ? t('records.stats.currentMonth.frequency.everyDay', { month })
-              : t('records.stats.currentMonth.frequency.description', {
+              ? t('statistics.stats.currentMonth.frequency.everyDay', { month })
+              : t('statistics.stats.currentMonth.frequency.description', {
                   date: frequency,
                   month,
                 })}
@@ -69,10 +69,10 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
 
         <S.StatsSectionBox>
           <S.StatsSectionTitle>
-            {t('records.stats.currentMonth.mostDay.title', { month })}
+            {t('statistics.stats.currentMonth.mostDay.title', { month })}
           </S.StatsSectionTitle>
           <S.StatsSectionDescription>
-            {t('records.stats.currentMonth.mostDay.description', {
+            {t('statistics.stats.currentMonth.mostDay.description', {
               day: t(`calendar.days.${activeDay}`),
               month,
             })}

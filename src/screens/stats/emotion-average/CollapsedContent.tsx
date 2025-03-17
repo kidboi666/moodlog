@@ -19,10 +19,10 @@ export const CollapsedContent = ({
     <S.ViewContainer>
       <S.YStackContainer>
         <S.CardTitle signatureMood={hasSignatureEmotion}>
-          {t('records.stats.emotion.title')}
+          {t('statistics.mood.title')}
         </S.CardTitle>
         <S.CardDescription signatureMood={hasSignatureEmotion}>
-          {t('records.stats.emotion.description')}
+          {t('statistics.mood.description')}
         </S.CardDescription>
       </S.YStackContainer>
       <YStack>

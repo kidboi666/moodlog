@@ -16,7 +16,8 @@ import { useDraft } from '@/store/hooks/useDraft';
 import * as S from '@/styles/Main.styled';
 
 export default function HomeScreen() {
-  const { dailyJournals, isSubmitted, onSubmittedChange } = useJournal('week');
+  const { dailyJournals, isSubmitted, onSubmittedChange, removeJournal } =
+    useJournal('week');
   const { t } = useTranslation();
   const { onScroll } = useScroll();
   const { userInfo } = useUser();
@@ -60,14 +61,24 @@ export default function HomeScreen() {
         </S.ContentHeaderContainer>
 
         {Array.isArray(dailyJournals) ? (
-          dailyJournals.map((journal, index) => (
-            <Fragment key={journal.id}>
-              {index > 0 && <S.Separator />}
-              <FadeIn delay={100 * (index + 1)}>
-                <JournalCard journal={journal} />
-              </FadeIn>
-            </Fragment>
-          ))
+          dailyJournals.map((journal, index) => {
+            const { id, content, createdAt, emotion, imageUri } = journal;
+            return (
+              <Fragment key={journal.id}>
+                {index > 0 && <S.Separator />}
+                <FadeIn delay={100 * (index + 1)}>
+                  <JournalCard
+                    id={id}
+                    content={content}
+                    emotion={emotion}
+                    imageUri={imageUri}
+                    createdAt={createdAt}
+                    onDelete={removeJournal}
+                  />
+                </FadeIn>
+              </Fragment>
+            );
+          })
         ) : (
           <EmptyJournal isToday={!!dailyJournals.length} />
         )}

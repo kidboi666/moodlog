@@ -14,16 +14,18 @@ import { MONTHS } from '@/constants/date';
 import { MonthKey } from '@/types/utils';
 import { MonthItem } from '@/screens/garden/MonthItem';
 import * as S from './GardenSection.styled';
+import { ISOMonthString } from '@/types/dtos/date';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =
-  useDate('entries');
+    useDate('entries');
   const { getEmotionForDate, getJournalsByMonth } = useJournal('entries');
-
   const months = useMemo(
     () =>
-      Object.keys(MONTHS).map(month => ({
+      Object.keys(MONTHS).map((month, i) => ({
         monthKey: month as MonthKey,
+        monthDate:
+          `${selectedYear}-${(i + 1).toString().padStart(2, '0')}` as ISOMonthString,
         lastDate: getLastDate(selectedYear, month as MonthKey),
         firstDateDay: getFirstDateDay(selectedYear, month),
         weekLength: getWeekLength(selectedYear, month),
@@ -35,12 +37,10 @@ export const GardenSection = () => {
     (ISOMonth: MonthKey) => {
       if (selectedMonth === getMonthInISODateString(selectedYear, ISOMonth)) {
         onSelectedMonthChange(null);
-        return;
+        getJournalsByMonth('0000-00');
+      } else {
+        onSelectedMonthChange(getMonthInISODateString(selectedYear, ISOMonth));
       }
-      onSelectedMonthChange(getMonthInISODateString(selectedYear, ISOMonth));
-      getJournalsByMonth(
-        getMonthInISODateString(selectedYear, Number(ISOMonth)),
-      );
     },
     [selectedYear, selectedMonth, onSelectedMonthChange, getJournalsByMonth],
   );
@@ -51,14 +51,11 @@ export const GardenSection = () => {
       <ScrollView horizontal>
         <GardenDayUnits />
         <S.StackBox>
-          {months.map((monthData, i) => {
-            const isSelected =
-              selectedMonth ===
-              getMonthInISODateString(selectedYear, monthData.monthKey);
-
+          {months.map(monthData => {
+            const isSelected = selectedMonth === monthData.monthDate;
             return (
               <MonthItem
-                key={i}
+                key={monthData.monthKey}
                 monthData={monthData}
                 isSelected={isSelected}
                 onMonthChange={handleMonthChange}

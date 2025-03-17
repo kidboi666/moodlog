@@ -42,19 +42,27 @@ interface Props {
   isEmpty?: boolean;
 }
 
-export const Grass = memo(({ emotions, isEmpty = false }: Props) => {
-  const emotionColor = useMemo(
-    () => (isEmpty ? null : calculateEmotionColor(emotions!)),
-    [emotions, isEmpty],
-  );
+export const Grass = memo(
+  ({ emotions, isEmpty = false }: Props) => {
+    const emotionColor = useMemo(
+      () => (isEmpty ? null : calculateEmotionColor(emotions!)),
+      [emotions, isEmpty],
+    );
 
-  if (isEmpty) {
-    return <S.Grass />;
-  }
+    if (isEmpty) {
+      return <S.Grass />;
+    }
 
-  return (
-    <S.Grass
-      moodColor={emotionColor ? emotionTheme[emotionColor].full : '$gray10'}
-    />
-  );
-});
+    return (
+      <S.Grass
+        moodColor={emotionColor ? emotionTheme[emotionColor].full : '$gray10'}
+      />
+    );
+  },
+  (prevProps, nextProps) => {
+    if (prevProps.isEmpty !== nextProps.isEmpty) return false;
+    if (!prevProps.emotions && !nextProps.emotions) return true;
+    if (!prevProps.emotions || !nextProps.emotions) return false;
+    return prevProps.emotions.length === nextProps.emotions.length;
+  },
+);

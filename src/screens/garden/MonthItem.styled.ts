@@ -8,6 +8,7 @@ export const MonthItemButton = styled(Button, {
   py: '$4',
   scale: 1,
   opacity: 0.7,
+  position: 'relative',
   z: 1,
 
   variants: {

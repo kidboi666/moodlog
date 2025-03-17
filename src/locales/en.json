@@ -68,58 +68,56 @@
     }
   },
   "entries": {
-    "title": "Entries"
-  },
-  "records": {
-    "title": "Statistic",
-    "stats": {
-      "totalCount": {
-        "title": "Total Records",
-        "description": "Journals written so far",
-        "daysSinceSignup": {
-          "title": "Days journaling",
-          "description": "Day {{date}}"
-        },
-        "frequency": {
-          "title": "Writing Frequency",
-          "description": "You write every {{date}} days.",
-          "everyDay": "You write daily."
-        },
-        "mostDay": {
-          "title": "Top Writing Day",
-          "description": "You mostly write on {{day}}."
-        },
-        "expressiveMonth": {
-          "title": "Most Active Month",
-          "description": "In {{month}}, you wrote {{count}} entries."
-        }
-      },
-      "emotion": {
-        "title": "Signature Emotion",
-        "description": "Your defining emotion"
-      },
-      "currentMonth": {
-        "title": "{{month}} Records",
-        "description": "Journals this month",
-        "journalCount": {
-          "title": "Journals in {{month}}",
-          "description": "{{count}} entries"
-        },
-        "frequency": {
-          "title": "{{month}} Frequency",
-          "description": "In {{month}}, you write every {{date}} days.",
-          "everyDay": "In {{month}}, you write daily."
-        },
-        "mostDay": {
-          "title": "Top Day in {{month}}",
-          "description": "In {{month}}, you write most on {{day}}."
-        },
-        "emotion": "{{month}} Signature Emotion"
-      }
-    },
+    "title": "Entries",
     "garden": {
       "title": "Records Overview",
       "description": "View emotions by year and month."
+    }
+  },
+  "statistics": {
+    "title": "Statistic",
+    "totalCount": {
+      "title": "Total Record",
+      "description": "Journals written so far",
+      "daysSinceSignup": {
+        "title": "Days journaling",
+        "description": "Day {{date}}"
+      },
+      "frequency": {
+        "title": "Writing Frequency",
+        "description": "You write every {{date}} days.",
+        "everyDay": "You write daily."
+      },
+      "mostDay": {
+        "title": "Top Writing Day",
+        "description": "You mostly write on {{day}}."
+      },
+      "expressiveMonth": {
+        "title": "Most Active Month",
+        "description": "In {{month}}, you wrote {{count}} entries."
+      }
+    },
+    "mood": {
+      "title": "Signature Emotion",
+      "description": "Your defining emotion"
+    },
+    "currentMonth": {
+      "title": "{{month}} Records",
+      "description": "Journals this month",
+      "journalCount": {
+        "title": "Journals in {{month}}",
+        "description": "{{count}} entries"
+      },
+      "frequency": {
+        "title": "{{month}} Frequency",
+        "description": "In {{month}}, you write every {{date}} days.",
+        "everyDay": "In {{month}}, you write daily."
+      },
+      "mostDay": {
+        "title": "Top Day in {{month}}",
+        "description": "In {{month}}, you write most on {{day}}."
+      },
+      "emotion": "{{month}} Signature Emotion"
     }
   },
   "emotions": {

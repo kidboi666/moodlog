@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import * as S from './GardenMonthUnits.styled';
+import { memo } from 'react';
 
 interface Props {
   month: string;
   isSelected: boolean;
 }
 
-export const GardenMonthUnits = ({ month, isSelected }: Props) => {
+export const GardenMonthUnits = memo(({ month, isSelected }: Props) => {
   const { t } = useTranslation();
   return (
     <S.ViewContainer>
@@ -15,4 +16,4 @@ export const GardenMonthUnits = ({ month, isSelected }: Props) => {
       </S.MonthText>
     </S.ViewContainer>
   );
-};
+});

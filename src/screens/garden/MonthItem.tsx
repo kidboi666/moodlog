@@ -48,4 +48,16 @@ export const MonthItem = memo(
       </S.MonthItemButton>
     );
   },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.monthData.monthKey === nextProps.monthData.monthKey &&
+      prevProps.monthData.firstDateDay === nextProps.monthData.firstDateDay &&
+      prevProps.monthData.weekLength === nextProps.monthData.weekLength &&
+      prevProps.monthData.lastDate === nextProps.monthData.lastDate &&
+      prevProps.isSelected === nextProps.isSelected &&
+      prevProps.selectedYear === nextProps.selectedYear &&
+      prevProps.getEmotionForDate === nextProps.getEmotionForDate &&
+      prevProps.onMonthChange === nextProps.onMonthChange
+    );
+  },
 );

@@ -24,7 +24,7 @@ interface Props {
 
 const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);
 
-export const EmotionAverage = memo(({ signatureEmotion }: Props) => {
+export const MoodAverage = memo(({ signatureEmotion }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isTouched = useSharedValue(false);
 
