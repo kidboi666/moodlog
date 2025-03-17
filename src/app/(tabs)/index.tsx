@@ -3,8 +3,6 @@ import { useJournal } from '@/store/hooks/useJournal';
 import { JournalCard } from '@/components/JournalCard';
 import { Container } from '@/components/layouts/containers/Container';
 import { EmptyJournal } from '@/components/EmptyJournal';
-import { Redirect } from 'expo-router';
-import { useApp } from '@/store/hooks/useApp';
 import { FadeIn } from '@/components/FadeIn';
 import { ShakeEmoji } from '@/components/ShakeEmoji';
 import { WeekDay } from '@/components/WeekDay';
@@ -19,7 +17,6 @@ import * as S from '@/styles/Main.styled';
 
 export default function HomeScreen() {
   const { dailyJournals, isSubmitted, onSubmittedChange } = useJournal('week');
-  const { isInitialApp } = useApp();
   const { t } = useTranslation();
   const { onScroll } = useScroll();
   const { userInfo } = useUser();
@@ -31,10 +28,6 @@ export default function HomeScreen() {
       onSubmittedChange();
     }
   }, [isSubmitted, initDraft, onSubmittedChange]);
-
-  if (!isInitialApp) {
-    return <Redirect href="/(onboarding)/welcome" />;
-  }
 
   return (
     <ScrollView

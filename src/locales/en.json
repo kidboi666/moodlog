@@ -71,6 +71,7 @@
     "title": "Entries"
   },
   "records": {
+    "title": "Statistic",
     "stats": {
       "totalCount": {
         "title": "Total Records",
@@ -174,6 +175,7 @@
     "signup": "Sign Up"
   },
   "settings": {
+    "title": "Setting",
     "theme": {
       "title": "Dark Mode",
       "light": "Light Theme",

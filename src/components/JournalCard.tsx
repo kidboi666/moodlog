@@ -1,9 +1,9 @@
 import { AnimatePresence, useControllableState, useEvent } from 'tamagui';
 import { Journal } from '@/types/entries';
 import { emotionTheme } from '@/constants/themes';
-import { router } from 'expo-router';
 import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
+import { useRouter } from 'expo-router';
 
 interface Props {
   journal: Journal;
@@ -13,6 +13,7 @@ interface Props {
 const positions = { left: { x: -80 }, right: { x: 0 } };
 
 export const JournalCard = ({ journal, onDelete }: Props) => {
+  const router = useRouter();
   const [positionI, setPositionI] = useControllableState<'left' | 'right'>({
     strategy: 'most-recent-wins',
     defaultProp: 'right',

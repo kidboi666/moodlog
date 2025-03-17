@@ -90,8 +90,8 @@ export const CustomTabBar = () => {
 
       setActiveTab(path);
 
+      router.replace(path as Href);
       setTimeout(() => {
-        router.push(path as Href);
         setActiveTab(null);
       }, FEEDBACK_DURATION);
     },

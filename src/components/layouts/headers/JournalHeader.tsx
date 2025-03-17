@@ -2,12 +2,13 @@ import { useJournal } from '@/store/hooks/useJournal';
 import React from 'react';
 import { BottomModal } from '@/components/modals/BottomModal';
 import { DeleteJournalModal } from '@/components/modals/contents/DeleteJournalModal';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useBottomModal } from '@/hooks/useBottomModal';
 import * as S from './JournalHeader.styled';
 import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
 
 export default function JournalHeader() {
+  const router = useRouter();
   const { selectedJournal } = useJournal();
   const { modalRef, openModal } = useBottomModal();
 

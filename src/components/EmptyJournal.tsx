@@ -1,15 +1,16 @@
 import { NotebookPen, Plus } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { router } from 'expo-router';
 import { useToastController } from '@tamagui/toast';
 import * as S from './EmptyJournal.styled';
 import { memo } from 'react';
+import { useRouter } from 'expo-router';
 
 interface Props {
   isToday: boolean;
 }
 
 export const EmptyJournal = memo(({ isToday }: Props) => {
+  const router = useRouter();
   const { t } = useTranslation();
   const toast = useToastController();
 

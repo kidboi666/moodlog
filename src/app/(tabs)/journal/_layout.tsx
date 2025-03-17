@@ -5,17 +5,16 @@ export default function JournalLayout() {
   const theme = useTheme();
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="[journalId]"
-        options={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: theme.background.val,
-          },
-          gestureEnabled: true,
-        }}
-      />
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {
+          backgroundColor: theme.background.val,
+        },
+        gestureEnabled: true,
+      }}
+    >
+      <Stack.Screen name="[journalId]" />
     </Stack>
   );
 }

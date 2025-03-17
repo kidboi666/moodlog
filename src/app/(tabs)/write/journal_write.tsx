@@ -12,13 +12,14 @@ import { useDraft } from '@/store/hooks/useDraft';
 import { useJournal } from '@/store/hooks/useJournal';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
-import { router } from 'expo-router';
 import { EnhancedTextInput } from '@/screens/write/EnhancedTextInput';
 import { WriteHeader } from '@/components/layouts/headers/WriteHeader';
 import * as S from '@/styles/write/JournalWrite.styled';
 import { ActionButtons } from '@/screens/write/ActionButtons';
+import { useRouter } from 'expo-router';
 
 export default function JournalWriteScreen() {
+  const router = useRouter();
   const { fontSize } = useApp();
   const {
     draft,
@@ -40,7 +41,7 @@ export default function JournalWriteScreen() {
     toast.show(t('notifications.success.journal.title'), {
       message: t('notifications.success.journal.message'),
     });
-    router.navigate('/(tabs)');
+    router.push('/');
   };
 
   const triggerFocus = () => {
