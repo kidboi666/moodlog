@@ -1,6 +1,6 @@
 import { Container } from '@/components/layouts/containers/Container';
 import { useTranslation } from 'react-i18next';
-import { RadioGroup, Separator } from 'tamagui';
+import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { useAppTheme } from '@/store/hooks/useAppTheme';
 import { Theme } from 'src/types/enums';
 import { RadioGroupItem } from '@/components/RadioGroupItem';
@@ -10,9 +10,9 @@ export default function ThemeScreen() {
   const { currentTheme, changeTheme } = useAppTheme();
   const { t } = useTranslation();
 
-  const handleValueChange = (value: string) => {
+  const handleValueChange = useEvent((value: string) => {
     changeTheme(value as Theme);
-  };
+  });
 
   return (
     <Container>
