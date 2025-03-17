@@ -1,10 +1,8 @@
-import { AnimatePresence, useEvent } from 'tamagui';
 import { SignatureEmotion } from '@/types/entries';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { memo, useState } from 'react';
 import {
@@ -28,10 +26,6 @@ export const MoodAverage = memo(({ signatureEmotion }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isTouched = useSharedValue(false);
 
-  const onPress = useEvent(() => {
-    setIsExpanded(prev => !prev);
-  });
-
   const hasSignatureEmotion = signatureEmotion
     ? signatureEmotion?.count > 0
     : false;
@@ -41,7 +35,7 @@ export const MoodAverage = memo(({ signatureEmotion }: Props) => {
       isExpanded ? RECORD_CARD_EXPANDED_HEIGHT : RECORD_CARD_HEIGHT,
     ),
     transform: [{ scale: withSpring(isTouched.value ? 0.9 : 1) }],
-    opacity: withTiming(isTouched.value ? 0.6 : 1),
+    opacity: withSpring(isTouched.value ? 0.6 : 1),
   }));
 
   return (
@@ -53,21 +47,19 @@ export const MoodAverage = memo(({ signatureEmotion }: Props) => {
             ? getEmotionTheme(signatureEmotion!.type, EmotionLevel.FULL)
             : '$gray5'
       }
-      onPress={onPress}
+      onPress={() => setIsExpanded(prev => !prev)}
       onPressIn={() => (isTouched.value = true)}
       onPressOut={() => (isTouched.value = false)}
       style={animatedStyle}
     >
-      <AnimatePresence>
-        {isExpanded ? (
-          <ExpandedContent />
-        ) : (
-          <CollapsedContent
-            hasSignatureEmotion={hasSignatureEmotion}
-            signatureEmotion={signatureEmotion}
-          />
-        )}
-      </AnimatePresence>
+      {isExpanded ? (
+        <ExpandedContent />
+      ) : (
+        <CollapsedContent
+          hasSignatureEmotion={hasSignatureEmotion}
+          signatureEmotion={signatureEmotion}
+        />
+      )}
     </AnimatedCard>
   );
 });

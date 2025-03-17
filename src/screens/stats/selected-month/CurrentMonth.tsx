@@ -1,9 +1,8 @@
-import { AnimatePresence, useEvent } from 'tamagui';
+import { useEvent } from 'tamagui';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { useState } from 'react';
 import {
@@ -32,7 +31,7 @@ export const CurrentMonth = () => {
       isExpanded ? RECORD_CARD_EXPANDED_HEIGHT_MEDIUM : RECORD_CARD_HEIGHT,
     ),
     transform: [{ scale: withSpring(isTouched.value ? 0.9 : 1) }],
-    opacity: withTiming(isTouched.value ? 0.6 : 1),
+    opacity: withSpring(isTouched.value ? 0.6 : 1),
   }));
 
   return (
@@ -42,15 +41,13 @@ export const CurrentMonth = () => {
       onPress={() => (selectedMonthStats ? onPress() : undefined)}
       style={animatedStyle}
     >
-      <AnimatePresence>
-        {!selectedMonthStats || selectedMonthStats.count === 0 ? (
-          <EmptyContent />
-        ) : isExpanded ? (
-          <ExpandedContent selectedMonthStats={selectedMonthStats} />
-        ) : (
-          <CollapsedContent selectedMonthStats={selectedMonthStats} />
-        )}
-      </AnimatePresence>
+      {!selectedMonthStats || selectedMonthStats.count === 0 ? (
+        <EmptyContent />
+      ) : isExpanded ? (
+        <ExpandedContent selectedMonthStats={selectedMonthStats} />
+      ) : (
+        <CollapsedContent selectedMonthStats={selectedMonthStats} />
+      )}
     </AnimatedCard>
   );
 };

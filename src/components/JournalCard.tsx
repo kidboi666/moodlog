@@ -39,9 +39,7 @@ export const JournalCard = memo(
     });
 
     const handleSwipeRight = useEvent(() => {
-      if (positionI === 'left') {
-        setPositionI('right');
-      }
+      setPositionI('right');
     });
 
     const navigateToDetail = useEvent(() => {
@@ -62,7 +60,7 @@ export const JournalCard = memo(
         </S.ActionBox>
 
         <S.CardContainer
-          animation="quick"
+          animation="bouncy"
           onPress={navigateToDetail}
           onLongPress={handleSwipeLeft}
           {...position}

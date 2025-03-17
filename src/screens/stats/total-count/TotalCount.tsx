@@ -1,4 +1,3 @@
-import { AnimatePresence, useEvent } from 'tamagui';
 import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
@@ -8,7 +7,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { ExpandedContent } from '@/screens/stats/total-count/ExpandedContent';
 import { CollapsedContent } from '@/screens/stats/total-count/CollapsedContent';
@@ -28,16 +26,12 @@ export const TotalCount = memo(
     const [isExpanded, setIsExpanded] = useState(false);
     const isTouched = useSharedValue(false);
 
-    const onPress = useEvent(() => {
-      setIsExpanded(prev => !prev);
-    });
-
     const animatedStyle = useAnimatedStyle(() => ({
       height: withSpring(
         isExpanded ? RECORD_CARD_EXPANDED_HEIGHT : RECORD_CARD_HEIGHT,
       ),
       transform: [{ scale: withSpring(isTouched.value ? 0.9 : 1) }],
-      opacity: withTiming(isTouched.value ? 0.6 : 1),
+      opacity: withSpring(isTouched.value ? 0.6 : 1),
     }));
 
     const { totalCount, totalFrequency, totalActiveDay } = journalStats;
@@ -46,22 +40,20 @@ export const TotalCount = memo(
       <AnimatedCard
         onPressIn={() => (isTouched.value = true)}
         onPressOut={() => (isTouched.value = false)}
-        onPress={onPress}
+        onPress={() => setIsExpanded(prev => !prev)}
         style={animatedStyle}
       >
-        <AnimatePresence>
-          {isExpanded ? (
-            <ExpandedContent
-              expressiveMonthStats={expressiveMonthStats}
-              totalCount={totalCount}
-              daysSinceSignup={daysSinceSignup}
-              totalFrequency={totalFrequency}
-              totalActiveDay={totalActiveDay}
-            />
-          ) : (
-            <CollapsedContent journalStats={journalStats} />
-          )}
-        </AnimatePresence>
+        {isExpanded ? (
+          <ExpandedContent
+            expressiveMonthStats={expressiveMonthStats}
+            totalCount={totalCount}
+            daysSinceSignup={daysSinceSignup}
+            totalFrequency={totalFrequency}
+            totalActiveDay={totalActiveDay}
+          />
+        ) : (
+          <CollapsedContent journalStats={journalStats} />
+        )}
       </AnimatedCard>
     );
   },
