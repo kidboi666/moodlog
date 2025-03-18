@@ -45,7 +45,7 @@ export const HorizontalCalendar = ({
             animated: true,
           });
         }
-      }, 1000);
+      }, 1300);
     }
 
     return () => clearTimeout(timeout);

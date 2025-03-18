@@ -22,6 +22,8 @@ export default function HomeScreen() {
   const { onScroll } = useScroll();
   const { userInfo } = useUser();
   const { initDraft } = useDraft();
+  // const isDev = __DEV__;
+  const isDev = false;
 
   useEffect(() => {
     if (isSubmitted) {
@@ -38,8 +40,8 @@ export default function HomeScreen() {
       keyboardShouldPersistTaps="handled"
     >
       <Container
-        edges={__DEV__ ? ['bottom'] : ['top', 'bottom']}
-        Header={__DEV__ ? <HomeHeader /> : undefined}
+        edges={isDev ? ['bottom'] : ['top', 'bottom']}
+        Header={isDev ? <HomeHeader /> : undefined}
         padded
       >
         <S.ContentHeaderContainer>

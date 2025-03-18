@@ -6,10 +6,10 @@ import { Languages } from '@/types/enums';
 import { SettingHeader } from '@/components/layouts/headers/SettingHeader';
 
 export default function LanguageScreen() {
-  const { language, onChangeLanguage } = useApp();
+  const { language, onLanguageChange } = useApp();
 
   const handleValueChange = useEvent((language: string) => {
-    onChangeLanguage(language as Languages);
+    onLanguageChange(language as Languages);
   });
 
   return (

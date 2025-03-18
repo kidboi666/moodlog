@@ -22,6 +22,11 @@ export enum Languages {
   KO = 'ko',
 }
 
+export enum TimeFormat {
+  HOUR_24 = 'hour-24',
+  HOUR_12 = 'hour-12',
+}
+
 export type Theme = 'dark' | 'light' | 'system';
 
 export type ContextName = 'week' | 'entries' | 'statistic' | 'global';

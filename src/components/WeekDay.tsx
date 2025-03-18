@@ -33,18 +33,22 @@ export const WeekDay = memo(() => {
 
   return (
     <S.WeekDayContainer>
-      <S.CurrentMonthBox>
-        <S.CurrentMonthText>
-          {t(`calendar.months.${getMonthString(currentMonth)}`)}.
-        </S.CurrentMonthText>
-      </S.CurrentMonthBox>
-      <HorizontalCalendar
-        dates={dates}
-        dateCounts={dateCounts}
-        selectedDate={selectedDate}
-        currentDate={currentDate}
-        onSelectedDateChange={onSelectedDateChange}
-      />
+      <S.OuterGradientBox>
+        <S.InnerGradientBox>
+          <S.CurrentMonthBox>
+            <S.CurrentMonthText>
+              {t(`calendar.months.${getMonthString(currentMonth)}`)}.
+            </S.CurrentMonthText>
+          </S.CurrentMonthBox>
+          <HorizontalCalendar
+            dates={dates}
+            dateCounts={dateCounts}
+            selectedDate={selectedDate}
+            currentDate={currentDate}
+            onSelectedDateChange={onSelectedDateChange}
+          />
+        </S.InnerGradientBox>
+      </S.OuterGradientBox>
     </S.WeekDayContainer>
   );
 });

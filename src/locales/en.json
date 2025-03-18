@@ -182,6 +182,11 @@
     },
     "language": {
       "title": "Language"
+    },
+    "timeFormat": {
+      "title": "Time Format",
+      "24": "24 Hour",
+      "12": "12 Hour"
     }
   },
   "onboarding": {

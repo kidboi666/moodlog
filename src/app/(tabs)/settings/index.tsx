@@ -1,5 +1,5 @@
 import { H1, ScrollView, Separator, YStack } from 'tamagui';
-import { Globe, Moon } from '@tamagui/lucide-icons';
+import { Clock, Globe, Moon } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { FadeIn } from '@/components/FadeIn';
 import { CARD_DELAY } from '@/constants/time';
@@ -30,6 +30,15 @@ export default function SettingsScreen() {
               icon={Globe}
               label={t('settings.language.title')}
               href="/settings/language"
+            />
+            <Separator />
+          </FadeIn>
+          <FadeIn delay={CARD_DELAY.THIRD}>
+            {/* Language Setting */}
+            <NavigationSettingItem
+              icon={Clock}
+              label={t('settings.timeFormat.title')}
+              href="/settings/time_format"
             />
           </FadeIn>
         </YStack>

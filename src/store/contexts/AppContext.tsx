@@ -7,7 +7,7 @@ import {
   useReducer,
 } from 'react';
 import { AppStore } from 'src/types/store';
-import { Languages, ViewFontSize } from 'src/types/enums';
+import { Languages, TimeFormat, ViewFontSize } from 'src/types/enums';
 import * as Localization from 'expo-localization';
 import { Nullable } from '@/types/utils';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,7 @@ type AppState = {
   fontSize: ViewFontSize;
   language: Languages;
   isInitialApp: boolean;
+  timeFormat: TimeFormat;
   firstLaunchDate: Nullable<ISODateString>;
 };
 
@@ -29,6 +30,7 @@ const initialState: AppState = {
   fontSize: ViewFontSize.SMALL,
   language: DEFAULT_LANGUAGE,
   isInitialApp: false,
+  timeFormat: TimeFormat.HOUR_24,
   firstLaunchDate: null,
 };
 
@@ -37,6 +39,7 @@ type AppAction =
   | { type: 'SET_FONT_SIZE'; payload: ViewFontSize }
   | { type: 'SET_INITIAL_APP'; payload: boolean }
   | { type: 'SET_FIRST_LAUNCH_DATE'; payload: Nullable<ISODateString> }
+  | { type: 'SET_TIME_FORMAT'; payload: TimeFormat }
   | {
       type: 'INIT_APP';
       payload: {
@@ -55,6 +58,8 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, isInitialApp: action.payload };
     case 'SET_FIRST_LAUNCH_DATE':
       return { ...state, firstLaunchDate: action.payload };
+    case 'SET_TIME_FORMAT':
+      return { ...state, timeFormat: action.payload };
     case 'INIT_APP':
       return {
         ...state,
@@ -80,6 +85,10 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
 
   const handleFontSizeChange = useCallback((fontSize: ViewFontSize) => {
     dispatch({ type: 'SET_FONT_SIZE', payload: fontSize });
+  }, []);
+
+  const handleTimeFormatChange = useCallback((timeFormat: TimeFormat) => {
+    dispatch({ type: 'SET_TIME_FORMAT', payload: timeFormat });
   }, []);
 
   const initializeFirstLaunchStatus = useCallback(async () => {
@@ -147,9 +156,11 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
           appVersion,
           firstLaunchDate: state.firstLaunchDate,
           fontSize: state.fontSize,
+          timeFormat: state.timeFormat,
           initializeFirstLaunchStatus,
-          onChangeFontSize: handleFontSizeChange,
-          onChangeLanguage: handleLanguageChange,
+          onFontSizeChange: handleFontSizeChange,
+          onLanguageChange: handleLanguageChange,
+          onTimeFormatChange: handleTimeFormatChange,
         }),
         [
           state.language,
@@ -157,9 +168,11 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
           appVersion,
           state.firstLaunchDate,
           state.fontSize,
+          state.timeFormat,
           initializeFirstLaunchStatus,
           handleFontSizeChange,
           handleLanguageChange,
+          handleTimeFormatChange,
         ],
       )}
     >

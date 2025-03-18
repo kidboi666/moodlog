@@ -9,7 +9,7 @@ import {
   SelectedMonthStats,
   UserInfo,
 } from '@/types/entries';
-import { Theme, ViewFontSize } from 'src/types/enums';
+import { Theme, TimeFormat, ViewFontSize } from 'src/types/enums';
 import { ISODateString, ISOMonthString } from '@/types/dtos/date';
 import { LoadingState, Nullable, WithState } from 'src/types/utils';
 import {
@@ -55,11 +55,13 @@ export interface AppStore {
   appVersion: string;
   language: any;
   isInitialApp: boolean;
+  timeFormat: TimeFormat;
+  fontSize: ViewFontSize;
   initializeFirstLaunchStatus: () => Promise<Nullable<ISODateString>>;
   firstLaunchDate: Nullable<ISODateString>;
-  onChangeLanguage: (language: any) => void;
-  onChangeFontSize: (fontSize: ViewFontSize) => void;
-  fontSize: ViewFontSize;
+  onLanguageChange: (language: any) => void;
+  onFontSizeChange: (fontSize: ViewFontSize) => void;
+  onTimeFormatChange: (timeFormat: TimeFormat) => void;
 }
 
 export type UserStore = WithState<

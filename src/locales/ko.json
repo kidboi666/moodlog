@@ -182,6 +182,11 @@
     },
     "language": {
       "title": "언어"
+    },
+    "timeFormat": {
+      "title": "시간 형식",
+      "24": "24 시간",
+      "12": "12 시간"
     }
   },
   "onboarding": {
