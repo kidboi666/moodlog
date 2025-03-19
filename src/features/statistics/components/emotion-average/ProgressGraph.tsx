@@ -1,5 +1,5 @@
 import { H3 } from 'tamagui';
-import { EmotionType } from '@/types/enums';
+import { EmotionType } from '@/core/types/enums';
 import { emotionTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import * as S from './ProgressGraph.styled';

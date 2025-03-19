@@ -1,6 +1,6 @@
-import { EmotionLevel, EmotionType } from 'src/types/enums';
-import { ISODateString, ISOMonthString } from '@/types/dtos/date';
-import { Nullable } from '@/types/utils';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
+import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
+import { Nullable } from '@/core/types/utils';
 
 export type Emotion = {
   type: EmotionType;

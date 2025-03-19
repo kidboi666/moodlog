@@ -5,14 +5,14 @@ import { useUser } from '@/core/store/hooks/useUser';
 import { useDraft } from '@/core/store/hooks/useDraft';
 import { Fragment, useEffect } from 'react';
 import { H3, ScrollView } from 'tamagui';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
-import { HomeHeader } from '@/core/components/layouts/headers/HomeHeader';
-import { Container } from '@/core/components/layouts/containers/Container';
+import { HomeHeader } from '@/features/home/components/HomeHeader';
+import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
-import { WeekDay } from '@/core/components/WeekDay';
-import { JournalCard } from '@/core/components/JournalCard';
-import { EmptyJournal } from '@/core/components/EmptyJournal';
+import { WeekDay } from '@/features/home/components/WeekDay';
+import { JournalCard } from '@/features/journal/components/JournalCard';
+import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import * as S from './Home.styled';
 
 export const HomeScreen = () => {

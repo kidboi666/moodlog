@@ -1,4 +1,4 @@
-import { HeaderContainer } from '@/core/components/layouts/containers/HeaderContainer';
+import { HeaderContainer } from '@/core/components/HeaderContainer.styleable';
 import { router } from 'expo-router';
 import * as S from './SettingHeader.styled';
 import { ArrowLeft } from '@tamagui/lucide-icons';

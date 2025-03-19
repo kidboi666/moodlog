@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { SelectedMonthStats } from '@/types/entries';
+import { SelectedMonthStats } from '@/core/types/entries';
 import {
   getEmotionTheme,
   getMonthStringWithoutYear,
 } from '@/core/utils/common';
-import { EmotionLevel, EmotionType } from '@/types/enums';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
 

@@ -1,6 +1,6 @@
-import { Container } from '@/core/components/layouts/containers/Container';
+import { Container } from '@/core/components/Container.styleable';
 import { Input } from 'tamagui';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { useUser } from '@/core/store/hooks/useUser';
 import { router } from 'expo-router';
 import { useStepProgress } from '@/core/store/hooks/useStepProgress';

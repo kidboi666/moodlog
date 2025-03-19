@@ -1,10 +1,10 @@
 import { Button, styled, XStack, YStack } from 'tamagui';
 import { ENTER_STYLE, PRESS_STYLE } from '@/core/constants/styles';
-import { HeaderContainer as HOSHeaderContainer } from '@/core/components/layouts/containers/HeaderContainer';
+import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 import { CONTAINER_SPACING } from '@/core/constants/size';
-import { RenderTime } from '@/core/components/RenderTime';
-import { RenderDay } from '@/core/components/RenderDay';
-import { RenderDate } from '@/core/components/RenderDate';
+import { RenderTime } from '@/core/components/RenderTime.styleable';
+import { RenderDay } from '@/core/components/RenderDay.styleable';
+import { RenderDate } from '@/core/components/RenderDate.styleable';
 
 export const HeaderContainer = styled(HOSHeaderContainer, {
   items: 'center',

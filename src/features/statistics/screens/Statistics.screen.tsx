@@ -2,7 +2,7 @@ import { StatsContainer } from '@/features/statistics/components/StatsContainer'
 import { H1, ScrollView } from 'tamagui';
 import { useScroll } from '@/core/store/hooks/useScroll';
 import { CurrentMonth } from '@/features/statistics/components/selected-month/CurrentMonth';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { CARD_DELAY } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';

@@ -1,7 +1,7 @@
 import { H2, H3, Text, XStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { JournalStats } from '@/types/entries';
+import { JournalStats } from '@/core/types/entries';
 import * as S from './CollapsedContent.styled';
 import { memo } from 'react';
 

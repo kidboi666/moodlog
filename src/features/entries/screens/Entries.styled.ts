@@ -1,4 +1,4 @@
-import { Container as HOSContainer } from '@/core/components/layouts/containers/Container';
+import { Container as HOSContainer } from '@/core/components/Container.styleable';
 import { H1, styled, YStack } from 'tamagui';
 
 export const Container = styled(HOSContainer, {

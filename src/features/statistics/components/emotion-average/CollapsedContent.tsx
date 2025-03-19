@@ -1,8 +1,8 @@
 import { XStack, YStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { SignatureEmotion } from '@/types/entries';
-import { Nullable } from '@/types/utils';
+import { SignatureEmotion } from '@/core/types/entries';
+import { Nullable } from '@/core/types/utils';
 import * as S from './CollapsedContent.styled';
 
 interface Props {

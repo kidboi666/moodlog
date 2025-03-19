@@ -1,4 +1,4 @@
-import { DateCounts } from '@/types/entries';
+import { DateCounts } from '@/core/types/entries';
 import * as S from './DateCountDot.styled';
 
 interface Props {

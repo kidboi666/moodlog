@@ -1,8 +1,8 @@
-import { EmotionLevel, EmotionType } from '@/types/enums';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
 import { Check } from '@tamagui/lucide-icons';
 import { emotionTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
-import { Emotion } from '@/types/entries';
+import { Emotion } from '@/core/types/entries';
 import { useTranslation } from 'react-i18next';
 import * as S from './PickerMood.styled';
 

@@ -6,10 +6,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Draft, Emotion } from '@/types/entries';
-import { ISODateString } from '@/types/dtos/date';
-import { DraftStore } from '@/types/store';
-import { Nullable } from '@/types/utils';
+import { Draft, Emotion } from '@/core/types/entries';
+import { ISODateString } from '@/core/types/dtos/date';
+import { DraftStore } from '@/core/types/store';
+import { Nullable } from '@/core/types/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { PermissionStatus } from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';

@@ -1,8 +1,8 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
-import { ISODateString, ISOMonthString } from '@/types/dtos/date';
-import { EmotionLevel, EmotionType } from '@/types/enums';
+import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
 import { emotionTheme } from '@/core/constants/themes';
-import { MonthKey } from '@/types/utils';
+import { MonthKey } from '@/core/types/utils';
 
 /**
  * month에 +1 하는 규칙:

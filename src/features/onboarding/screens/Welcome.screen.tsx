@@ -1,9 +1,9 @@
 import { H1, H2 } from 'tamagui';
 import { router } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
-import { Container } from '@/core/components/layouts/containers/Container';
+import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { useStepProgress } from '@/core/store/hooks/useStepProgress';
 import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';

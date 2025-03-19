@@ -8,16 +8,16 @@ import {
   JournalStats,
   SelectedMonthStats,
   UserInfo,
-} from '@/types/entries';
-import { Theme, TimeFormat, ViewFontSize } from 'src/types/enums';
-import { ISODateString, ISOMonthString } from '@/types/dtos/date';
-import { LoadingState, Nullable, WithState } from 'src/types/utils';
+} from '@/core/types/entries';
+import { Theme, TimeFormat, ViewFontSize } from '@/core/types/enums';
+import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
+import { LoadingState, Nullable, WithState } from '@/core/types/utils';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
-import { NewUserInfo } from '@/types/dtos/user';
+import { NewUserInfo } from '@/core/types/dtos/user';
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
 

@@ -1,5 +1,5 @@
-import { Journal } from '@/types/entries';
-import { EmotionLevel, EmotionType } from 'src/types/enums';
+import { Journal } from '@/core/types/entries';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
 
 export const dummyJournals: Journal[] = [
   {

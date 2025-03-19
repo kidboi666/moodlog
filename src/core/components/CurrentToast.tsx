@@ -2,7 +2,7 @@ import { Toast, useToastState } from '@tamagui/toast';
 import { useAppTheme } from '@/core/store/hooks/useAppTheme';
 import * as S from './CurrentToast.styled';
 
-export function CurrentToast() {
+export const CurrentToast = () => {
   const currentToast = useToastState();
   const { currentTheme } = useAppTheme();
 
@@ -22,4 +22,4 @@ export function CurrentToast() {
       </S.ToastContent>
     </S.ToastContainer>
   );
-}
+};

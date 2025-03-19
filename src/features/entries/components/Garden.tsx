@@ -1,7 +1,7 @@
-import { Grass } from '@/screens/garden/Grass';
-import { getMonthNumber } from '@/utils/common';
-import { Emotion } from '@/types/entries';
-import { MonthKey } from '@/types/utils';
+import { Grass } from '@/features/entries/components/Grass';
+import { getMonthNumber } from '@/core/utils/common';
+import { Emotion } from '@/core/types/entries';
+import { MonthKey } from '@/core/types/utils';
 import { memo, useMemo } from 'react';
 import * as S from './Garden.styled';
 

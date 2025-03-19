@@ -1,7 +1,7 @@
 import { H1 } from 'tamagui';
 import { useUser } from '@/core/store/hooks/useUser';
-import { Container } from '@/core/components/layouts/containers/Container';
-import { FadeIn } from '@/core/components/FadeIn';
+import { Container } from '@/core/components/Container.styleable';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { router } from 'expo-router';
 import { useStepProgress } from '@/core/store/hooks/useStepProgress';
 import { ArrowLeft } from '@tamagui/lucide-icons';

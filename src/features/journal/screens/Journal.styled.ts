@@ -1,4 +1,4 @@
-import { Container as HOSContainer } from '@/core/components/layouts/containers/Container';
+import { Container as HOSContainer } from '@/core/components/Container.styleable';
 import {
   H3,
   Image as TamaguiImage,

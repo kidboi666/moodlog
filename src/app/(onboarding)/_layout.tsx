@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'tamagui';
-import { OnboardingHeader } from '@/core/components/layouts/headers/OnboardingHeader';
+import { OnboardingHeader } from '@/features/onboarding/components/OnboardingHeader';
 import { StepProgressContextProvider } from '@/core/store/contexts/PageProgressContext';
 
 export default function OnboardingLayout() {

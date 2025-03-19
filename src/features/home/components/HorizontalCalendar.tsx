@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { ScrollView, View } from 'tamagui';
-import { ISODateString } from '@/types/dtos/date';
+import { ISODateString } from '@/core/types/dtos/date';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
-import { DateCounts } from '@/types/entries';
+import { DateCounts } from '@/core/types/entries';
 import { CalendarUtils } from 'react-native-calendars';
-import { DateCountDot } from '@/core/components/DateCountDot';
+import { DateCountDot } from '@/features/home/components/DateCountDot';
 import { useTranslation } from 'react-i18next';
 import {
   getDateInISODateString,

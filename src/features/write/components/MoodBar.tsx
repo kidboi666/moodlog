@@ -1,6 +1,6 @@
 import { emotionTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
-import { Emotion } from '@/types/entries';
+import { Emotion } from '@/core/types/entries';
 import * as S from './MoodBar.styled';
 
 interface Props {

@@ -6,14 +6,14 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { UserStore } from '@/types/store';
+import { UserStore } from '@/core/types/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { uuid } from 'expo-modules-core';
-import { UserInfo } from '@/types/entries';
-import { Nullable } from '@/types/utils';
+import { UserInfo } from '@/core/types/entries';
+import { Nullable } from '@/core/types/utils';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { useApp } from '@/core/store/hooks/useApp';
-import { NewUserInfo } from '@/types/dtos/user';
+import { NewUserInfo } from '@/core/types/dtos/user';
 
 const INITIAL_USER_INFO = {
   id: '',

@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import { DateData } from 'react-native-calendars';
 import { DayState } from 'react-native-calendars/src/types';
 import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
-import { DateCounts } from '@/types/entries';
-import { DateCountDot } from '@/core/components/DateCountDot';
+import { DateCounts } from '@/core/types/entries';
+import { DateCountDot } from '@/features/home/components/DateCountDot';
 import * as S from './CustomDayComponent.styled';
 
 interface Props {

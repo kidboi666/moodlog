@@ -1,6 +1,6 @@
 import { Button, styled } from 'tamagui';
 import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/constants/styles';
-import { HeaderContainer as HOSHeaderContainer } from '@/core/components/layouts/containers/HeaderContainer';
+import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 
 export const HeaderContainer = styled(HOSHeaderContainer, {});
 

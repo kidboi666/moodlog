@@ -4,8 +4,8 @@ import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { memo } from 'react';
-import { Emotion } from '@/types/entries';
-import { Nullable } from '@/types/utils';
+import { Emotion } from '@/core/types/entries';
+import { Nullable } from '@/core/types/utils';
 
 interface Props {
   content: string;

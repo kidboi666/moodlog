@@ -1,5 +1,5 @@
 import { styled, XStack, YStack } from 'tamagui';
-import { Container as HOSContainer } from '@/core/components/layouts/containers/Container';
+import { Container as HOSContainer } from '@/core/components/Container.styleable';
 
 export const ViewContainer = styled(HOSContainer, {
   pr: 0,

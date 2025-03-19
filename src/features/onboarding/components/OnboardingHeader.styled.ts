@@ -1,5 +1,5 @@
 import { styled, View, XStack } from 'tamagui';
-import { HeaderContainer as HOSHeaderContainer } from '@/core/components/layouts/containers/HeaderContainer';
+import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 
 export const HeaderContainer = styled(HOSHeaderContainer, {
   py: '$4',

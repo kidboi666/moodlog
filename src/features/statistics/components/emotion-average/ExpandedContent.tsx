@@ -1,7 +1,7 @@
 import { H3, Text } from 'tamagui';
 import { useStatistics } from '@/core/store/hooks/useStatistics';
 import { ProgressGraph } from '@/features/statistics/components/emotion-average/ProgressGraph';
-import { EmotionType } from '@/types/enums';
+import { EmotionType } from '@/core/types/enums';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';

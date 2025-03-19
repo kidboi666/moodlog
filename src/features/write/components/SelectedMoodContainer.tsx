@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Emotion } from '@/types/entries';
+import { Emotion } from '@/core/types/entries';
 import { useTranslation } from 'react-i18next';
-import { Nullable } from '@/types/utils';
+import { Nullable } from '@/core/types/utils';
 import * as S from './SelectedMoodContainer.styled';
 
 interface Props {

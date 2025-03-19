@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Emotion } from '@/types/entries';
+import { Emotion } from '@/core/types/entries';
 import { useRouter } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';

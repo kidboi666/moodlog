@@ -6,13 +6,13 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { AppStore } from '@/types/store';
-import { Languages, TimeFormat, ViewFontSize } from '@/types/enums';
+import { AppStore } from '@/core/types/store';
+import { Languages, TimeFormat, ViewFontSize } from '@/core/types/enums';
 import * as Localization from 'expo-localization';
-import { Nullable } from '@/types/utils';
+import { Nullable } from '@/core/types/utils';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ISODateString } from '@/types/dtos/date';
+import { ISODateString } from '@/core/types/dtos/date';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { APP_VERSION } from '@/core/constants/common';
 

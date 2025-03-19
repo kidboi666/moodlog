@@ -9,7 +9,7 @@ import {
   YStack,
 } from 'tamagui';
 import { ENTER_STYLE } from '@/core/constants/styles';
-import { RenderTime } from '@/core/components/RenderTime';
+import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const Container = styled(View, {

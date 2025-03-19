@@ -5,7 +5,7 @@ import {
   StatisticDateContext,
   WeekDateContext,
 } from '@/core/store/contexts/DateContext';
-import { ContextName } from '@/types/enums';
+import { ContextName } from '@/core/types/enums';
 
 export const useDate = (contextName: ContextName) => {
   let dateContext;

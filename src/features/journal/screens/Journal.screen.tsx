@@ -6,7 +6,7 @@ import { emotionTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import { useScroll } from '@/core/store/hooks/useScroll';
 import { toSingle } from '@/core/utils/common';
-import JournalHeader from '@/core/components/layouts/headers/JournalHeader';
+import JournalHeader from '@/features/journal/components/JournalHeader';
 import * as S from './Journal.styled';
 
 interface Props {

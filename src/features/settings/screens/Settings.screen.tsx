@@ -1,9 +1,9 @@
 import { H1, ScrollView, Separator, YStack } from 'tamagui';
 import { Clock, Globe, Moon } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { CARD_DELAY } from '@/core/constants/time';
-import { NavigationSettingItem } from '@/core/components/NavigationSettingItem';
+import { NavigationSettingItem } from '@/features/settings/components/NavigationSettingItem';
 import * as S from './Settings.styled';
 
 export const SettingsScreen = () => {

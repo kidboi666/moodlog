@@ -7,10 +7,10 @@ import {
 import { Button } from 'tamagui';
 import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import React, { memo, useCallback, useMemo } from 'react';
-import { DateCounts } from '@/types/entries';
-import { ISODateString, ISOMonthString } from '@/types/dtos/date';
+import { DateCounts } from '@/core/types/entries';
+import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
 import { Direction } from 'react-native-calendars/src/types';
-import { CustomDayComponent } from '@/core/components/CustomDayComponent';
+import { CustomDayComponent } from '@/features/calendar/components/CustomDayComponent';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
 import { CalendarCustomHeader } from '@/features/calendar/components/CalendarCustomHeader';
 import { getMonthInISODateString } from '@/core/utils/common';

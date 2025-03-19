@@ -1,10 +1,10 @@
-import { Container } from '@/core/components/layouts/containers/Container';
-import { SettingHeader } from '@/core/components/layouts/headers/SettingHeader';
+import { Container } from '@/core/components/Container.styleable';
+import { SettingHeader } from '@/features/settings/components/SettingHeader';
 import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { useApp } from '@/core/store/hooks/useApp';
 import { useTranslation } from 'react-i18next';
-import { TimeFormat } from '@/types/enums';
+import { TimeFormat } from '@/core/types/enums';
 
 export const TimeFormatScreen = () => {
   const { timeFormat, onTimeFormatChange } = useApp();

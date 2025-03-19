@@ -7,8 +7,8 @@ import {
   useState,
 } from 'react';
 import { useJournal } from '@/core/store/hooks/useJournal';
-import { StatisticsStore } from '@/types/store';
-import { Nullable } from '@/types/utils';
+import { StatisticsStore } from '@/core/types/store';
+import { Nullable } from '@/core/types/utils';
 import { MONTHS } from '@/core/constants/date';
 import {
   EmotionStats,
@@ -18,10 +18,10 @@ import {
   ScoreBoard,
   SelectedMonthStats,
   SignatureEmotion,
-} from '@/types/entries';
-import { EmotionLevel } from '@/types/enums';
+} from '@/core/types/entries';
+import { EmotionLevel } from '@/core/types/enums';
 import { getDayInISODateString } from '@/core/utils/common';
-import { ISOMonthString } from '@/types/dtos/date';
+import { ISOMonthString } from '@/core/types/dtos/date';
 import { useDate } from '@/core/store/hooks/useDate';
 
 const INITIAL_JOURNAL_STATS = {

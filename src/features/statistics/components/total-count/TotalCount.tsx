@@ -10,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExpandedContent } from '@/features/statistics/components/total-count/ExpandedContent';
 import { CollapsedContent } from '@/features/statistics/components/total-count/CollapsedContent';
-import { ExpressiveMonthStats, JournalStats } from '@/types/entries';
+import { ExpressiveMonthStats, JournalStats } from '@/core/types/entries';
 import * as S from './TotalCount.styled';
 
 const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);

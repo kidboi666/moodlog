@@ -1,8 +1,8 @@
-import { Emotion } from '@/types/entries';
-import { EmotionLevel, EmotionType } from '@/types/enums';
-import { emotionTheme } from '@/constants/themes';
+import { Emotion } from '@/core/types/entries';
+import { EmotionLevel, EmotionType } from '@/core/types/enums';
+import { emotionTheme } from '@/core/constants/themes';
 import { memo, useMemo } from 'react';
-import { Nullable } from '@/types/utils';
+import { Nullable } from '@/core/types/utils';
 import * as S from './Grass.styled';
 
 const calculateEmotionColor = (emotions: Emotion[]) => {

@@ -13,7 +13,7 @@ import { useJournal } from '@/core/store/hooks/useJournal';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
 import { EnhancedTextInput } from '@/features/write/components/EnhancedTextInput';
-import { WriteHeader } from '@/core/components/layouts/headers/WriteHeader';
+import { WriteHeader } from '@/features/write/components/WriteHeader';
 import { ActionButtons } from '@/features/write/components/ActionButtons';
 import { useRouter } from 'expo-router';
 import * as S from './JournalWrite.styled';

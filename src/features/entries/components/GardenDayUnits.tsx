@@ -1,4 +1,4 @@
-import { WEEK_DAY } from '@/constants/date';
+import { WEEK_DAY } from '@/core/constants/date';
 import { useTranslation } from 'react-i18next';
 import * as S from './GardenDayUnits.styled';
 import { memo } from 'react';

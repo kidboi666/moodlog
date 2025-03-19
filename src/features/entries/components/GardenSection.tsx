@@ -1,20 +1,20 @@
 import { ScrollView } from 'tamagui';
-import { useJournal } from '@/store/hooks/useJournal';
-import { GardenTitleHeader } from '@/screens/garden/GardenTitleHeader';
-import { GardenDayUnits } from '@/screens/garden/GardenDayUnits';
+import { useJournal } from '@/core/store/hooks/useJournal';
+import { GardenTitleHeader } from '@/features/entries/components/GardenTitleHeader';
+import { GardenDayUnits } from '@/features/entries/components/GardenDayUnits';
 import {
   getFirstDateDay,
   getLastDate,
   getMonthInISODateString,
   getWeekLength,
-} from '@/utils/common';
+} from '@/core/utils/common';
 import { useCallback, useMemo } from 'react';
-import { useDate } from '@/store/hooks/useDate';
-import { MONTHS } from '@/constants/date';
-import { MonthKey } from '@/types/utils';
-import { MonthItem } from '@/screens/garden/MonthItem';
+import { useDate } from '@/core/store/hooks/useDate';
+import { MONTHS } from '@/core/constants/date';
+import { MonthKey } from '@/core/types/utils';
+import { MonthItem } from '@/features/entries/components/MonthItem';
 import * as S from './GardenSection.styled';
-import { ISOMonthString } from '@/types/dtos/date';
+import { ISOMonthString } from '@/core/types/dtos/date';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =

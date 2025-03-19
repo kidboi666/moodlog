@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
-import { ISODateString } from '@/types/dtos/date';
-import { HorizontalCalendar } from '@/core/components/HorizontalCalendar';
+import { ISODateString } from '@/core/types/dtos/date';
+import { HorizontalCalendar } from '@/features/home/components/HorizontalCalendar';
 import { useTranslation } from 'react-i18next';
 import {
   getISODateString,

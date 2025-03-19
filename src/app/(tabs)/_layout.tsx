@@ -1,5 +1,5 @@
 import { BottomModal } from '@/core/components/modals/BottomModal';
-import { DevContainer } from '@/core/components/layouts/containers/DevContainer';
+import { DevContainer } from '@/core/components/DevContainer';
 import { ContainerFog } from '@/core/components/ContainerFog';
 import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';

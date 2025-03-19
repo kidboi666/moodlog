@@ -6,16 +6,16 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { JournalStore } from '@/types/store';
-import { DateCounts, Draft, Journal } from '@/types/entries';
+import { JournalStore } from '@/core/types/store';
+import { DateCounts, Draft, Journal } from '@/core/types/entries';
 import { uuid } from 'expo-modules-core';
-import { ISODateString, ISOMonthString } from '@/types/dtos/date';
-import { Nullable } from '@/types/utils';
+import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
+import { Nullable } from '@/core/types/utils';
 import { CalendarUtils } from 'react-native-calendars';
 import { MONTHS } from '@/core/constants/date';
 import { getISODateString } from '@/core/utils/common';
 import { useDate } from '@/core/store/hooks/useDate';
-import { ContextName } from '@/types/enums';
+import { ContextName } from '@/core/types/enums';
 import { useStorage } from '@/core/store/hooks/useStorage';
 
 export const CreateJournalContext = (contextName: ContextName) => {

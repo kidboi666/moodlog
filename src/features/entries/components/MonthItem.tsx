@@ -1,9 +1,9 @@
-import { MonthKey } from '@/types/utils';
+import { MonthKey } from '@/core/types/utils';
 import { YStack } from 'tamagui';
-import { GardenMonthUnits } from '@/screens/garden/GardenMonthUnits';
-import { Garden } from '@/screens/garden/Garden';
+import { GardenMonthUnits } from '@/features/entries/components/GardenMonthUnits';
+import { Garden } from '@/features/entries/components/Garden';
 import { memo } from 'react';
-import { Emotion } from '@/types/entries';
+import { Emotion } from '@/core/types/entries';
 import * as S from './MonthItem.styled';
 
 interface Props {

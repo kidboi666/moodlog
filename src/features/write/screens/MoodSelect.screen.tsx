@@ -4,9 +4,9 @@ import { MoodSelectTitle } from '@/features/write/components/MoodSelectTitle';
 import { SelectedMoodContainer } from '@/features/write/components/SelectedMoodContainer';
 import { PickerMood } from '@/features/write/components/PickerMood';
 import { NextButton } from '@/features/write/components/NextButton';
-import { FadeIn } from '@/core/components/FadeIn';
+import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { MoodBar } from '@/features/write/components/MoodBar';
-import { WriteHeader } from '@/core/components/layouts/headers/WriteHeader';
+import { WriteHeader } from '@/features/write/components/WriteHeader';
 import { CARD_DELAY } from '@/core/constants/time';
 import * as S from './MoodSelect.styled';
 

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import { EmptyContent } from '@/features/statistics/components/EmptyContent';
-import { ExpressiveMonthStats } from '@/types/entries';
+import { ExpressiveMonthStats } from '@/core/types/entries';
 import { getMonthStringWithoutYear } from '@/core/utils/common';
 import * as S from './ExpandedContent.styled';
 import { memo } from 'react';

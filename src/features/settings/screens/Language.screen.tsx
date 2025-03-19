@@ -1,9 +1,9 @@
-import { Container } from '@/core/components/layouts/containers/Container';
+import { Container } from '@/core/components/Container.styleable';
 import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { useApp } from '@/core/store/hooks/useApp';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
-import { Languages } from '@/types/enums';
-import { SettingHeader } from '@/core/components/layouts/headers/SettingHeader';
+import { Languages } from '@/core/types/enums';
+import { SettingHeader } from '@/features/settings/components/SettingHeader';
 
 export const LanguageScreen = () => {
   const { language, onLanguageChange } = useApp();

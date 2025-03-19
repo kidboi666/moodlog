@@ -7,12 +7,12 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Journal } from '@/types/entries';
+import { Journal } from '@/core/types/entries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { useToastController } from '@tamagui/toast';
-import { Nullable } from '@/types/utils';
-import { StorageStore } from '@/types/store';
+import { Nullable } from '@/core/types/utils';
+import { StorageStore } from '@/core/types/store';
 
 export const StorageContext = createContext<Nullable<StorageStore>>(null);
 

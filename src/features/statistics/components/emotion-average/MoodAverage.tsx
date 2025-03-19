@@ -1,4 +1,4 @@
-import { SignatureEmotion } from '@/types/entries';
+import { SignatureEmotion } from '@/core/types/entries';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -9,8 +9,8 @@ import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
-import { Nullable } from '@/types/utils';
-import { EmotionLevel } from '@/types/enums';
+import { Nullable } from '@/core/types/utils';
+import { EmotionLevel } from '@/core/types/enums';
 import { CollapsedContent } from '@/features/statistics/components/emotion-average/CollapsedContent';
 import { ExpandedContent } from '@/features/statistics/components/emotion-average/ExpandedContent';
 import { getEmotionTheme } from '@/core/utils/common';

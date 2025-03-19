@@ -5,11 +5,11 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { ThemeStore } from '@/types/store';
+import { ThemeStore } from '@/core/types/store';
 import { Theme as TamaguiTheme } from 'tamagui';
 import { useColorScheme } from 'react-native';
-import { Nullable } from '@/types/utils';
-import { Theme } from '@/types/enums';
+import { Nullable } from '@/core/types/utils';
+import { Theme } from '@/core/types/enums';
 
 export const ThemeContext = createContext<Nullable<ThemeStore>>(null);
 
