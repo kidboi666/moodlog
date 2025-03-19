@@ -4,7 +4,7 @@ import { Maximize2 } from '@tamagui/lucide-icons';
 import { getMonthStringWithoutYear } from '@/core/utils/common';
 import * as S from './CollapsedContent.styled';
 
-import { SelectedMonthStats } from '@/core/types/statistic.types';
+import { SelectedMonthStats } from '@/types/statistic.types';
 
 interface Props {
   selectedMonthStats: SelectedMonthStats;

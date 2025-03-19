@@ -5,7 +5,7 @@ import { useAppTheme } from '@/core/store/hooks/useAppTheme';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
 
-import { Theme } from '@/core/types/app.types';
+import { Theme } from '@/types/app.types';
 
 export const ThemeScreen = () => {
   const { currentTheme, changeTheme } = useAppTheme();

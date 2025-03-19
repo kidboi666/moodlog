@@ -3,7 +3,7 @@ import { moodTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as S from './PickerMood.styled';
-import { Mood, MoodLevel, MoodType } from '@/core/types/mood.types';
+import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
 
 interface Props {
   mood?: Mood;

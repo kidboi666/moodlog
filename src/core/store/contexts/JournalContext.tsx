@@ -7,19 +7,15 @@ import {
   useState,
 } from 'react';
 import { uuid } from 'expo-modules-core';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { CalendarUtils } from 'react-native-calendars';
 import { MONTHS } from '@/core/constants/date';
 import { getISODateString } from '@/core/utils/common';
 import { useDate } from '@/core/store/hooks/useDate';
 import { useStorage } from '@/core/store/hooks/useStorage';
 import { ContextName, JournalStore } from '@/core/store/types';
-import {
-  DateCounts,
-  ISODateString,
-  ISOMonthString,
-} from '@/core/types/date.types';
-import { Draft, Journal } from '@/core/types/journal.types';
+import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
+import { Draft, Journal } from '@/types/journal.types';
 
 export const CreateJournalContext = (contextName: ContextName) => {
   const Context = createContext<Nullable<JournalStore>>(null);

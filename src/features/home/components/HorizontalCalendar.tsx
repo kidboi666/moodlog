@@ -9,7 +9,7 @@ import {
   getDayInISODateString,
 } from '@/core/utils/common';
 import * as S from './HorizontalCalendar.styled';
-import { DateCounts, ISODateString } from '@/core/types/date.types';
+import { DateCounts, ISODateString } from '@/types/date.types';
 
 interface Props {
   dates: ISODateString[];

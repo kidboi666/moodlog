@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';
 import { AnimatePresence } from 'tamagui';
-import { Mood } from '@/core/types/mood.types';
+import { Mood } from '@/types/mood.types';
 
 interface Props {
   mood?: Mood;

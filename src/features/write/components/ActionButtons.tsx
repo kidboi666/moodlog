@@ -1,6 +1,6 @@
 import { Check, ImagePlus, Timer } from '@tamagui/lucide-icons';
 import React, { memo } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as S from './ActionButtons.styled';
 import { Button, XGroup } from 'tamagui';
 

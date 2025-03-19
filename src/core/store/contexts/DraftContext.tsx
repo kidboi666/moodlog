@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as ImagePicker from 'expo-image-picker';
 import { PermissionStatus } from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -16,9 +16,9 @@ import {
   TextInputSelectionChangeEventData,
 } from 'react-native';
 import { DraftStore } from '@/core/store/types';
-import { ISODateString } from '@/core/types/date.types';
-import { Draft } from '@/core/types/journal.types';
-import { Mood } from '@/core/types/mood.types';
+import { ISODateString } from '@/types/date.types';
+import { Draft } from '@/types/journal.types';
+import { Mood } from '@/types/mood.types';
 
 const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
   ? `${FileSystem.documentDirectory}journal_images/`

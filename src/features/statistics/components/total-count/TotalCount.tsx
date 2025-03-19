@@ -1,23 +1,17 @@
-import {
-  RECORD_CARD_EXPANDED_HEIGHT,
-  RECORD_CARD_HEIGHT,
-} from '@/core/constants/size';
-import { memo, useState } from 'react';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
 import { ExpandedContent } from '@/features/statistics/components/total-count/ExpandedContent';
 import { CollapsedContent } from '@/features/statistics/components/total-count/CollapsedContent';
 import * as S from './TotalCount.styled';
 
 import {
+  ExpansionState,
   ExpressiveMonthStats,
   JournalStats,
-} from '@/core/types/statistic.types';
-
-const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);
+} from '@/types/statistic.types';
+import { useControllableState, useEvent } from 'tamagui';
+import {
+  RECORD_CARD_EXPANDED_HEIGHT,
+  RECORD_CARD_HEIGHT,
+} from '@/core/constants/size';
 
 interface Props {
   journalStats: JournalStats;
@@ -25,40 +19,50 @@ interface Props {
   daysSinceSignup: number;
 }
 
-export const TotalCount = memo(
-  ({ journalStats, daysSinceSignup, expressiveMonthStats }: Props) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const isTouched = useSharedValue(false);
-
-    const animatedStyle = useAnimatedStyle(() => ({
-      height: withSpring(
-        isExpanded ? RECORD_CARD_EXPANDED_HEIGHT : RECORD_CARD_HEIGHT,
-      ),
-      transform: [{ scale: withSpring(isTouched.value ? 0.9 : 1) }],
-      opacity: withSpring(isTouched.value ? 0.6 : 1),
-    }));
-
-    const { totalCount, totalFrequency, totalActiveDay } = journalStats;
-
-    return (
-      <AnimatedCard
-        onPressIn={() => (isTouched.value = true)}
-        onPressOut={() => (isTouched.value = false)}
-        onPress={() => setIsExpanded(prev => !prev)}
-        style={animatedStyle}
-      >
-        {isExpanded ? (
-          <ExpandedContent
-            expressiveMonthStats={expressiveMonthStats}
-            totalCount={totalCount}
-            daysSinceSignup={daysSinceSignup}
-            totalFrequency={totalFrequency}
-            totalActiveDay={totalActiveDay}
-          />
-        ) : (
-          <CollapsedContent journalStats={journalStats} />
-        )}
-      </AnimatedCard>
-    );
+const heights = {
+  expanded: {
+    height: RECORD_CARD_EXPANDED_HEIGHT,
   },
-);
+  collapsed: {
+    height: RECORD_CARD_HEIGHT,
+  },
+} as const;
+
+export const TotalCount = ({
+  journalStats,
+  daysSinceSignup,
+  expressiveMonthStats,
+}: Props) => {
+  const [expansionState, setExpansionState] =
+    useControllableState<ExpansionState>({
+      strategy: 'most-recent-wins',
+      defaultProp: ExpansionState.COLLAPSED,
+    });
+  const animatedStyle = heights[expansionState];
+
+  const handleIsExpandedChange = useEvent(() => {
+    setExpansionState(prev =>
+      prev === ExpansionState.EXPANDED
+        ? ExpansionState.COLLAPSED
+        : ExpansionState.EXPANDED,
+    );
+  });
+
+  const { totalCount, totalFrequency, totalActiveDay } = journalStats;
+
+  return (
+    <S.CardContainer onPress={handleIsExpandedChange} {...animatedStyle}>
+      {expansionState === ExpansionState.EXPANDED ? (
+        <ExpandedContent
+          expressiveMonthStats={expressiveMonthStats}
+          totalCount={totalCount}
+          daysSinceSignup={daysSinceSignup}
+          totalFrequency={totalFrequency}
+          totalActiveDay={totalActiveDay}
+        />
+      ) : (
+        <CollapsedContent journalStats={journalStats} />
+      )}
+    </S.CardContainer>
+  );
+};

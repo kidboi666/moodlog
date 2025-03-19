@@ -13,7 +13,7 @@ import { useDate } from '@/core/store/hooks/useDate';
 import { MONTHS } from '@/core/constants/date';
 import { MonthItem } from '@/features/entries/components/MonthItem';
 import * as S from './GardenSection.styled';
-import { ISOMonthString, MonthKey } from '@/core/types/date.types';
+import { ISOMonthString, MonthKey } from '@/types/date.types';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =

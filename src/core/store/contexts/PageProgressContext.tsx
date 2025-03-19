@@ -5,7 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 
 import { StepProgressStore } from '@/core/store/types';
 

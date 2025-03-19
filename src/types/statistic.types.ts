@@ -1,5 +1,5 @@
-import { ISOMonthString } from '@/core/types/date.types';
-import { MoodType, SignatureMood } from '@/core/types/mood.types';
+import { ISOMonthString } from '@/types/date.types';
+import { MoodType, SignatureMood } from '@/types/mood.types';
 
 export type SelectedMonthStats = {
   month: ISOMonthString;
@@ -38,3 +38,8 @@ export type MoodStats = {
   signatureMood: SignatureMood;
   scoreBoard: ScoreBoard;
 };
+
+export enum ExpansionState {
+  COLLAPSED = 'collapsed',
+  EXPANDED = 'expanded',
+}

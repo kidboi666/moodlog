@@ -5,7 +5,7 @@ import { Minimize2 } from '@tamagui/lucide-icons';
 import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';
 
-import { MoodType } from '@/core/types/mood.types';
+import { MoodType } from '@/types/mood.types';
 
 export const ExpandedContent = () => {
   const { moodStats } = useStatistics();

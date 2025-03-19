@@ -1,5 +1,5 @@
-import { Journal } from '@/core/types/journal.types';
-import { MoodLevel, MoodType } from '@/core/types/mood.types';
+import { Journal } from '@/types/journal.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 
 export const dummyJournals: Journal[] = [
   {

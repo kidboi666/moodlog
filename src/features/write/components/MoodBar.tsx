@@ -1,7 +1,7 @@
 import { moodTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
 import * as S from './MoodBar.styled';
-import { Mood } from '@/core/types/mood.types';
+import { Mood } from '@/types/mood.types';
 
 interface Props {
   mood?: Mood;

@@ -1,4 +1,4 @@
-import { LoadingState, Nullable, WithState } from '@/core/types/common.types';
+import { LoadingState, Nullable, WithState } from '@/types/common.types';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -6,21 +6,17 @@ import {
 } from 'react-native';
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
-import {
-  DateCounts,
-  ISODateString,
-  ISOMonthString,
-} from '@/core/types/date.types';
+import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 import {
   ExpressiveMonthStats,
   JournalStats,
   MoodStats,
   SelectedMonthStats,
-} from '@/core/types/statistic.types';
-import { Draft, Journal } from '@/core/types/journal.types';
-import { NewUserInfo, UserInfo } from '@/core/types/user.types';
-import { Mood } from '@/core/types/mood.types';
-import { Theme, TimeFormat, ViewFontSize } from '@/core/types/app.types';
+} from '@/types/statistic.types';
+import { Draft, Journal } from '@/types/journal.types';
+import { NewUserInfo, UserInfo } from '@/types/user.types';
+import { Mood } from '@/types/mood.types';
+import { Theme, TimeFormat, ViewFontSize } from '@/types/app.types';
 
 export type ContextName = 'week' | 'entries' | 'statistic' | 'global';
 

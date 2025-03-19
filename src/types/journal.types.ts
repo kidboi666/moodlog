@@ -1,6 +1,6 @@
-import { ISODateString } from '@/core/types/date.types';
-import { Nullable } from '@/core/types/common.types';
-import { Mood } from '@/core/types/mood.types';
+import { ISODateString } from '@/types/date.types';
+import { Nullable } from '@/types/common.types';
+import { Mood } from '@/types/mood.types';
 
 export type Journal = {
   id: string;
@@ -16,3 +16,8 @@ export type Draft = {
   mood?: Mood;
   imageUri: Nullable<string>;
 };
+
+export enum CardPosition {
+  LEFT = 'left',
+  RIGHT = 'right',
+}

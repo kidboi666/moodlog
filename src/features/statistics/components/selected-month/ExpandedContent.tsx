@@ -3,8 +3,8 @@ import { getMonthStringWithoutYear, getMoodTheme } from '@/core/utils/common';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
 
-import { SelectedMonthStats } from '@/core/types/statistic.types';
-import { MoodLevel, MoodType } from '@/core/types/mood.types';
+import { SelectedMonthStats } from '@/types/statistic.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 
 interface Props {
   selectedMonthStats: SelectedMonthStats;

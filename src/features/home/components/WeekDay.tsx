@@ -10,7 +10,7 @@ import { useJournal } from '@/core/store/hooks/useJournal';
 import { useDate } from '@/core/store/hooks/useDate';
 import * as S from './WeekDay.styled';
 
-import { ISODateString } from '@/core/types/date.types';
+import { ISODateString } from '@/types/date.types';
 
 export const WeekDay = memo(() => {
   const {

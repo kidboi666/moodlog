@@ -3,7 +3,7 @@ import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import * as S from './CollapsedContent.styled';
 import { memo } from 'react';
-import { JournalStats } from '@/core/types/statistic.types';
+import { JournalStats } from '@/types/statistic.types';
 
 interface Props {
   journalStats: JournalStats;

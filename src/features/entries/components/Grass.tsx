@@ -1,8 +1,8 @@
 import { moodTheme } from '@/core/constants/themes';
 import { memo, useMemo } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as S from './Grass.styled';
-import { Mood, MoodLevel, MoodType } from '@/core/types/mood.types';
+import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
 
 const calculateMoodColor = (moods: Mood[]) => {
   if (!moods || moods.length === 0) return null;

@@ -5,7 +5,7 @@ import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { useApp } from '@/core/store/hooks/useApp';
 import { useTranslation } from 'react-i18next';
 
-import { TimeFormat } from '@/core/types/app.types';
+import { TimeFormat } from '@/types/app.types';
 
 export const TimeFormatScreen = () => {
   const { timeFormat, onTimeFormatChange } = useApp();

@@ -5,11 +5,11 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { CalendarUtils } from 'react-native-calendars';
 import { getMonthInISODateString } from '@/core/utils/common';
 import { ContextName, DateStore } from '@/core/store/types';
-import { ISODateString, ISOMonthString } from '@/core/types/date.types';
+import { ISODateString, ISOMonthString } from '@/types/date.types';
 
 type DateAction =
   | { type: 'SET_SELECTED_YEAR'; payload: number }

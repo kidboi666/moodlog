@@ -21,7 +21,7 @@ import { Platform } from 'react-native';
 import { HIDE_TAB_BAR_ROUTES } from '@/core/constants/routes';
 import * as NavigationBar from 'expo-navigation-bar';
 import { FEEDBACK_DURATION } from '@/core/constants/time';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
 

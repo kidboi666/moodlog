@@ -4,7 +4,7 @@ import { useApp } from '@/core/store/hooks/useApp';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
 
-import { Languages } from '@/core/types/app.types';
+import { Languages } from '@/types/app.types';
 
 export const LanguageScreen = () => {
   const { language, onLanguageChange } = useApp();

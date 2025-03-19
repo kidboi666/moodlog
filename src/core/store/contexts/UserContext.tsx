@@ -8,11 +8,11 @@ import {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { uuid } from 'expo-modules-core';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { useApp } from '@/core/store/hooks/useApp';
 import { UserStore } from '@/core/store/types';
-import { NewUserInfo, UserInfo } from '@/core/types/user.types';
+import { NewUserInfo, UserInfo } from '@/types/user.types';
 
 const INITIAL_USER_INFO = {
   id: '',

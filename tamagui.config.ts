@@ -1,6 +1,8 @@
 import { defaultConfig } from '@tamagui/config/v4';
 import { createFont, createTamagui } from 'tamagui';
 import { themes, tokens as tamaguiTokens } from '@tamagui/themes';
+import { createAnimations } from '@tamagui/animations-moti';
+import { Easing } from 'react-native-reanimated';
 
 const systemFont = createFont({
   family: 'Pretendard',
@@ -37,8 +39,28 @@ const systemFont = createFont({
   },
 });
 
+export const animations = createAnimations({
+  bouncy: {
+    type: 'spring',
+    damping: 8,
+    mass: 1,
+    stiffness: 100,
+  },
+  medium: {
+    type: 'timing',
+    duration: 300,
+    easing: Easing.inOut(Easing.ease),
+  },
+  quick: {
+    type: 'timing',
+    duration: 150,
+    easing: Easing.inOut(Easing.quad),
+  },
+});
+
 export const config = createTamagui({
   ...defaultConfig,
+  animations,
   fonts: {
     body: systemFont,
     heading: systemFont,

@@ -5,7 +5,7 @@ import { getMonthStringWithoutYear } from '@/core/utils/common';
 import * as S from './ExpandedContent.styled';
 import { memo } from 'react';
 
-import { ExpressiveMonthStats } from '@/core/types/statistic.types';
+import { ExpressiveMonthStats } from '@/types/statistic.types';
 
 interface Props {
   totalFrequency: number;

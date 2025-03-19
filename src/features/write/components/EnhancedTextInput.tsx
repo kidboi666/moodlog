@@ -13,9 +13,9 @@ import {
   TextInputSelectionChangeEventData,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as S from './EnhancedTextInput.styled';
-import { ViewFontSize } from '@/core/types/app.types';
+import { ViewFontSize } from '@/types/app.types';
 
 interface EnhancedTextInputProps {
   fontSize: ViewFontSize;

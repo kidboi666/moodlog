@@ -1,18 +1,24 @@
-import { StatsContainer } from '@/features/statistics/components/StatsContainer';
 import { H1, ScrollView } from 'tamagui';
 import { useScroll } from '@/core/store/hooks/useScroll';
-import { CurrentMonth } from '@/features/statistics/components/selected-month/CurrentMonth';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { CARD_DELAY } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import { TimeRangeZone } from '@/features/statistics/components/TimeRangeZone';
 import * as S from './Statistics.styled';
+import { TotalCount } from '@/features/statistics/components/total-count/TotalCount';
+import { MoodAverage } from '@/features/statistics/components/mood-average/MoodAverage';
+import { useStatistics } from '@/core/store/hooks/useStatistics';
+import { useUser } from '@/core/store/hooks/useUser';
 
 export const StatisticsScreen = () => {
   const { onScroll } = useScroll();
   const [timeRange, setTimeRange] = useState<'weekly' | 'monthly'>('weekly');
   const { t } = useTranslation();
+  const { journalStats, moodStats, expressiveMonthStats } = useStatistics();
+  const { userInfo } = useUser();
+  const { signatureMood } = moodStats ?? null;
+  const { daysSinceSignup } = userInfo ?? null;
 
   const switchToMonthly = useCallback(() => {
     setTimeRange('monthly');
@@ -34,10 +40,16 @@ export const StatisticsScreen = () => {
           />
         </S.OrderBox>
         <FadeIn delay={CARD_DELAY.FIRST}>
-          <StatsContainer />
-        </FadeIn>
-        <FadeIn delay={CARD_DELAY.THIRD}>
-          <CurrentMonth />
+          <S.YStackContainer>
+            <S.XStackContainer>
+              <TotalCount
+                expressiveMonthStats={expressiveMonthStats}
+                daysSinceSignup={daysSinceSignup}
+                journalStats={journalStats}
+              />
+              <MoodAverage signatureMood={signatureMood} />
+            </S.XStackContainer>
+          </S.YStackContainer>
         </FadeIn>
       </S.CardContainer>
     </ScrollView>

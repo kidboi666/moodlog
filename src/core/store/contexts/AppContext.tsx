@@ -7,14 +7,14 @@ import {
   useReducer,
 } from 'react';
 import * as Localization from 'expo-localization';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { APP_VERSION } from '@/core/constants/common';
 import { AppStore } from '@/core/store/types';
-import { ISODateString } from '@/core/types/date.types';
-import { Languages, TimeFormat, ViewFontSize } from '@/core/types/app.types';
+import { ISODateString } from '@/types/date.types';
+import { Languages, TimeFormat, ViewFontSize } from '@/types/app.types';
 
 const DEFAULT_LANGUAGE = Localization.getLocales()[0].languageCode as Languages;
 

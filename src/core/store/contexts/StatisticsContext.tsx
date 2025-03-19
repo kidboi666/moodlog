@@ -7,21 +7,21 @@ import {
   useState,
 } from 'react';
 import { useJournal } from '@/core/store/hooks/useJournal';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { MONTHS } from '@/core/constants/date';
 import { getDayInISODateString } from '@/core/utils/common';
 import { useDate } from '@/core/store/hooks/useDate';
 import { StatisticsStore } from '@/core/store/types';
-import { ISOMonthString } from '@/core/types/date.types';
+import { ISOMonthString } from '@/types/date.types';
 import {
   ExpressiveMonthStats,
   JournalStats,
   MoodStats,
   ScoreBoard,
   SelectedMonthStats,
-} from '@/core/types/statistic.types';
-import { Journal } from '@/core/types/journal.types';
-import { MoodLevel, SignatureMood } from '@/core/types/mood.types';
+} from '@/types/statistic.types';
+import { Journal } from '@/types/journal.types';
+import { MoodLevel, SignatureMood } from '@/types/mood.types';
 
 const INITIAL_JOURNAL_STATS = {
   totalCount: 0,

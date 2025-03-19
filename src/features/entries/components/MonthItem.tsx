@@ -3,8 +3,8 @@ import { GardenMonthUnits } from '@/features/entries/components/GardenMonthUnits
 import { Garden } from '@/features/entries/components/Garden';
 import { memo } from 'react';
 import * as S from './MonthItem.styled';
-import { MonthKey } from '@/core/types/date.types';
-import { Mood } from '@/core/types/mood.types';
+import { MonthKey } from '@/types/date.types';
+import { Mood } from '@/types/mood.types';
 
 interface Props {
   monthData: {

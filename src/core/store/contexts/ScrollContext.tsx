@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import { useNavigation } from 'expo-router';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { ScrollStore } from '@/core/store/types';

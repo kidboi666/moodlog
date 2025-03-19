@@ -3,7 +3,7 @@ import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import * as S from './ProgressGraph.styled';
 
-import { MoodType } from '@/core/types/mood.types';
+import { MoodType } from '@/types/mood.types';
 
 interface Props {
   moodScore: number;

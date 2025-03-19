@@ -1,8 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 import * as S from './SelectedMoodContainer.styled';
-import { Mood } from '@/core/types/mood.types';
+import { Mood } from '@/types/mood.types';
 
 interface Props {
   mood: Nullable<Mood>;

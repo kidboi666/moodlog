@@ -1,4 +1,4 @@
-import { Nullable } from '@/core/types/common.types';
+import { Nullable } from '@/types/common.types';
 
 export type UserInfo = {
   id: string;

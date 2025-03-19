@@ -1,11 +1,7 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
 import { moodTheme } from '@/core/constants/themes';
-import {
-  ISODateString,
-  ISOMonthString,
-  MonthKey,
-} from '@/core/types/date.types';
-import { MoodLevel, MoodType } from '@/core/types/mood.types';
+import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 
 /**
  * month에 +1 하는 규칙:

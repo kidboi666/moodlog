@@ -4,8 +4,9 @@ import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { memo } from 'react';
-import { Nullable } from '@/core/types/common.types';
-import { Mood } from '@/core/types/mood.types';
+import { Nullable } from '@/types/common.types';
+import { Mood } from '@/types/mood.types';
+import { CardPosition } from '@/types/journal.types';
 
 interface Props {
   content: string;
@@ -21,9 +22,9 @@ const positions = { left: { x: -80 }, right: { x: 0 } };
 export const JournalCard = memo(
   ({ content, id, createdAt, imageUri, mood, onDelete }: Props) => {
     const router = useRouter();
-    const [positionI, setPositionI] = useControllableState<'left' | 'right'>({
+    const [positionI, setPositionI] = useControllableState<CardPosition>({
       strategy: 'most-recent-wins',
-      defaultProp: 'right',
+      defaultProp: CardPosition.RIGHT,
     });
     const position = positions[positionI];
 
@@ -31,19 +32,19 @@ export const JournalCard = memo(
       if (onDelete) {
         onDelete(id);
       }
-      setPositionI('right');
+      setPositionI(CardPosition.RIGHT);
     });
 
     const handleSwipeLeft = useEvent(() => {
-      setPositionI('left');
+      setPositionI(CardPosition.LEFT);
     });
 
     const handleSwipeRight = useEvent(() => {
-      setPositionI('right');
+      setPositionI(CardPosition.RIGHT);
     });
 
     const navigateToDetail = useEvent(() => {
-      if (positionI === 'left') {
+      if (positionI === CardPosition.LEFT) {
         handleSwipeRight();
       } else {
         router.push({

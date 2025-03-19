@@ -3,7 +3,7 @@ import { PRESS_STYLE } from '@/core/constants/styles';
 
 export const RadioGroupContainerButton = styled(Button, {
   unstyled: true,
-  animation: 'medium',
+  animation: 'quick',
   rounded: '$4',
   pressStyle: PRESS_STYLE,
 });
