@@ -29,7 +29,7 @@ export const CollapsedContent = ({
         <XStack>
           <S.MoodText signatureMood={hasSignatureMood}>
             {hasSignatureMood
-              ? t(`emotions.types.${signatureMood?.type}`)
+              ? t(`moods.types.${signatureMood?.type}`)
               : t('common.fallback.text')}
           </S.MoodText>
           <S.MaximizeButton icon={Maximize2} />

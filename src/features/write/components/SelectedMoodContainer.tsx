@@ -20,10 +20,10 @@ export const SelectedMoodContainer = memo(({ mood }: Props) => {
     <S.ViewContainer>
       <S.XStackContainer key={animationKey}>
         <S.MoodLevelText>
-          {mood ? t(`emotions.levels.${mood.level}`) : '??'}
+          {mood ? t(`moods.levels.${mood.level}`) : '??'}
         </S.MoodLevelText>
         <S.MoodTypeText>
-          {mood ? t(`emotions.types.${mood.type}`) : '??'}
+          {mood ? t(`moods.types.${mood.type}`) : '??'}
         </S.MoodTypeText>
       </S.XStackContainer>
     </S.ViewContainer>

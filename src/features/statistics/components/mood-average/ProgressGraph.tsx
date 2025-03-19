@@ -16,7 +16,7 @@ export const ProgressGraph = ({ moodScore, moodType }: Props) => {
   return (
     <S.GraphContainer>
       <S.GraphNameBox>
-        <H3>{t(`emotions.types.${moodType}`)}</H3>
+        <H3>{t(`moods.types.${moodType}`)}</H3>
         <S.GraphName>{`${Math.floor(moodScore)}%`}</S.GraphName>
       </S.GraphNameBox>
       <S.Progress value={moodScore}>

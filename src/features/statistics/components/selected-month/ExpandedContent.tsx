@@ -30,11 +30,11 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
         bg={getMoodTheme(signatureMood.type as MoodType, MoodLevel.FULL)}
       >
         <S.SignatureMoodLabel>
-          {t('statistics.statistics.currentMonth.emotion', { month })}
+          {t('statistics.statistics.currentMonth.mood', { month })}
         </S.SignatureMoodLabel>
         <S.SignatureMoodValue>
           {signatureMood
-            ? t(`emotions.types.${signatureMood.type}`)
+            ? t(`mood.types.${signatureMood.type}`)
             : t('common.fallback.text')}
         </S.SignatureMoodValue>
       </S.MoodSummaryHeader>

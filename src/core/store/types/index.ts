@@ -123,7 +123,7 @@ export interface DraftStore {
   enhancedInputRef: MutableRefObject<EnhancedTextInputRef | null>;
   onTimeStamp: () => void;
   onLocalDateChange: (date: ISODateString) => void;
-  onMoodChange: (emotion: Mood) => void;
+  onMoodChange: (mood: Mood) => void;
   onImageUriChange: () => Promise<Nullable<void>>;
   onContentChange: (content: string) => void;
 }

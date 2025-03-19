@@ -11,7 +11,7 @@ export const MoodSelectTitle = () => {
       <XStack>
         <ShakeEmoji emoji="🫥" duration={3000} />
       </XStack>
-      <S.Title>{t('placeholders.emotion')}</S.Title>
+      <S.Title>{t('placeholders.mood')}</S.Title>
     </S.ViewContainer>
   );
 };

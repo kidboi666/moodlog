@@ -43,7 +43,7 @@ export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
             </S.MoodLevelContainer>
             <S.SelectedMoodBox key={index}>
               <S.SelectedMoodText>
-                {t(`emotions.types.${type}`)}
+                {t(`moods.types.${type}`)}
               </S.SelectedMoodText>
             </S.SelectedMoodBox>
           </S.MoodTypeContainer>

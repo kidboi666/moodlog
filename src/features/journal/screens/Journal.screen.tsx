@@ -37,10 +37,10 @@ export const JournalScreen = ({ journalId }: Props) => {
           <S.ContentBox>
             <S.MoodTextBox>
               <S.MoodLevelText>
-                {t(`emotions.levels.${selectedJournal.mood?.level}`)}
+                {t(`moods.levels.${selectedJournal.mood?.level}`)}
               </S.MoodLevelText>
               <S.MoodTypeText>
-                {t(`emotions.types.${selectedJournal.mood?.type}`)}
+                {t(`moods.types.${selectedJournal.mood?.type}`)}
               </S.MoodTypeText>
             </S.MoodTextBox>
             {selectedJournal.imageUri && (

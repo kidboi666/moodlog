@@ -48,7 +48,7 @@
       "title": "How was your day?",
       "content": "Record your emotions and experiences today."
     },
-    "emotion": "Choose the emotion you're feeling right now."
+    "mood": "Choose the emotion you're feeling right now."
   },
   "notifications": {
     "success": {
@@ -61,7 +61,7 @@
       "journal": {
         "title": "Diaries can only be written on the same day."
       },
-      "emotion": {
+      "mood": {
         "title": "Please select an emotion intensity!",
         "message": "No emotion intensity has been selected"
       }
@@ -117,10 +117,10 @@
         "title": "Top Day in {{month}}",
         "description": "In {{month}}, you write most on {{day}}."
       },
-      "emotion": "{{month}} Signature Emotion"
+      "mood": "{{month}} Signature Emotion"
     }
   },
-  "emotions": {
+  "moods": {
     "types": {
       "happy": "Happy",
       "sad": "Sad",
