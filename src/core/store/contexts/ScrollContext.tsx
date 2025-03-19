@@ -1,4 +1,3 @@
-import { ScrollStore } from '@/core/types/store';
 import {
   createContext,
   PropsWithChildren,
@@ -7,9 +6,10 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import { useNavigation } from 'expo-router';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { ScrollStore } from '@/core/store/types';
 
 export const ScrollContext = createContext<Nullable<ScrollStore>>(null);
 

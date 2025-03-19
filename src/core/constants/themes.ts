@@ -1,4 +1,4 @@
-export const emotionTheme = {
+export const moodTheme = {
   angry: {
     zero: '$red5',
     half: '$red8',

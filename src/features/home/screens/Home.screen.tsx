@@ -64,7 +64,7 @@ export const HomeScreen = () => {
 
         {Array.isArray(dailyJournals) ? (
           dailyJournals.map((journal, index) => {
-            const { id, content, createdAt, emotion, imageUri } = journal;
+            const { id, content, createdAt, mood, imageUri } = journal;
             return (
               <Fragment key={journal.id}>
                 {index > 0 && <S.Separator />}
@@ -72,7 +72,7 @@ export const HomeScreen = () => {
                   <JournalCard
                     id={id}
                     content={content}
-                    emotion={emotion}
+                    mood={mood}
                     imageUri={imageUri}
                     createdAt={createdAt}
                     onDelete={removeJournal}

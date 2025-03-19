@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { H2, H3, Text, XStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
 import { getMonthStringWithoutYear } from '@/core/utils/common';
-import { SelectedMonthStats } from '@/core/types/entries';
 import * as S from './CollapsedContent.styled';
+
+import { SelectedMonthStats } from '@/core/types/statistic.types';
 
 interface Props {
   selectedMonthStats: SelectedMonthStats;

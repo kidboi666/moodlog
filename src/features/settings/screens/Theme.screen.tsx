@@ -2,9 +2,10 @@ import { Container } from '@/core/components/Container.styleable';
 import { useTranslation } from 'react-i18next';
 import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { useAppTheme } from '@/core/store/hooks/useAppTheme';
-import { Theme } from '@/core/types/enums';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
+
+import { Theme } from '@/core/types/app.types';
 
 export const ThemeScreen = () => {
   const { currentTheme, changeTheme } = useAppTheme();

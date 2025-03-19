@@ -28,7 +28,7 @@ export const MoodBar = styled(View, {
   borderBottomRightRadius: '$4',
 
   variants: {
-    emotionColor: {
+    moodColor: {
       ':string': bg => {
         return { bg };
       },
@@ -41,7 +41,7 @@ export const ContentBox = styled(YStack, {
   gap: '$4',
 });
 
-export const EmotionTextBox = styled(XStack, {
+export const MoodTextBox = styled(XStack, {
   gap: '$2',
   self: 'flex-start',
   justify: 'center',
@@ -50,11 +50,11 @@ export const EmotionTextBox = styled(XStack, {
   enterStyle: ENTER_STYLE,
 });
 
-export const EmotionLevelText = styled(H3, {
+export const MoodLevelText = styled(H3, {
   color: '$gray11',
 });
 
-export const EmotionTypeText = styled(H3);
+export const MoodTypeText = styled(H3);
 
 export const ImageBox = styled(XStack, {
   animation: 'bouncy',

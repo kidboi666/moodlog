@@ -1,25 +1,25 @@
 import { AnimatePresence, useControllableState, useEvent } from 'tamagui';
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { memo } from 'react';
-import { Emotion } from '@/core/types/entries';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
+import { Mood } from '@/core/types/mood.types';
 
 interface Props {
   content: string;
   id: string;
   createdAt: string;
   imageUri: Nullable<string>;
-  emotion: Emotion;
+  mood: Mood;
   onDelete?: (id: string) => void;
 }
 
 const positions = { left: { x: -80 }, right: { x: 0 } };
 
 export const JournalCard = memo(
-  ({ content, id, createdAt, imageUri, emotion, onDelete }: Props) => {
+  ({ content, id, createdAt, imageUri, mood, onDelete }: Props) => {
     const router = useRouter();
     const [positionI, setPositionI] = useControllableState<'left' | 'right'>({
       strategy: 'most-recent-wins',
@@ -67,9 +67,7 @@ export const JournalCard = memo(
         >
           <S.CardHeader>
             <S.Content>
-              <S.MoodBar
-                moodColor={emotionTheme[emotion?.type]?.[emotion?.level]}
-              />
+              <S.MoodBar moodColor={moodTheme[mood?.type]?.[mood?.level]} />
               <S.JournalContentBox>
                 <S.TimeText createdAt={createdAt} />
                 <S.JournalContentText>{content ?? ''}</S.JournalContentText>

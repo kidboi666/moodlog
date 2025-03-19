@@ -9,6 +9,7 @@ interface Props extends ViewProps {
   Header?: ReactNode;
   padded?: boolean;
 }
+
 export const Container = S.Container.styleable<Props>(
   ({ children, Header, padded, edges, ...props }, ref) => {
     const insets = useSafeAreaInsets();

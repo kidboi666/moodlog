@@ -1,12 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { SelectedMonthStats } from '@/core/types/entries';
-import {
-  getEmotionTheme,
-  getMonthStringWithoutYear,
-} from '@/core/utils/common';
-import { EmotionLevel, EmotionType } from '@/core/types/enums';
+import { getMonthStringWithoutYear, getMoodTheme } from '@/core/utils/common';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
+
+import { SelectedMonthStats } from '@/core/types/statistic.types';
+import { MoodLevel, MoodType } from '@/core/types/mood.types';
 
 interface Props {
   selectedMonthStats: SelectedMonthStats;
@@ -19,7 +17,7 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
     count,
     activeDay,
     frequency,
-    signatureEmotion,
+    signatureMood,
   } = selectedMonthStats;
 
   const month = t(
@@ -28,21 +26,18 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
 
   return (
     <S.MonthlyStatsContainer>
-      <S.EmotionSummaryHeader
-        bg={getEmotionTheme(
-          signatureEmotion.type as EmotionType,
-          EmotionLevel.FULL,
-        )}
+      <S.MoodSummaryHeader
+        bg={getMoodTheme(signatureMood.type as MoodType, MoodLevel.FULL)}
       >
-        <S.SignatureEmotionLabel>
+        <S.SignatureMoodLabel>
           {t('statistics.statistics.currentMonth.emotion', { month })}
-        </S.SignatureEmotionLabel>
-        <S.SignatureEmotionValue>
-          {signatureEmotion
-            ? t(`emotions.types.${signatureEmotion.type}`)
+        </S.SignatureMoodLabel>
+        <S.SignatureMoodValue>
+          {signatureMood
+            ? t(`emotions.types.${signatureMood.type}`)
             : t('common.fallback.text')}
-        </S.SignatureEmotionValue>
-      </S.EmotionSummaryHeader>
+        </S.SignatureMoodValue>
+      </S.MoodSummaryHeader>
 
       <S.StatsDetailContainer>
         <S.StatsSectionBox>

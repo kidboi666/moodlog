@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
-import { Emotion } from '@/core/types/entries';
 import { useRouter } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';
 import { AnimatePresence } from 'tamagui';
+import { Mood } from '@/core/types/mood.types';
 
 interface Props {
-  mood?: Emotion;
+  mood?: Mood;
 }
 
 export const NextButton = memo(({ mood }: Props) => {

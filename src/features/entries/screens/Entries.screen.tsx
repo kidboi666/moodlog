@@ -15,7 +15,7 @@ export const EntriesScreen = () => {
   return (
     <ScrollView>
       <S.Container edges={['top']} padded>
-        <S.Title>{t('entries.title')}</S.Title>
+        <S.Title>{t('models.title')}</S.Title>
         <FadeIn delay={CARD_DELAY.FIRST}>
           <GardenSection />
         </FadeIn>
@@ -24,7 +24,7 @@ export const EntriesScreen = () => {
           <S.JournalWrapper>
             {Array.isArray(monthlyJournals) ? (
               monthlyJournals.map(journal => {
-                const { content, imageUri, id, createdAt, emotion } = journal;
+                const { content, imageUri, id, createdAt, mood } = journal;
                 return (
                   <Fragment key={id}>
                     <JournalCard
@@ -32,7 +32,7 @@ export const EntriesScreen = () => {
                       content={content}
                       imageUri={imageUri}
                       createdAt={createdAt}
-                      emotion={emotion}
+                      mood={mood}
                       onDelete={removeJournal}
                     />
                   </Fragment>

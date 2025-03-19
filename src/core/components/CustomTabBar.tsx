@@ -21,7 +21,7 @@ import { Platform } from 'react-native';
 import { HIDE_TAB_BAR_ROUTES } from '@/core/constants/routes';
 import * as NavigationBar from 'expo-navigation-bar';
 import { FEEDBACK_DURATION } from '@/core/constants/time';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
 
@@ -99,8 +99,8 @@ export const CustomTabBar = () => {
   );
 
   const showDraftNotification = useMemo(
-    () => Boolean(draft.content || draft.emotion?.type),
-    [draft.content, draft.emotion?.type],
+    () => Boolean(draft.content || draft.mood?.type),
+    [draft.content, draft.mood?.type],
   );
 
   return (
@@ -116,10 +116,10 @@ export const CustomTabBar = () => {
         <TabTrigger
           name="entries"
           asChild
-          onPress={() => navigateTo('/entries')}
+          onPress={() => navigateTo('/models')}
         >
           <S.CalendarButton
-            isTabActive={isTabActive('/entries')}
+            isTabActive={isTabActive('/models')}
             icon={CalendarDays}
           />
         </TabTrigger>

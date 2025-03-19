@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from 'tamagui';
 import { useApp } from '@/core/store/hooks/useApp';
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -73,11 +73,9 @@ export const JournalWriteScreen = () => {
           }
         >
           <S.XStackContainer>
-            {draft.emotion ? (
+            {draft.mood ? (
               <S.ColoredMoodBar
-                moodColor={
-                  emotionTheme[draft.emotion?.type][draft.emotion?.level]
-                }
+                moodColor={moodTheme[draft.mood?.type][draft.mood?.level]}
               />
             ) : (
               <S.UncoloredMoodBar />

@@ -1,20 +1,21 @@
 import { H3, Text } from 'tamagui';
 import { useStatistics } from '@/core/store/hooks/useStatistics';
-import { ProgressGraph } from '@/features/statistics/components/emotion-average/ProgressGraph';
-import { EmotionType } from '@/core/types/enums';
+import { ProgressGraph } from '@/features/statistics/components/mood-average/ProgressGraph';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';
 
+import { MoodType } from '@/core/types/mood.types';
+
 export const ExpandedContent = () => {
-  const { emotionStats } = useStatistics();
+  const { moodStats } = useStatistics();
   const { t } = useTranslation();
 
-  const { scoreBoard } = emotionStats;
-  let emotionTotalScore = 0;
+  const { scoreBoard } = moodStats;
+  let moodTotalScore = 0;
 
   Object.values(scoreBoard).forEach(scoreCount => {
-    emotionTotalScore += scoreCount.score;
+    moodTotalScore += scoreCount.score;
   });
 
   return (
@@ -28,10 +29,8 @@ export const ExpandedContent = () => {
           {Object.entries(scoreBoard).map(([type, countScore], i) => (
             <ProgressGraph
               key={i}
-              emotionType={type as EmotionType}
-              emotionScore={Math.round(
-                (countScore.score / emotionTotalScore) * 100,
-              )}
+              moodType={type as MoodType}
+              moodScore={Math.round((countScore.score / moodTotalScore) * 100)}
             />
           ))}
         </S.MoodGraphBox>

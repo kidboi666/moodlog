@@ -1,37 +1,37 @@
 import { XStack, YStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { SignatureEmotion } from '@/core/types/entries';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import * as S from './CollapsedContent.styled';
+import { SignatureMood } from '@/core/types/mood.types';
 
 interface Props {
-  hasSignatureEmotion: boolean;
-  signatureEmotion: Nullable<SignatureEmotion>;
+  hasSignatureMood: boolean;
+  signatureMood: Nullable<SignatureMood>;
 }
 
 export const CollapsedContent = ({
-  hasSignatureEmotion,
-  signatureEmotion,
+  hasSignatureMood,
+  signatureMood,
 }: Props) => {
   const { t } = useTranslation();
   return (
     <S.ViewContainer>
       <S.YStackContainer>
-        <S.CardTitle signatureMood={hasSignatureEmotion}>
+        <S.CardTitle signatureMood={hasSignatureMood}>
           {t('statistics.mood.title')}
         </S.CardTitle>
-        <S.CardDescription signatureMood={hasSignatureEmotion}>
+        <S.CardDescription signatureMood={hasSignatureMood}>
           {t('statistics.mood.description')}
         </S.CardDescription>
       </S.YStackContainer>
       <YStack>
         <XStack>
-          <S.EmotionText signatureMood={hasSignatureEmotion}>
-            {hasSignatureEmotion
-              ? t(`emotions.types.${signatureEmotion?.type}`)
+          <S.MoodText signatureMood={hasSignatureMood}>
+            {hasSignatureMood
+              ? t(`emotions.types.${signatureMood?.type}`)
               : t('common.fallback.text')}
-          </S.EmotionText>
+          </S.MoodText>
           <S.MaximizeButton icon={Maximize2} />
         </XStack>
       </YStack>

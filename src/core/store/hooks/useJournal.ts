@@ -5,7 +5,8 @@ import {
   StatisticJournalContext,
   WeekJournalContext,
 } from '../contexts/JournalContext';
-import { ContextName } from '@/core/types/enums';
+
+import { ContextName } from '@/core/store/types';
 
 export const useJournal = (contextName?: ContextName) => {
   let journalContext;

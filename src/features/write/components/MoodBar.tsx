@@ -1,18 +1,16 @@
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
-import { Emotion } from '@/core/types/entries';
 import * as S from './MoodBar.styled';
+import { Mood } from '@/core/types/mood.types';
 
 interface Props {
-  emotion?: Emotion;
+  mood?: Mood;
 }
 
-export const MoodBar = memo(({ emotion }: Props) => {
+export const MoodBar = memo(({ mood }: Props) => {
   return (
     <S.MoodBar
-      moodColor={
-        emotion ? emotionTheme[emotion?.type][emotion?.level] : '$gray8'
-      }
+      moodColor={mood ? moodTheme[mood?.type][mood?.level] : '$gray8'}
     />
   );
 });

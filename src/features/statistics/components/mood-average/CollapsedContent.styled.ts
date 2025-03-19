@@ -37,7 +37,7 @@ export const CardDescription = styled(Text, {
   } as const,
 });
 
-export const EmotionText = styled(H2, {
+export const MoodText = styled(H2, {
   color: '$gray12',
   flex: 1,
 

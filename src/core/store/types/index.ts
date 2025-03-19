@@ -1,25 +1,28 @@
-import {
-  DateCounts,
-  Draft,
-  Emotion,
-  EmotionStats,
-  ExpressiveMonthStats,
-  Journal,
-  JournalStats,
-  SelectedMonthStats,
-  UserInfo,
-} from '@/core/types/entries';
-import { Theme, TimeFormat, ViewFontSize } from '@/core/types/enums';
-import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
-import { LoadingState, Nullable, WithState } from '@/core/types/utils';
+import { LoadingState, Nullable, WithState } from '@/core/types/common.types';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
-import { NewUserInfo } from '@/core/types/dtos/user';
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
+import {
+  DateCounts,
+  ISODateString,
+  ISOMonthString,
+} from '@/core/types/date.types';
+import {
+  ExpressiveMonthStats,
+  JournalStats,
+  MoodStats,
+  SelectedMonthStats,
+} from '@/core/types/statistic.types';
+import { Draft, Journal } from '@/core/types/journal.types';
+import { NewUserInfo, UserInfo } from '@/core/types/user.types';
+import { Mood } from '@/core/types/mood.types';
+import { Theme, TimeFormat, ViewFontSize } from '@/core/types/app.types';
+
+export type ContextName = 'week' | 'entries' | 'statistic' | 'global';
 
 export interface JournalStore {
   journals: Journal[];
@@ -36,7 +39,7 @@ export interface JournalStore {
     month: number | string,
     date: number,
   ) => number;
-  getEmotionForDate: (year: number, month: number, date: number) => Emotion[];
+  getMoodForDate: (year: number, month: number, date: number) => Mood[];
   onSelectedJournalChange: (journalId: string) => void;
   onSubmittedChange: () => void;
   updateJournals: (id: string, updateJournal: Journal) => void;
@@ -99,7 +102,7 @@ export interface DateStore {
 
 export interface StatisticsStore {
   journalStats: JournalStats;
-  emotionStats: EmotionStats;
+  moodStats: MoodStats;
   expressiveMonthStats: ExpressiveMonthStats;
   selectedMonthStats: Nullable<SelectedMonthStats>;
 }
@@ -120,11 +123,10 @@ export interface DraftStore {
   enhancedInputRef: MutableRefObject<EnhancedTextInputRef | null>;
   onTimeStamp: () => void;
   onLocalDateChange: (date: ISODateString) => void;
-  onEmotionChange: (emotion: Emotion) => void;
+  onMoodChange: (emotion: Mood) => void;
   onImageUriChange: () => Promise<Nullable<void>>;
   onContentChange: (content: string) => void;
 }
-
 export type StorageStore = WithState<
   {
     journals: Journal[];

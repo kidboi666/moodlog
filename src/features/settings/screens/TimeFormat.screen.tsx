@@ -4,7 +4,8 @@ import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { useApp } from '@/core/store/hooks/useApp';
 import { useTranslation } from 'react-i18next';
-import { TimeFormat } from '@/core/types/enums';
+
+import { TimeFormat } from '@/core/types/app.types';
 
 export const TimeFormatScreen = () => {
   const { timeFormat, onTimeFormatChange } = useApp();

@@ -1,4 +1,3 @@
-import { SignatureEmotion } from '@/core/types/entries';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -9,26 +8,24 @@ import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
-import { Nullable } from '@/core/types/utils';
-import { EmotionLevel } from '@/core/types/enums';
-import { CollapsedContent } from '@/features/statistics/components/emotion-average/CollapsedContent';
-import { ExpandedContent } from '@/features/statistics/components/emotion-average/ExpandedContent';
-import { getEmotionTheme } from '@/core/utils/common';
-import * as S from './EmotionAverage.styled';
+import { Nullable } from '@/core/types/common.types';
+import { CollapsedContent } from '@/features/statistics/components/mood-average/CollapsedContent';
+import { ExpandedContent } from '@/features/statistics/components/mood-average/ExpandedContent';
+import { getMoodTheme } from '@/core/utils/common';
+import * as S from './MoodAverage.styled';
+import { MoodLevel, SignatureMood } from '@/core/types/mood.types';
 
 interface Props {
-  signatureEmotion: Nullable<SignatureEmotion>;
+  signatureMood: Nullable<SignatureMood>;
 }
 
 const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);
 
-export const MoodAverage = memo(({ signatureEmotion }: Props) => {
+export const MoodAverage = memo(({ signatureMood }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isTouched = useSharedValue(false);
 
-  const hasSignatureEmotion = signatureEmotion
-    ? signatureEmotion?.count > 0
-    : false;
+  const hasSignatureMood = signatureMood ? signatureMood?.count > 0 : false;
 
   const animatedStyle = useAnimatedStyle(() => ({
     height: withSpring(
@@ -43,8 +40,8 @@ export const MoodAverage = memo(({ signatureEmotion }: Props) => {
       moodColor={
         isExpanded
           ? '$gray4'
-          : hasSignatureEmotion
-            ? getEmotionTheme(signatureEmotion!.type, EmotionLevel.FULL)
+          : hasSignatureMood
+            ? getMoodTheme(signatureMood!.type, MoodLevel.FULL)
             : '$gray5'
       }
       onPress={() => setIsExpanded(prev => !prev)}
@@ -56,8 +53,8 @@ export const MoodAverage = memo(({ signatureEmotion }: Props) => {
         <ExpandedContent />
       ) : (
         <CollapsedContent
-          hasSignatureEmotion={hasSignatureEmotion}
-          signatureEmotion={signatureEmotion}
+          hasSignatureMood={hasSignatureMood}
+          signatureMood={signatureMood}
         />
       )}
     </AnimatedCard>

@@ -6,17 +6,20 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { JournalStore } from '@/core/types/store';
-import { DateCounts, Draft, Journal } from '@/core/types/entries';
 import { uuid } from 'expo-modules-core';
-import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import { CalendarUtils } from 'react-native-calendars';
 import { MONTHS } from '@/core/constants/date';
 import { getISODateString } from '@/core/utils/common';
 import { useDate } from '@/core/store/hooks/useDate';
-import { ContextName } from '@/core/types/enums';
 import { useStorage } from '@/core/store/hooks/useStorage';
+import { ContextName, JournalStore } from '@/core/store/types';
+import {
+  DateCounts,
+  ISODateString,
+  ISOMonthString,
+} from '@/core/types/date.types';
+import { Draft, Journal } from '@/core/types/journal.types';
 
 export const CreateJournalContext = (contextName: ContextName) => {
   const Context = createContext<Nullable<JournalStore>>(null);
@@ -57,11 +60,11 @@ export const CreateJournalContext = (contextName: ContextName) => {
 
     const addJournal = useCallback(
       (draft: Draft) => {
-        if (draft.content && draft.emotion) {
+        if (draft.content && draft.mood) {
           const newJournal = {
             id: uuid.v4(),
             content: draft.content,
-            emotion: draft.emotion,
+            mood: draft.mood,
             createdAt: new Date().toISOString(),
             localDate: getISODateString(
               currentYear,
@@ -96,14 +99,14 @@ export const CreateJournalContext = (contextName: ContextName) => {
       [journals],
     );
 
-    const getEmotionForDate = useCallback(
+    const getMoodForDate = useCallback(
       (year: number, month: number, date: number) => {
         const dateString = getISODateString(year, month, date);
         const foundJournals = journals.filter(
           journal => journal.localDate === dateString,
         );
 
-        return foundJournals.map(journal => journal.emotion);
+        return foundJournals.map(journal => journal.mood);
       },
       [journals],
     );
@@ -225,7 +228,7 @@ export const CreateJournalContext = (contextName: ContextName) => {
             addJournal,
             getDateCountsForMonth,
             getDateCountsForDate,
-            getEmotionForDate,
+            getMoodForDate,
             removeJournal,
             onSelectedJournalChange: handleSelectedJournalChange,
             onSubmittedChange: handleSubmittedChange,
@@ -244,7 +247,7 @@ export const CreateJournalContext = (contextName: ContextName) => {
             addJournal,
             getDateCountsForMonth,
             getDateCountsForDate,
-            getEmotionForDate,
+            getMoodForDate,
             removeJournal,
             handleSelectedJournalChange,
             handleSubmittedChange,

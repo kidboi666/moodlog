@@ -1,8 +1,11 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
-import { ISODateString, ISOMonthString } from '@/core/types/dtos/date';
-import { EmotionLevel, EmotionType } from '@/core/types/enums';
-import { emotionTheme } from '@/core/constants/themes';
-import { MonthKey } from '@/core/types/utils';
+import { moodTheme } from '@/core/constants/themes';
+import {
+  ISODateString,
+  ISOMonthString,
+  MonthKey,
+} from '@/core/types/date.types';
+import { MoodLevel, MoodType } from '@/core/types/mood.types';
 
 /**
  * month에 +1 하는 규칙:
@@ -89,11 +92,8 @@ export const getCountOfNextMonth = (date: ISODateString) => {
   return 12 - parseInt(currentMonth, 10);
 };
 
-export const getEmotionTheme = (
-  type: EmotionType | string,
-  level: EmotionLevel,
-) => {
-  return emotionTheme[type as EmotionType][level];
+export const getMoodTheme = (type: MoodType | string, level: MoodLevel) => {
+  return moodTheme[type as MoodType][level];
 };
 
 export const toSingle = <T>(value: T | T[]): T => {

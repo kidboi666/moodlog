@@ -6,10 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Draft, Emotion } from '@/core/types/entries';
-import { ISODateString } from '@/core/types/dtos/date';
-import { DraftStore } from '@/core/types/store';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import * as ImagePicker from 'expo-image-picker';
 import { PermissionStatus } from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -18,6 +15,10 @@ import {
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
+import { DraftStore } from '@/core/store/types';
+import { ISODateString } from '@/core/types/date.types';
+import { Draft } from '@/core/types/journal.types';
+import { Mood } from '@/core/types/mood.types';
 
 const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
   ? `${FileSystem.documentDirectory}journal_images/`
@@ -25,7 +26,7 @@ const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
 
 const initialDraft = {
   content: '',
-  emotion: undefined,
+  mood: undefined,
   imageUri: '',
 };
 
@@ -40,8 +41,8 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
     setDraft(prev => ({ ...prev, localDate: date }));
   }, []);
 
-  const handleEmotionChange = useCallback((emotion: Emotion) => {
-    setDraft(prev => ({ ...prev, emotion }));
+  const handleMoodChange = useCallback((mood: Mood) => {
+    setDraft(prev => ({ ...prev, mood }));
   }, []);
 
   const handleContentChange = useCallback((content: string) => {
@@ -122,7 +123,7 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
           onTimeStamp: handleTimeStamp,
           onImageUriChange: handleImageUriChange,
           onLocalDateChange: handleLocalDateChange,
-          onEmotionChange: handleEmotionChange,
+          onMoodChange: handleMoodChange,
           onContentChange: handleContentChange,
           onSelectionChange: handleSelectionChange,
         }),
@@ -134,7 +135,7 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
           handleTimeStamp,
           handleImageUriChange,
           handleLocalDateChange,
-          handleEmotionChange,
+          handleMoodChange,
           handleContentChange,
           handleSelectionChange,
         ],

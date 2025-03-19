@@ -1,42 +1,39 @@
-import { EmotionLevel, EmotionType } from '@/core/types/enums';
 import { Check } from '@tamagui/lucide-icons';
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import React, { memo } from 'react';
-import { Emotion } from '@/core/types/entries';
 import { useTranslation } from 'react-i18next';
 import * as S from './PickerMood.styled';
+import { Mood, MoodLevel, MoodType } from '@/core/types/mood.types';
 
 interface Props {
-  emotion?: Emotion;
-  onEmotionChange: (emotion: Emotion) => void;
+  mood?: Mood;
+  onMoodChange: (mood: Mood) => void;
 }
 
-export const PickerMood = memo(({ onEmotionChange, emotion }: Props) => {
+export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
   const { t } = useTranslation();
   return (
     <S.ViewContainer>
       <S.XStackContainer>
-        {Object.values(EmotionType).map((type, index) => (
+        {Object.values(MoodType).map((type, index) => (
           <S.MoodTypeContainer key={index}>
             <S.MoodLevelContainer>
-              {Object.values(EmotionLevel).map(level => (
+              {Object.values(MoodLevel).map(level => (
                 <S.MoodLevelButton
                   key={type + level}
-                  moodColor={emotionTheme[type][level]}
+                  moodColor={moodTheme[type][level]}
                   onPress={() =>
-                    onEmotionChange({
+                    onMoodChange({
                       type,
                       level,
                     })
                   }
                   icon={
-                    emotion?.type === type && emotion?.level === level ? (
+                    mood?.type === type && mood?.level === level ? (
                       <Check
                         position="absolute"
                         z="$1"
-                        color={
-                          level === EmotionLevel.ZERO ? '$gray10' : '$gray4'
-                        }
+                        color={level === MoodLevel.ZERO ? '$gray10' : '$gray4'}
                         size="$1"
                       />
                     ) : null

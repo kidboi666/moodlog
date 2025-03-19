@@ -11,15 +11,14 @@ import {
 import { useCallback, useMemo } from 'react';
 import { useDate } from '@/core/store/hooks/useDate';
 import { MONTHS } from '@/core/constants/date';
-import { MonthKey } from '@/core/types/utils';
 import { MonthItem } from '@/features/entries/components/MonthItem';
 import * as S from './GardenSection.styled';
-import { ISOMonthString } from '@/core/types/dtos/date';
+import { ISOMonthString, MonthKey } from '@/core/types/date.types';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =
     useDate('entries');
-  const { getEmotionForDate, getJournalsByMonth } = useJournal('entries');
+  const { getMoodForDate, getJournalsByMonth } = useJournal('entries');
   const months = useMemo(
     () =>
       Object.keys(MONTHS).map((month, i) => ({
@@ -60,7 +59,7 @@ export const GardenSection = () => {
                 isSelected={isSelected}
                 onMonthChange={handleMonthChange}
                 selectedYear={selectedYear}
-                getEmotionForDate={getEmotionForDate}
+                getMoodForDate={getMoodForDate}
               />
             );
           })}

@@ -1,9 +1,9 @@
 import { Grass } from '@/features/entries/components/Grass';
 import { getMonthNumber } from '@/core/utils/common';
-import { Emotion } from '@/core/types/entries';
-import { MonthKey } from '@/core/types/utils';
 import { memo, useMemo } from 'react';
 import * as S from './Garden.styled';
+import { MonthKey } from '@/core/types/date.types';
+import { Mood } from '@/core/types/mood.types';
 
 interface Props {
   weekLength: number;
@@ -11,7 +11,7 @@ interface Props {
   firstDateDay: number;
   selectedYear: number;
   lastDate: number;
-  getEmotionForDate: (year: number, month: number, date: number) => Emotion[];
+  getMoodForDate: (year: number, month: number, date: number) => Mood[];
 }
 
 export const Garden = memo(
@@ -21,9 +21,9 @@ export const Garden = memo(
     firstDateDay,
     selectedYear,
     lastDate,
-    getEmotionForDate,
+    getMoodForDate,
   }: Props) => {
-    const emotionsData = useMemo(() => {
+    const moodData = useMemo(() => {
       const data = [];
       for (let week = 0; week < weekLength; week++) {
         const weekData = [];
@@ -33,11 +33,7 @@ export const Garden = memo(
             weekData.push(null);
           } else {
             weekData.push(
-              getEmotionForDate(
-                selectedYear,
-                getMonthNumber(monthKey),
-                dateNum,
-              ),
+              getMoodForDate(selectedYear, getMonthNumber(monthKey), dateNum),
             );
           }
         }
@@ -50,19 +46,15 @@ export const Garden = memo(
       firstDateDay,
       selectedYear,
       lastDate,
-      getEmotionForDate,
+      getMoodForDate,
     ]);
 
     return (
       <S.GardenContainer>
-        {emotionsData.map((week, weekIndex) => (
+        {moodData.map((week, weekIndex) => (
           <S.YStackContainer key={weekIndex}>
-            {week.map((emotions, dayIndex) => (
-              <Grass
-                key={dayIndex}
-                emotions={emotions}
-                isEmpty={emotions === null}
-              />
+            {week.map((moods, dayIndex) => (
+              <Grass key={dayIndex} mood={moods} isEmpty={moods === null} />
             ))}
           </S.YStackContainer>
         ))}

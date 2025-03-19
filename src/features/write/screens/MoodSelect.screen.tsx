@@ -11,7 +11,7 @@ import { CARD_DELAY } from '@/core/constants/time';
 import * as S from './MoodSelect.styled';
 
 export const MoodSelectScreen = () => {
-  const { draft, onEmotionChange } = useDraft();
+  const { draft, onMoodChange } = useDraft();
   return (
     <S.ViewContainer edges={['bottom']} Header={<WriteHeader />}>
       <S.XStackContainer>
@@ -21,20 +21,17 @@ export const MoodSelectScreen = () => {
           </FadeIn>
 
           <FadeIn delay={CARD_DELAY.SECOND} flex={1}>
-            <SelectedMoodContainer emotion={draft.emotion ?? null} />
+            <SelectedMoodContainer mood={draft.mood ?? null} />
           </FadeIn>
 
           <FadeIn delay={CARD_DELAY.THIRD}>
-            <PickerMood
-              emotion={draft?.emotion}
-              onEmotionChange={onEmotionChange}
-            />
+            <PickerMood mood={draft?.mood} onMoodChange={onMoodChange} />
           </FadeIn>
 
-          <NextButton mood={draft?.emotion} />
+          <NextButton mood={draft?.mood} />
         </S.YStackContainer>
 
-        <MoodBar emotion={draft?.emotion} />
+        <MoodBar mood={draft?.mood} />
       </S.XStackContainer>
     </S.ViewContainer>
   );

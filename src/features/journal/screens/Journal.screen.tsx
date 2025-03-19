@@ -2,7 +2,7 @@ import { ScrollView } from 'tamagui';
 import React, { useEffect } from 'react';
 import { useJournal } from '@/core/store/hooks/useJournal';
 import { useApp } from '@/core/store/hooks/useApp';
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import { useScroll } from '@/core/store/hooks/useScroll';
 import { toSingle } from '@/core/utils/common';
@@ -30,21 +30,19 @@ export const JournalScreen = ({ journalId }: Props) => {
       <S.ViewContainer edges={['bottom']} Header={<JournalHeader />}>
         <S.XStackContainer>
           <S.MoodBar
-            emotionColor={
-              emotionTheme[selectedJournal.emotion.type][
-                selectedJournal.emotion.level
-              ]
+            moodColor={
+              moodTheme[selectedJournal.mood.type][selectedJournal.mood.level]
             }
           />
           <S.ContentBox>
-            <S.EmotionTextBox>
-              <S.EmotionLevelText>
-                {t(`emotions.levels.${selectedJournal.emotion?.level}`)}
-              </S.EmotionLevelText>
-              <S.EmotionTypeText>
-                {t(`emotions.types.${selectedJournal.emotion?.type}`)}
-              </S.EmotionTypeText>
-            </S.EmotionTextBox>
+            <S.MoodTextBox>
+              <S.MoodLevelText>
+                {t(`emotions.levels.${selectedJournal.mood?.level}`)}
+              </S.MoodLevelText>
+              <S.MoodTypeText>
+                {t(`emotions.types.${selectedJournal.mood?.type}`)}
+              </S.MoodTypeText>
+            </S.MoodTextBox>
             {selectedJournal.imageUri && (
               <S.ImageBox>
                 <S.Image source={{ uri: selectedJournal.imageUri }} />

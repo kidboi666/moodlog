@@ -1,5 +1,5 @@
-import { DateCounts } from '@/core/types/entries';
 import * as S from './DateCountDot.styled';
+import { DateCounts } from '@/core/types/date.types';
 
 interface Props {
   dateCounts?: DateCounts;

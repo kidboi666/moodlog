@@ -5,8 +5,9 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Nullable } from '@/core/types/utils';
-import { StepProgressStore } from '@/core/types/store';
+import { Nullable } from '@/core/types/common.types';
+
+import { StepProgressStore } from '@/core/store/types';
 
 export const StepProgressContext =
   createContext<Nullable<StepProgressStore>>(null);

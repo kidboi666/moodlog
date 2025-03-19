@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ScrollView, View } from 'tamagui';
-import { ISODateString } from '@/core/types/dtos/date';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
-import { DateCounts } from '@/core/types/entries';
 import { CalendarUtils } from 'react-native-calendars';
 import { DateCountDot } from '@/features/home/components/DateCountDot';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +9,7 @@ import {
   getDayInISODateString,
 } from '@/core/utils/common';
 import * as S from './HorizontalCalendar.styled';
+import { DateCounts, ISODateString } from '@/core/types/date.types';
 
 interface Props {
   dates: ISODateString[];

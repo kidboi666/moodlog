@@ -1,10 +1,10 @@
-import { MonthKey } from '@/core/types/utils';
 import { YStack } from 'tamagui';
 import { GardenMonthUnits } from '@/features/entries/components/GardenMonthUnits';
 import { Garden } from '@/features/entries/components/Garden';
 import { memo } from 'react';
-import { Emotion } from '@/core/types/entries';
 import * as S from './MonthItem.styled';
+import { MonthKey } from '@/core/types/date.types';
+import { Mood } from '@/core/types/mood.types';
 
 interface Props {
   monthData: {
@@ -16,7 +16,7 @@ interface Props {
   isSelected: boolean;
   onMonthChange: (monthKey: MonthKey) => void;
   selectedYear: number;
-  getEmotionForDate: (year: number, month: number, date: number) => Emotion[];
+  getMoodForDate: (year: number, month: number, date: number) => Mood[];
 }
 
 export const MonthItem = memo(
@@ -25,7 +25,7 @@ export const MonthItem = memo(
     isSelected,
     onMonthChange,
     selectedYear,
-    getEmotionForDate,
+    getMoodForDate,
   }: Props) => {
     const { monthKey, lastDate, firstDateDay, weekLength } = monthData;
     return (
@@ -42,7 +42,7 @@ export const MonthItem = memo(
             firstDateDay={firstDateDay}
             selectedYear={selectedYear}
             lastDate={lastDate}
-            getEmotionForDate={getEmotionForDate}
+            getMoodForDate={getMoodForDate}
           />
         </YStack>
       </S.MonthItemButton>
@@ -56,7 +56,7 @@ export const MonthItem = memo(
       prevProps.monthData.lastDate === nextProps.monthData.lastDate &&
       prevProps.isSelected === nextProps.isSelected &&
       prevProps.selectedYear === nextProps.selectedYear &&
-      prevProps.getEmotionForDate === nextProps.getEmotionForDate &&
+      prevProps.getMoodForDate === nextProps.getMoodForDate &&
       prevProps.onMonthChange === nextProps.onMonthChange
     );
   },

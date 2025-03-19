@@ -8,7 +8,7 @@ export const MonthlyStatsContainer = styled(YStack, {
   exitStyle: { opacity: 0 },
 });
 
-export const EmotionSummaryHeader = styled(XStack, {
+export const MoodSummaryHeader = styled(XStack, {
   justify: 'space-between',
   items: 'center',
   rounded: '$8',
@@ -16,12 +16,12 @@ export const EmotionSummaryHeader = styled(XStack, {
   // bg는 동적으로 적용
 });
 
-export const SignatureEmotionLabel = styled(H3, {
+export const SignatureMoodLabel = styled(H3, {
   fontWeight: '800',
   color: '$gray1',
 });
 
-export const SignatureEmotionValue = styled(H2, {
+export const SignatureMoodValue = styled(H2, {
   color: '$gray1',
 });
 

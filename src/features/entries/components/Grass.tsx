@@ -1,12 +1,11 @@
-import { Emotion } from '@/core/types/entries';
-import { EmotionLevel, EmotionType } from '@/core/types/enums';
-import { emotionTheme } from '@/core/constants/themes';
+import { moodTheme } from '@/core/constants/themes';
 import { memo, useMemo } from 'react';
-import { Nullable } from '@/core/types/utils';
+import { Nullable } from '@/core/types/common.types';
 import * as S from './Grass.styled';
+import { Mood, MoodLevel, MoodType } from '@/core/types/mood.types';
 
-const calculateEmotionColor = (emotions: Emotion[]) => {
-  if (!emotions || emotions.length === 0) return null;
+const calculateMoodColor = (moods: Mood[]) => {
+  if (!moods || moods.length === 0) return null;
 
   const scoreBoard = {
     angry: 0,
@@ -15,13 +14,13 @@ const calculateEmotionColor = (emotions: Emotion[]) => {
     happy: 0,
   };
 
-  emotions.forEach((emotion: Emotion) => {
+  moods.forEach((mood: Mood) => {
     const scoreMap = {
-      [EmotionLevel.FULL]: 3,
-      [EmotionLevel.HALF]: 2,
-      [EmotionLevel.ZERO]: 1,
+      [MoodLevel.FULL]: 3,
+      [MoodLevel.HALF]: 2,
+      [MoodLevel.ZERO]: 1,
     };
-    scoreBoard[emotion.type] += scoreMap[emotion.level] || 0;
+    scoreBoard[mood.type] += scoreMap[mood.level] || 0;
   });
 
   let maxType = 'happy';
@@ -34,19 +33,19 @@ const calculateEmotionColor = (emotions: Emotion[]) => {
     }
   }
 
-  return maxType as EmotionType;
+  return maxType as MoodType;
 };
 
 interface Props {
-  emotions: Nullable<Emotion[]>;
+  mood: Nullable<Mood[]>;
   isEmpty?: boolean;
 }
 
 export const Grass = memo(
-  ({ emotions, isEmpty = false }: Props) => {
-    const emotionColor = useMemo(
-      () => (isEmpty ? null : calculateEmotionColor(emotions!)),
-      [emotions, isEmpty],
+  ({ mood, isEmpty = false }: Props) => {
+    const moodColor = useMemo(
+      () => (isEmpty ? null : calculateMoodColor(mood!)),
+      [mood, isEmpty],
     );
 
     if (isEmpty) {
@@ -54,15 +53,13 @@ export const Grass = memo(
     }
 
     return (
-      <S.Grass
-        moodColor={emotionColor ? emotionTheme[emotionColor].full : '$gray10'}
-      />
+      <S.Grass moodColor={moodColor ? moodTheme[moodColor].full : '$gray10'} />
     );
   },
   (prevProps, nextProps) => {
     if (prevProps.isEmpty !== nextProps.isEmpty) return false;
-    if (!prevProps.emotions && !nextProps.emotions) return true;
-    if (!prevProps.emotions || !nextProps.emotions) return false;
-    return prevProps.emotions.length === nextProps.emotions.length;
+    if (!prevProps.mood && !nextProps.mood) return true;
+    if (!prevProps.mood || !nextProps.mood) return false;
+    return prevProps.mood.length === nextProps.mood.length;
   },
 );
