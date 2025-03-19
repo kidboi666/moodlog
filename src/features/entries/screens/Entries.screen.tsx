@@ -15,13 +15,13 @@ export const EntriesScreen = () => {
   return (
     <ScrollView>
       <S.Container edges={['top']} padded>
-        <S.Title>{t('models.title')}</S.Title>
+        <S.Title>{t('entries.title')}</S.Title>
         <FadeIn delay={CARD_DELAY.FIRST}>
           <GardenSection />
         </FadeIn>
 
         <FadeIn delay={CARD_DELAY.SECOND}>
-          <S.JournalWrapper>
+          <S.JournalBox>
             {Array.isArray(monthlyJournals) ? (
               monthlyJournals.map(journal => {
                 const { content, imageUri, id, createdAt, mood } = journal;
@@ -41,7 +41,7 @@ export const EntriesScreen = () => {
             ) : (
               <EmptyJournal isToday={false} />
             )}
-          </S.JournalWrapper>
+          </S.JournalBox>
         </FadeIn>
       </S.Container>
     </ScrollView>

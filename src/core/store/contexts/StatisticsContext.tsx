@@ -125,7 +125,7 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     };
 
     moods.forEach(mood => {
-      switch (mood.level) {
+      switch (mood?.level) {
         case MoodLevel.ZERO: {
           scoreBoard[mood.type] = {
             count: scoreBoard[mood.type].count + 1,

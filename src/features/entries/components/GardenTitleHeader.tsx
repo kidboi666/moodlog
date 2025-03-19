@@ -6,9 +6,9 @@ export const GardenTitleHeader = memo(() => {
   const { t } = useTranslation();
   return (
     <S.GardenTitleHeaderContainer>
-      <S.GardenTitle>{t('models.garden.title')}</S.GardenTitle>
+      <S.GardenTitle>{t('entries.garden.title')}</S.GardenTitle>
       <S.GardenDescription>
-        {t('models.garden.description')}
+        {t('entries.garden.description')}
       </S.GardenDescription>
     </S.GardenTitleHeaderContainer>
   );

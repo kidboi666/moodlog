@@ -1,4 +1,3 @@
-import { useEvent } from 'tamagui';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -22,9 +21,13 @@ export const CurrentMonth = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isTouched = useSharedValue(false);
 
-  const onPress = useEvent(() => {
-    setIsExpanded(prev => !prev);
-  });
+  const onPress = () => {
+    if (selectedMonthStats) {
+      setIsExpanded(prev => !prev);
+      return;
+    }
+    return undefined;
+  };
 
   const animatedStyle = useAnimatedStyle(() => ({
     height: withSpring(
@@ -38,7 +41,7 @@ export const CurrentMonth = () => {
     <AnimatedCard
       onPressIn={() => (isTouched.value = true)}
       onPressOut={() => (isTouched.value = false)}
-      onPress={() => (selectedMonthStats ? onPress() : undefined)}
+      onPress={onPress}
       style={animatedStyle}
     >
       {!selectedMonthStats || selectedMonthStats.count === 0 ? (

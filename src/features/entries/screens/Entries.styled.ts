@@ -7,6 +7,6 @@ export const Container = styled(HOSContainer, {
 
 export const Title = styled(H1);
 
-export const JournalWrapper = styled(YStack, {
+export const JournalBox = styled(YStack, {
   gap: '$4',
 });

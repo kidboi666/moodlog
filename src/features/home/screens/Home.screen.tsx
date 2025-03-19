@@ -22,8 +22,8 @@ export const HomeScreen = () => {
   const { onScroll } = useScroll();
   const { userInfo } = useUser();
   const { initDraft } = useDraft();
-  // const isDev = __DEV__;
-  const isDev = false;
+  const isDev = __DEV__;
+  // const isDev = false;
 
   useEffect(() => {
     if (isSubmitted) {

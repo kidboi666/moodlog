@@ -15,9 +15,9 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import '../i18n';
 import { useUser } from '@/core/store/hooks/useUser';
 import { Stack } from 'expo-router';
+import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
 
 export const unstable_settings = {

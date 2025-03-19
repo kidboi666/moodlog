@@ -116,10 +116,10 @@ export const CustomTabBar = () => {
         <TabTrigger
           name="entries"
           asChild
-          onPress={() => navigateTo('/models')}
+          onPress={() => navigateTo('/entries')}
         >
           <S.CalendarButton
-            isTabActive={isTabActive('/models')}
+            isTabActive={isTabActive('/entries')}
             icon={CalendarDays}
           />
         </TabTrigger>
