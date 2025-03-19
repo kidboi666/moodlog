@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { NewUserInfo } from '@/types/dtos/user';
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { EnhancedTextInputRef } from '@/screens/write/EnhancedTextInput';
+import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
 
 export interface JournalStore {
   journals: Journal[];

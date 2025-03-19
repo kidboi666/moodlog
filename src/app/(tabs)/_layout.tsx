@@ -1,8 +1,8 @@
-import { BottomModal } from '@/components/modals/BottomModal';
-import { DevContainer } from '@/components/layouts/containers/DevContainer';
-import { ContainerFog } from '@/components/ContainerFog';
+import { BottomModal } from '@/core/components/modals/BottomModal';
+import { DevContainer } from '@/core/components/layouts/containers/DevContainer';
+import { ContainerFog } from '@/core/components/ContainerFog';
 import React from 'react';
-import { CustomTabBar } from '@/components/CustomTabBar';
+import { CustomTabBar } from '@/core/components/CustomTabBar';
 import {
   defaultTabsSlotRender,
   TabList,
@@ -13,7 +13,7 @@ import {
   TabTrigger,
 } from 'expo-router/ui';
 import { Redirect } from 'expo-router';
-import { useApp } from '@/store/hooks/useApp';
+import { useApp } from '@/core/store/hooks/useApp';
 
 const renderFn = (desc: TabsDescriptor, opt: TabsSlotRenderOptions) => {
   const Content = defaultTabsSlotRender(desc, opt);

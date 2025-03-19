@@ -1,14 +1,14 @@
 import '../../tamagui-web.css';
-import { RootProvider } from '@/providers/RootProvider';
+import { RootProvider } from '@/core/providers/RootProvider';
 import { useFonts } from 'expo-font';
 import { useEffect, useMemo } from 'react';
-import { StatusBar } from '@/components/StatusBar';
-import { useAppTheme } from '@/store/hooks/useAppTheme';
+import { StatusBar } from '@/core/components/StatusBar';
+import { useAppTheme } from '@/core/store/hooks/useAppTheme';
 import { Platform } from 'react-native';
 import { useTheme } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { CurrentToast } from '@/components/CurrentToast';
+import { CurrentToast } from '@/core/components/CurrentToast';
 import {
   DarkTheme,
   DefaultTheme,
@@ -16,7 +16,7 @@ import {
 } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '../i18n';
-import { useUser } from '@/store/hooks/useUser';
+import { useUser } from '@/core/store/hooks/useUser';
 import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 

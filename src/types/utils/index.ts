@@ -1,4 +1,4 @@
-import { MONTHS, WEEK_DAY } from '@/constants/date';
+import { MONTHS, WEEK_DAY } from '@/core/constants/date';
 
 /**
  * type
