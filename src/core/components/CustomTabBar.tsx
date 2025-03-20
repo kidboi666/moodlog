@@ -1,5 +1,5 @@
-import { useTheme } from 'tamagui';
-import { Href, usePathname, useRouter } from 'expo-router';
+import { useControllableState, useTheme } from 'tamagui';
+import { usePathname, useRouter } from 'expo-router';
 import {
   CalendarDays,
   FileChartColumnIncreasing,
@@ -7,30 +7,25 @@ import {
   Plus,
   Settings,
 } from '@tamagui/lucide-icons';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDraft } from '@/core/store/hooks/useDraft';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import { HIDE_TAB_BAR_ROUTES } from '@/core/constants/routes';
 import * as NavigationBar from 'expo-navigation-bar';
-import { FEEDBACK_DURATION } from '@/core/constants/time';
-import { Nullable } from '@/types/common.types';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
+import { ShowTabBar } from '@/types/app.types';
 
-const AnimatedStack = Animated.createAnimatedComponent(S.TabBarContainer);
-
-const ANIMATION_CONFIG = {
-  duration: 300,
-  easing: Easing.inOut(Easing.ease),
-};
+const translates = {
+  show: {
+    y: 0,
+  },
+  hide: {
+    y: 140,
+  },
+} as const;
 
 export const CustomTabBar = () => {
   const theme = useTheme();
@@ -38,33 +33,26 @@ export const CustomTabBar = () => {
   const pathname = usePathname();
   const { draft } = useDraft();
   const insets = useSafeAreaInsets();
-  const translateY = useSharedValue(0);
-  const [activeTab, setActiveTab] = useState<Nullable<string>>(null);
-  const [lastTapTimestamp, setLastTapTimestamp] = useState(0);
+  const [tabBarState, setShouldHideTabBar] = useControllableState<ShowTabBar>({
+    strategy: 'most-recent-wins',
+    defaultProp: ShowTabBar.SHOW,
+  });
 
-  const shouldHideTabBar = useMemo(
-    () => HIDE_TAB_BAR_ROUTES.some(route => pathname.startsWith(route)),
-    [pathname],
-  );
+  const animatedTabBar = translates[tabBarState];
 
   useEffect(() => {
-    translateY.value = withTiming(
-      shouldHideTabBar ? TAB_BAR_HEIGHT + insets.bottom : 0,
-      ANIMATION_CONFIG,
+    setShouldHideTabBar(
+      HIDE_TAB_BAR_ROUTES.some(route => pathname.startsWith(route))
+        ? ShowTabBar.HIDE
+        : ShowTabBar.SHOW,
     );
 
     if (Platform.OS === 'android') {
       NavigationBar.setBackgroundColorAsync(
-        shouldHideTabBar ? theme.background.val : theme.gray4.val,
+        tabBarState ? theme.background.val : theme.gray4.val,
       );
     }
-  }, [pathname, shouldHideTabBar, theme, insets.bottom, translateY]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: translateY.value }],
-    };
-  });
+  }, [pathname, tabBarState, theme, insets.bottom]);
 
   const isActive = useCallback(
     (path: string) => {
@@ -75,27 +63,9 @@ export const CustomTabBar = () => {
 
   const isTabActive = useCallback(
     (path: string) => {
-      return isActive(path) || activeTab === path;
+      return isActive(path);
     },
-    [isActive, activeTab],
-  );
-
-  const navigateTo = useCallback(
-    (path: string) => {
-      if (isActive(path)) return;
-
-      const now = Date.now();
-      if (now - lastTapTimestamp < FEEDBACK_DURATION) return;
-      setLastTapTimestamp(now);
-
-      setActiveTab(path);
-
-      router.push(path as Href);
-      setTimeout(() => {
-        setActiveTab(null);
-      }, FEEDBACK_DURATION);
-    },
-    [router, pathname, isActive, lastTapTimestamp],
+    [isActive],
   );
 
   const showDraftNotification = useMemo(
@@ -104,30 +74,22 @@ export const CustomTabBar = () => {
   );
 
   return (
-    <AnimatedStack
+    <S.TabBarContainer
       height={TAB_BAR_HEIGHT + insets.bottom}
       pb={insets.bottom}
-      style={animatedStyle}
+      {...animatedTabBar}
     >
       <S.Container>
-        <TabTrigger name="home" asChild onPress={() => navigateTo('/')}>
+        <TabTrigger name="home" asChild href="/">
           <S.HomeButton isTabActive={isTabActive('/')} icon={Home} />
         </TabTrigger>
-        <TabTrigger
-          name="entries"
-          asChild
-          onPress={() => navigateTo('/entries')}
-        >
+        <TabTrigger name="entries" asChild href="/entries">
           <S.CalendarButton
             isTabActive={isTabActive('/entries')}
             icon={CalendarDays}
           />
         </TabTrigger>
-        <TabTrigger
-          name="write"
-          asChild
-          onPress={() => navigateTo('/write/mood_select')}
-        >
+        <TabTrigger name="write" asChild href="/write/mood_select">
           <S.WriteButton>
             <S.WriteInnerBox>
               <Plus size="$1" />
@@ -135,27 +97,19 @@ export const CustomTabBar = () => {
             </S.WriteInnerBox>
           </S.WriteButton>
         </TabTrigger>
-        <TabTrigger
-          name="statistics"
-          asChild
-          onPress={() => navigateTo('/statistics')}
-        >
+        <TabTrigger name="statistics" asChild href="/statistics">
           <S.RecordButton
             isTabActive={isTabActive('/statistics')}
             icon={FileChartColumnIncreasing}
           />
         </TabTrigger>
-        <TabTrigger
-          name="settings"
-          asChild
-          onPress={() => navigateTo('/settings')}
-        >
+        <TabTrigger name="settings" asChild href="/settings">
           <S.SettingsButton
             isTabActive={isTabActive('/settings')}
             icon={Settings}
           />
         </TabTrigger>
       </S.Container>
-    </AnimatedStack>
+    </S.TabBarContainer>
   );
 };

@@ -19,7 +19,7 @@ export const TabBarContainer = styled(XStack, {
   borderBottomWidth: 0,
   borderColor: '$gray7',
   bg: '$gray4',
-  animation: 'medium',
+  animation: 'lazy',
   animateOnly: ENTER_STYLE_KEY,
   enterStyle: ENTER_STYLE,
 });

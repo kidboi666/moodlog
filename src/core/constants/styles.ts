@@ -5,10 +5,12 @@ import { Dimensions } from 'react-native';
  */
 export const ENTER_STYLE = {
   opacity: 0,
-  scale: 0.85,
+  scale: 0.92,
 } as const;
 
 export const ENTER_STYLE_KEY = ['opacity', 'transform'];
+
+export const EXIT_STYLE = ENTER_STYLE;
 
 export const PRESS_STYLE = {
   bg: '$gray10',

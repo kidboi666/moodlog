@@ -37,7 +37,6 @@ export const HomeScreen = () => {
       onScroll={onScroll}
       scrollEventThrottle={32}
       overScrollMode="always"
-      keyboardShouldPersistTaps="handled"
     >
       <Container
         edges={isDev ? ['bottom'] : ['top', 'bottom']}

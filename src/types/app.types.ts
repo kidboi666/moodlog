@@ -15,3 +15,8 @@ export enum TimeFormat {
 }
 
 export type Theme = 'dark' | 'light' | 'system';
+
+export enum ShowTabBar {
+  SHOW = 'show',
+  HIDE = 'hide',
+}

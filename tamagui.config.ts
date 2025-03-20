@@ -42,9 +42,14 @@ const systemFont = createFont({
 export const animations = createAnimations({
   bouncy: {
     type: 'spring',
-    damping: 8,
+    damping: 11,
     mass: 1,
     stiffness: 100,
+  },
+  lazy: {
+    type: 'timing',
+    duration: 500,
+    easing: Easing.inOut(Easing.ease),
   },
   medium: {
     type: 'timing',

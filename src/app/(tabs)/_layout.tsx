@@ -3,25 +3,9 @@ import { DevContainer } from '@/core/components/DevContainer';
 import { ContainerFog } from '@/core/components/ContainerFog';
 import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
-import {
-  defaultTabsSlotRender,
-  TabList,
-  Tabs,
-  TabsDescriptor,
-  TabSlot,
-  TabsSlotRenderOptions,
-  TabTrigger,
-} from 'expo-router/ui';
+import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
 import { Redirect } from 'expo-router';
 import { useApp } from '@/core/store/hooks/useApp';
-
-const renderFn = (desc: TabsDescriptor, opt: TabsSlotRenderOptions) => {
-  const Content = defaultTabsSlotRender(desc, opt);
-
-  if (!Content || !opt.isFocused) return null;
-
-  return <>{Content}</>;
-};
 
 export default function TabsLayout() {
   const { isInitialApp } = useApp();
@@ -31,7 +15,7 @@ export default function TabsLayout() {
   }
   return (
     <Tabs>
-      <TabSlot renderFn={renderFn} />
+      <TabSlot />
       <ContainerFog />
       <CustomTabBar />
       <TabList style={{ display: 'none' }}>

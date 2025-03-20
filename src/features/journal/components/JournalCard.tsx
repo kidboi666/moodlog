@@ -56,12 +56,15 @@ export const JournalCard = memo(
 
     return (
       <S.Container>
-        <S.ActionBox>
-          <S.DeleteButton icon={Trash} onPress={handleDelete} />
-        </S.ActionBox>
+        <AnimatePresence>
+          {positionI === 'left' && (
+            <S.ActionBox>
+              <S.DeleteButton icon={Trash} onPress={handleDelete} />
+            </S.ActionBox>
+          )}
+        </AnimatePresence>
 
         <S.CardContainer
-          animation="bouncy"
           onPress={navigateToDetail}
           onLongPress={handleSwipeLeft}
           {...position}
