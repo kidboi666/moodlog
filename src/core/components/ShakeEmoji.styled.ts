@@ -2,7 +2,7 @@ import { Button, styled } from 'tamagui';
 
 export const EmojiButton = styled(Button, {
   unstyled: true,
-  animation: 'quick',
+  animation: 'medium',
   rotate: '0deg',
   pressStyle: {
     scale: 0.85,

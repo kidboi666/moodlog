@@ -1,5 +1,5 @@
 import { useControllableState, useTheme } from 'tamagui';
-import { usePathname, useRouter } from 'expo-router';
+import { usePathname } from 'expo-router';
 import {
   CalendarDays,
   FileChartColumnIncreasing,
@@ -17,6 +17,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
 import { ShowTabBar } from '@/types/app.types';
+import { useAppTheme } from '@/core/store/hooks/useAppTheme';
 
 const translates = {
   show: {
@@ -29,7 +30,7 @@ const translates = {
 
 export const CustomTabBar = () => {
   const theme = useTheme();
-  const router = useRouter();
+  const { resolvedTheme } = useAppTheme();
   const pathname = usePathname();
   const { draft } = useDraft();
   const insets = useSafeAreaInsets();
@@ -52,7 +53,7 @@ export const CustomTabBar = () => {
         tabBarState ? theme.background.val : theme.gray4.val,
       );
     }
-  }, [pathname, tabBarState, theme, insets.bottom]);
+  }, [pathname, tabBarState, theme, insets.bottom, resolvedTheme]);
 
   const isActive = useCallback(
     (path: string) => {

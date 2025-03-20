@@ -48,8 +48,7 @@
         }
       ],
       "expo-localization",
-      "expo-image-picker",
-      "expo-sqlite"
+      "expo-image-picker"
     ],
     "experiments": {
       "typedRoutes": true

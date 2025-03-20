@@ -1,10 +1,5 @@
 import { Button, Circle as TamaguiCircle, styled, View, XStack } from 'tamagui';
-import {
-  ENTER_STYLE,
-  ENTER_STYLE_KEY,
-  PRESS_STYLE,
-  PRESS_STYLE_KEY,
-} from '@/core/constants/styles';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/constants/styles';
 import { Platform } from 'react-native';
 
 export const TabBarContainer = styled(XStack, {
@@ -18,10 +13,9 @@ export const TabBarContainer = styled(XStack, {
   borderWidth: 1,
   borderBottomWidth: 0,
   borderColor: '$gray7',
-  bg: '$gray4',
   animation: 'lazy',
-  animateOnly: ENTER_STYLE_KEY,
-  enterStyle: ENTER_STYLE,
+  bg: '$gray4',
+  width: '100%',
 });
 
 export const Container = styled(XStack, {

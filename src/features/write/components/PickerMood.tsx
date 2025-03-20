@@ -1,6 +1,6 @@
 import { Check } from '@tamagui/lucide-icons';
 import { moodTheme } from '@/core/constants/themes';
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as S from './PickerMood.styled';
 import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
@@ -10,7 +10,7 @@ interface Props {
   onMoodChange: (mood: Mood) => void;
 }
 
-export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
+export const PickerMood = ({ onMoodChange, mood }: Props) => {
   const { t } = useTranslation();
   return (
     <S.ViewContainer>
@@ -51,4 +51,4 @@ export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
       </S.XStackContainer>
     </S.ViewContainer>
   );
-});
+};

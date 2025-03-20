@@ -3,50 +3,64 @@ import {
   PropsWithChildren,
   useCallback,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'react';
 import { Nullable } from '@/types/common.types';
-import * as ImagePicker from 'expo-image-picker';
-import { PermissionStatus } from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
 import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
 import {
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
 import { DraftStore } from '@/core/store/types';
-import { ISODateString } from '@/types/date.types';
-import { Draft } from '@/types/journal.types';
 import { Mood } from '@/types/mood.types';
-
-const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
-  ? `${FileSystem.documentDirectory}journal_images/`
-  : '';
+import { CalendarUtils } from 'react-native-calendars';
+import { Draft } from '@/types/journal.types';
+import { saveImage } from '@/core/utils/imageUtils';
 
 const initialDraft = {
   content: '',
   mood: undefined,
   imageUri: '',
+  localDate: CalendarUtils.getCalendarDateString(new Date()),
+};
+
+type DraftAction =
+  | { type: 'SET_CONTENT'; payload: string }
+  | { type: 'SET_MOOD'; payload: Mood }
+  | { type: 'SET_IMAGE_URI'; payload: string }
+  | { type: 'INIT_DRAFT'; payload: Draft };
+
+const draftReducer = (state: Draft, action: DraftAction): Draft => {
+  switch (action.type) {
+    case 'SET_CONTENT':
+      return { ...state, content: action.payload };
+    case 'SET_MOOD':
+      return { ...state, mood: action.payload };
+    case 'SET_IMAGE_URI':
+      return { ...state, imageUri: action.payload };
+    case 'INIT_DRAFT':
+      return action.payload;
+    default:
+      return state;
+  }
 };
 
 export const DraftContext = createContext<Nullable<DraftStore>>(null);
 
 export const DraftContextProvider = ({ children }: PropsWithChildren) => {
-  const [draft, setDraft] = useState<Draft>(initialDraft);
+  const [draft, dispatch] = useReducer(draftReducer, initialDraft);
+
   const [selection, setSelection] = useState({ start: 0, end: 0 });
   const enhancedInputRef = useRef<EnhancedTextInputRef>(null);
 
-  const handleLocalDateChange = useCallback((date: ISODateString) => {
-    setDraft(prev => ({ ...prev, localDate: date }));
-  }, []);
-
   const handleMoodChange = useCallback((mood: Mood) => {
-    setDraft(prev => ({ ...prev, mood }));
+    dispatch({ type: 'SET_MOOD', payload: mood });
   }, []);
 
   const handleContentChange = useCallback((content: string) => {
-    setDraft(prev => ({ ...prev, content }));
+    dispatch({ type: 'SET_CONTENT', payload: content });
   }, []);
 
   const handleTimeStamp = useCallback(() => {
@@ -61,51 +75,15 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const initDraft = useCallback(() => {
-    setDraft(initialDraft);
+    dispatch({ type: 'INIT_DRAFT', payload: initialDraft });
   }, []);
 
   const handleImageUriChange = useCallback(async () => {
     try {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if (status !== PermissionStatus.GRANTED) {
-        alert('사진을 추가하기 위해선 사진 접근 권한이 필요합니다.');
-        return null;
+      const newFilePath = await saveImage();
+      if (newFilePath) {
+        dispatch({ type: 'SET_IMAGE_URI', payload: newFilePath });
       }
-
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 0.8,
-      });
-
-      if (result.canceled) {
-        return null;
-      }
-
-      const dirInfo = await FileSystem.getInfoAsync(JOURNAL_IMAGES_DIR);
-
-      if (!dirInfo.exists) {
-        await FileSystem.makeDirectoryAsync(JOURNAL_IMAGES_DIR, {
-          intermediates: true,
-        });
-      }
-
-      const dateString = new Date().toISOString().split('T')[0];
-      const timestamp = Date.now();
-      const randomString = Math.random().toString(36).substring(2, 8);
-      const fileExt = result.assets[0].uri.split('.').pop();
-      const fileName = `${dateString}-${timestamp}-${randomString}.${fileExt}`;
-      const newFilePath = `${JOURNAL_IMAGES_DIR}${fileName}`;
-
-      await FileSystem.copyAsync({
-        from: result.assets[0].uri,
-        to: newFilePath,
-      });
-
-      setDraft(prev => ({ ...prev, imageUri: newFilePath }));
     } catch (err) {
       console.error('Image saving error ', err);
       return null;
@@ -122,7 +100,6 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
           selection,
           onTimeStamp: handleTimeStamp,
           onImageUriChange: handleImageUriChange,
-          onLocalDateChange: handleLocalDateChange,
           onMoodChange: handleMoodChange,
           onContentChange: handleContentChange,
           onSelectionChange: handleSelectionChange,
@@ -134,7 +111,6 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
           selection,
           handleTimeStamp,
           handleImageUriChange,
-          handleLocalDateChange,
           handleMoodChange,
           handleContentChange,
           handleSelectionChange,
