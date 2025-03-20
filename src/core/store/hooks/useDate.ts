@@ -1,27 +1,8 @@
 import { useContext } from 'react';
-import {
-  EntriesDateContext,
-  GlobalDateContext,
-  StatisticDateContext,
-  WeekDateContext,
-} from '@/core/store/contexts/date.context';
+import { DateContext } from '@/core/store/contexts/date.context';
 
-import { ContextName } from '@/core/store/types';
-
-export const useDate = (contextName: ContextName) => {
-  let dateContext;
-
-  if (contextName === 'week') {
-    dateContext = WeekDateContext;
-  } else if (contextName === 'entries') {
-    dateContext = EntriesDateContext;
-  } else if (contextName === 'statistic') {
-    dateContext = StatisticDateContext;
-  } else {
-    dateContext = GlobalDateContext;
-  }
-
-  const context = useContext(dateContext);
+export const useDate = () => {
+  const context = useContext(DateContext);
   if (!context) {
     throw new Error('useDate must be used within a DateContextProvider');
   }

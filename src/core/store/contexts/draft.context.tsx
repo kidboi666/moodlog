@@ -16,8 +16,8 @@ import {
 import { DraftStore } from '@/core/store/types';
 import { Mood } from '@/types/mood.types';
 import { CalendarUtils } from 'react-native-calendars';
-import { Draft } from '@/types/journal.types';
 import { saveImage } from '@/core/utils/imageUtils';
+import { draftReducer } from '@/core/store/reducers/draft.reducer';
 
 const initialDraft = {
   content: '',
@@ -26,31 +26,10 @@ const initialDraft = {
   localDate: CalendarUtils.getCalendarDateString(new Date()),
 };
 
-type DraftAction =
-  | { type: 'SET_CONTENT'; payload: string }
-  | { type: 'SET_MOOD'; payload: Mood }
-  | { type: 'SET_IMAGE_URI'; payload: string }
-  | { type: 'INIT_DRAFT'; payload: Draft };
-
-const draftReducer = (state: Draft, action: DraftAction): Draft => {
-  switch (action.type) {
-    case 'SET_CONTENT':
-      return { ...state, content: action.payload };
-    case 'SET_MOOD':
-      return { ...state, mood: action.payload };
-    case 'SET_IMAGE_URI':
-      return { ...state, imageUri: action.payload };
-    case 'INIT_DRAFT':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
 export const DraftContext = createContext<Nullable<DraftStore>>(null);
 
 export const DraftContextProvider = ({ children }: PropsWithChildren) => {
-  const [draft, dispatch] = useReducer(draftReducer, initialDraft);
+  const [state, dispatch] = useReducer(draftReducer, initialDraft);
 
   const [selection, setSelection] = useState({ start: 0, end: 0 });
   const enhancedInputRef = useRef<EnhancedTextInputRef>(null);
@@ -94,7 +73,7 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
     <DraftContext.Provider
       value={useMemo(
         () => ({
-          draft,
+          draft: state,
           initDraft,
           enhancedInputRef,
           selection,
@@ -105,7 +84,7 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
           onSelectionChange: handleSelectionChange,
         }),
         [
-          draft,
+          state,
           initDraft,
           enhancedInputRef,
           selection,

@@ -5,15 +5,14 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { uuid } from 'expo-modules-core';
 import { Nullable } from '@/types/common.types';
-import { CalendarUtils } from 'react-native-calendars';
 import { MONTHS } from '@/core/constants/date';
 import { getISODateString } from '@/core/utils/common';
 import { JournalStore } from '@/core/store/types';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 import { Draft, Journal } from '@/types/journal.types';
 import { journalReducer } from '@/core/store/reducers/journal.reducer';
+import { JournalService } from '@/core/services/journal.service';
 
 const initialState = {
   journals: [],
@@ -37,19 +36,10 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: 'SET_SELECTED_JOURNAL', payload: selectedJournal });
   }, []);
 
-  const addJournal = useCallback((draft: Draft) => {
-    if (draft.content && draft.mood) {
-      const newJournal = {
-        id: uuid.v4(),
-        content: draft.content,
-        mood: draft.mood,
-        createdAt: new Date().toISOString(),
-        localDate: CalendarUtils.getCalendarDateString(new Date()),
-        imageUri: draft.imageUri ? draft.imageUri : null,
-      };
-      dispatch({ type: 'SET_JOURNAL', payload: newJournal });
-      dispatch({ type: 'SET_IS_SUBMITTED', payload: true });
-    }
+  const addJournal = useCallback(async (draft: Draft) => {
+    const nextJournals = await JournalService.addJournal(state.journals, draft);
+    dispatch({ type: 'SET_JOURNALS', payload: nextJournals });
+    dispatch({ type: 'SET_IS_SUBMITTED', payload: true });
   }, []);
 
   const getDateCountsForDate = useCallback(
@@ -113,14 +103,15 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
 
   const removeJournal = useCallback((id: string) => {
     const nextJournals = state.journals.filter(journal => journal.id !== id);
-    dispatch({ type: 'INIT_JOURNALS', payload: nextJournals });
+    dispatch({ type: 'SET_JOURNALS', payload: nextJournals });
   }, []);
 
-  const updateJournals = useCallback((id: string, newJournal: Journal) => {
-    const nextJournals = state.journals.map(journal =>
-      journal.id === id ? newJournal : journal,
+  const updateJournals = useCallback(async (newJournal: Journal) => {
+    const nextJournals = await JournalService.updateJournal(
+      state.journals,
+      newJournal,
     );
-    dispatch({ type: 'INIT_JOURNALS', payload: nextJournals });
+    dispatch({ type: 'SET_JOURNALS', payload: nextJournals });
   }, []);
 
   const getJournalsByDate = useCallback((date: ISODateString) => {

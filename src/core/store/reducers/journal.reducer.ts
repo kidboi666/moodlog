@@ -21,8 +21,7 @@ type JournalAction =
   | { type: 'SET_DAILY_JOURNALS'; payload: Journal[] | ISODateString }
   | { type: 'SET_IS_SUBMITTED'; payload: boolean }
   | { type: 'SET_IS_LOADING'; payload: boolean }
-  | { type: 'INIT_JOURNALS'; payload: Journal[] }
-  | { type: 'SET_JOURNAL'; payload: Journal };
+  | { type: 'SET_JOURNALS'; payload: Journal[] };
 
 export const journalReducer = (state: JournalState, action: JournalAction) => {
   switch (action.type) {
@@ -38,10 +37,8 @@ export const journalReducer = (state: JournalState, action: JournalAction) => {
       return { ...state, isSubmitted: action.payload };
     case 'SET_IS_LOADING':
       return { ...state, isLoading: action.payload };
-    case 'INIT_JOURNALS':
+    case 'SET_JOURNALS':
       return { ...state, journals: action.payload };
-    case 'SET_JOURNAL':
-      return { ...state, journals: [...state.journals, action.payload] };
     default:
       return state;
   }
