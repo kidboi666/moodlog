@@ -2,7 +2,7 @@ import { PortalProvider, type TamaguiProviderProps } from 'tamagui';
 import { ToastProvider } from './ToastProvider';
 import { TamaguiBaseProvider } from './TamaguiProvider';
 import { useColorScheme } from 'react-native';
-import { ThemeContextProvider } from '@/core/store/contexts/ThemeContext';
+import { ThemeContextProvider } from '@/core/store/contexts/theme.context';
 import { ContextProvider } from '@/core/providers/ContextProvider';
 
 export const RootProvider = ({

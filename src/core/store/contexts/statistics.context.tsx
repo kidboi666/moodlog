@@ -59,7 +59,7 @@ const INITIAL_MOOD_STATS = {
 export const StatisticsContext = createContext<Nullable<StatisticsStore>>(null);
 
 export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
-  const { journals, monthlyJournals } = useJournal('statistic');
+  const { journals, monthlyJournals } = useJournal();
   const { selectedYear, selectedMonth } = useDate('statistic');
   const [journalStats, setJournalStats] = useState<JournalStats>(
     INITIAL_JOURNAL_STATS,

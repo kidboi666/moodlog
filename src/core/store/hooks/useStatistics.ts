@@ -1,4 +1,4 @@
-import { StatisticsContext } from '@/core/store/contexts/StatisticsContext';
+import { StatisticsContext } from '@/core/store/contexts/statistics.context';
 import { useContext } from 'react';
 
 export const useStatistics = () => {

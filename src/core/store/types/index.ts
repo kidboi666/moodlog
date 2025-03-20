@@ -23,7 +23,7 @@ export type ContextName = 'week' | 'entries' | 'statistic' | 'global';
 export interface JournalStore {
   journals: Journal[];
   dailyJournals: Journal[] | ISODateString;
-  selectedJournal?: Journal;
+  selectedJournal: Nullable<Journal>;
   monthlyJournals: Journal[];
   yearlyJournals: Journal[];
   isSubmitted: boolean;
@@ -37,7 +37,6 @@ export interface JournalStore {
   ) => number;
   getMoodForDate: (year: number, month: number, date: number) => Mood[];
   onSelectedJournalChange: (journalId: string) => void;
-  onSubmittedChange: () => void;
   updateJournals: (id: string, updateJournal: Journal) => void;
   getJournalsByDate: (date: ISODateString) => void;
   getJournalsByMonth: (date: ISOMonthString) => void;
@@ -118,7 +117,6 @@ export interface DraftStore {
   ) => void;
   enhancedInputRef: MutableRefObject<EnhancedTextInputRef | null>;
   onTimeStamp: () => void;
-  onLocalDateChange: (date: ISODateString) => void;
   onMoodChange: (mood: Mood) => void;
   onImageUriChange: () => Promise<Nullable<void>>;
   onContentChange: (content: string) => void;

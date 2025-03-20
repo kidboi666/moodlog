@@ -1,13 +1,13 @@
-import { DraftContextProvider } from '@/core/store/contexts/DraftContext';
-import { StatisticsContextProvider } from '@/core/store/contexts/StatisticsContext';
-import { AppContextProvider } from '@/core/store/contexts/AppContext';
-import { ScrollContextProvider } from '@/core/store/contexts/ScrollContext';
-import { UserContextProvider } from '@/core/store/contexts/UserContext';
-import { DevContextProvider } from '@/core/store/contexts/DevContext';
+import { DraftContextProvider } from '@/core/store/contexts/draft.context';
+import { StatisticsContextProvider } from '@/core/store/contexts/statistics.context';
+import { AppContextProvider } from '@/core/store/contexts/app.context';
+import { ScrollContextProvider } from '@/core/store/contexts/scroll.context';
+import { UserContextProvider } from '@/core/store/contexts/user.context';
+import { DevContextProvider } from '@/core/store/contexts/dev.context';
 import { PropsWithChildren } from 'react';
 import { DateContextProvider } from '@/core/providers/DateContextProvider';
-import { JournalContextProvider } from '@/core/providers/JournalContextProvider';
-import { StorageProvider } from '@/core/store/contexts/StorageContext';
+import { StorageProvider } from '@/core/store/contexts/storage.context';
+import { JournalContextProvider } from '@/core/store/contexts/journal.context';
 
 export const ContextProvider = ({ children }: PropsWithChildren) => {
   return (

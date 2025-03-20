@@ -4,7 +4,7 @@ import {
   GlobalDateContext,
   StatisticDateContext,
   WeekDateContext,
-} from '@/core/store/contexts/DateContext';
+} from '@/core/store/contexts/date.context';
 
 import { ContextName } from '@/core/store/types';
 

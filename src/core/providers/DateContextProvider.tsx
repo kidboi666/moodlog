@@ -4,7 +4,7 @@ import {
   GlobalDateProvider,
   StatisticDateProvider,
   WeekDateProvider,
-} from '@/core/store/contexts/DateContext';
+} from '@/core/store/contexts/date.context';
 
 export const DateContextProvider = ({ children }: PropsWithChildren) => {
   return (

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ScrollContext } from '@/core/store/contexts/ScrollContext';
+import { ScrollContext } from '@/core/store/contexts/scroll.context';
 
 export const useScroll = () => {
   const context = useContext(ScrollContext);

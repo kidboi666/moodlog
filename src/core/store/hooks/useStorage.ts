@@ -1,4 +1,4 @@
-import { StorageContext } from '@/core/store/contexts/StorageContext';
+import { StorageContext } from '@/core/store/contexts/storage.context';
 import { useContext } from 'react';
 
 export const useStorage = () => {

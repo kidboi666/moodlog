@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DraftContext } from '@/core/store/contexts/DraftContext';
+import { DraftContext } from '@/core/store/contexts/draft.context';
 
 export const useDraft = () => {
   const context = useContext(DraftContext);
