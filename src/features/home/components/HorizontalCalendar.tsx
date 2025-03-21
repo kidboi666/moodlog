@@ -1,45 +1,50 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { ScrollView, View } from 'tamagui';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
-import { CalendarUtils } from 'react-native-calendars';
 import { DateCountDot } from '@/features/home/components/DateCountDot';
 import { useTranslation } from 'react-i18next';
 import {
   getDateInISODateString,
   getDayInISODateString,
+  getISODateString,
+  getLastDate,
 } from '@/core/utils/common';
 import * as S from './HorizontalCalendar.styled';
-import { DateCounts, ISODateString } from '@/types/date.types';
+import { ISODateString } from '@/types/date.types';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useCalendar } from '@/core/hooks/useCalendar';
 
-interface Props {
-  dates: ISODateString[];
-  selectedDate: ISODateString;
-  dateCounts: DateCounts;
-  currentDate: Date;
-  onSelectedDateChange: (date: ISODateString) => void;
-}
-
-export const HorizontalCalendar = ({
-  dateCounts,
-  dates,
-  selectedDate,
-  currentDate,
-  onSelectedDateChange,
-}: Props) => {
+export const HorizontalCalendar = () => {
+  const { journals, getCountForMonth, onDailyJournalsChange } = useJournal();
   const { t } = useTranslation();
   const scrollViewRef = useRef<ScrollView>(null);
+  const {
+    currentYear,
+    currentMonth,
+    onSelectedDateChange,
+    isToday,
+    isFuture,
+    isSelected,
+  } = useCalendar(onDailyJournalsChange);
 
-  const handleSelectedDateChange = (date: ISODateString) => {
-    if (CalendarUtils.getCalendarDateString(currentDate) >= date) {
-      onSelectedDateChange(date);
-    }
-  };
+  const dateCounts = useMemo(
+    () => getCountForMonth(currentYear, currentMonth),
+    [journals],
+  );
+
+  const dates: ISODateString[] = useMemo(() => {
+    const lastDate = getLastDate(currentYear, currentMonth);
+
+    return Array.from({ length: lastDate }, (_, i) => {
+      return getISODateString(currentYear, currentMonth, i + 1);
+    });
+  }, [currentYear, currentMonth]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
     if (dates.length > 0) {
-      const selectedIndex = dates.findIndex(date => date === selectedDate);
+      const selectedIndex = dates.findIndex(date => isSelected(date));
       timeout = setTimeout(() => {
         if (selectedIndex !== -1 && scrollViewRef.current) {
           scrollViewRef.current.scrollTo({
@@ -65,27 +70,23 @@ export const HorizontalCalendar = ({
           snapToInterval={CALENDAR_SCROLL_SIZE}
         >
           {dates.map(date => {
-            const isToday =
-              date === CalendarUtils.getCalendarDateString(currentDate);
-            const isFuture =
-              date > CalendarUtils.getCalendarDateString(currentDate);
             return (
               <S.DateContainer
                 key={date}
-                isSelected={selectedDate === date}
-                isToday={isToday}
-                onPress={() => handleSelectedDateChange(date)}
+                isSelected={isSelected(date)}
+                isToday={isToday(date)}
+                onPress={() => onSelectedDateChange(date)}
               >
                 <S.DateWrapper>
                   <S.DateTextWrapper>
-                    <S.DayText isSelected={selectedDate === date}>
+                    <S.DayText isSelected={isSelected(date)}>
                       {t(`calendar.days.${getDayInISODateString(date)}`)}
                     </S.DayText>
                     <S.DateText
-                      isFuture={
-                        isFuture
+                      futureDateColor={
+                        isFuture(date)
                           ? '$gray11'
-                          : selectedDate === date
+                          : isSelected(date)
                             ? '$gray12'
                             : '$gray6'
                       }
@@ -97,7 +98,7 @@ export const HorizontalCalendar = ({
                     variant="contained"
                     dateCounts={dateCounts}
                     dateString={date}
-                    isSelected={selectedDate === date}
+                    isSelected={isSelected(date)}
                   />
                 </S.DateWrapper>
               </S.DateContainer>

@@ -2,81 +2,69 @@ import {
   createContext,
   PropsWithChildren,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
-  useState,
+  useReducer,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { uuid } from 'expo-modules-core';
 import { Nullable } from '@/types/common.types';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { UserStore } from '@/core/store/types';
-import { NewUserInfo, UserInfo } from '@/types/user.types';
+import { NewUserInfo } from '@/types/user.types';
 import { useApp } from '@/core/store/contexts/app.context';
+import { userReducer } from '@/core/store/reducers/user.reducer';
+import { UserState } from '@/core/store/types/user.types';
+import { UserService } from '@/core/store/services/user.service';
 
-const INITIAL_USER_INFO = {
+const initialState: UserState = {
   id: '',
   userName: '',
-  daysSinceSignup: 0,
   email: null,
   provider: null,
   age: null,
   avatarUrl: null,
+  daysSinceSignup: 0,
+  error: null,
 };
 
 export const UserContext = createContext<Nullable<UserStore>>(null);
 
 export const UserContextProvider = ({ children }: PropsWithChildren) => {
-  const [userInfo, setUserInfo] = useState<UserInfo>(INITIAL_USER_INFO);
-  const [draftUserName, setDraftUserName] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { initializeFirstLaunchStatus, firstLaunchDate } = useApp();
+  const [state, dispatch] = useReducer(userReducer, initialState);
+  const { initFirstLaunchStatus, firstLaunchDate } = useApp();
 
   const signUp = useCallback(
     async (userName: string) => {
       try {
-        setIsLoading(true);
-        const newUser = {
-          ...userInfo,
-          id: uuid.v4(),
-          userName: userName,
-        };
-        await AsyncStorage.setItem(
-          STORAGE_KEY.USER_INFO,
-          JSON.stringify(newUser),
-        );
-        setUserInfo(newUser);
-        await initializeFirstLaunchStatus();
+        const newUser = await UserService.saveUser(state, userName);
+        dispatch({ type: 'SET_USER_INFO', payload: newUser });
+        await initFirstLaunchStatus();
       } catch (err) {
-        console.error('Failed to save user data', err);
-      } finally {
-        setIsLoading(false);
+        console.error('failed to save user data : ', err);
+        dispatch({ type: 'SET_ERROR', payload: err });
       }
     },
-    [initializeFirstLaunchStatus, userInfo],
+    [initFirstLaunchStatus, state.userName],
   );
 
   const handleDraftUserNameChange = useCallback((userName: string) => {
-    setDraftUserName(userName);
+    dispatch({ type: 'SET_USER_NAME', payload: userName });
   }, []);
 
-  const calculateDaysSinceSignup = useCallback((launchDate: string) => {
-    const today = new Date();
-    const signupDate = new Date(launchDate);
-    const diffTime = today.getTime() - signupDate.getTime();
-    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  }, []);
-
-  const updateDaysSinceSignup = useCallback(() => {
+  const updateDaysSinceSignup = useCallback(async () => {
     if (!firstLaunchDate) return;
-
-    const daysSinceSignup = calculateDaysSinceSignup(firstLaunchDate);
-    setUserInfo(prev => {
-      if (prev.daysSinceSignup === daysSinceSignup) return prev;
-
-      return { ...prev, daysSinceSignup };
-    });
-  }, [firstLaunchDate, calculateDaysSinceSignup]);
+    try {
+      const newDaysSinceSignup = await UserService.saveDaysSinceSignup(
+        state,
+        firstLaunchDate,
+      );
+      dispatch({ type: 'SET_DAYS_SINCE_SIGNUP', payload: newDaysSinceSignup });
+    } catch (err) {
+      console.error('failed to save user data : ', err);
+      dispatch({ type: 'SET_ERROR', payload: err });
+    }
+  }, [firstLaunchDate]);
 
   const handleUserInfoChange = useCallback((newUserInfo: NewUserInfo) => {
     setUserInfo(prev => {
@@ -91,18 +79,15 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
 
   const loadUserData = useCallback(async () => {
     try {
-      setIsLoading(true);
       const savedUserData = await AsyncStorage.getItem(STORAGE_KEY.USER_INFO);
       if (savedUserData) {
         setUserInfo(JSON.parse(savedUserData));
-        await initializeFirstLaunchStatus();
+        await initFirstLaunchStatus();
       }
     } catch (err) {
-      console.error('Failed to load user data', err);
-    } finally {
-      setIsLoading(false);
+      console.error('failed to load user data', err);
     }
-  }, [initializeFirstLaunchStatus]);
+  }, [initFirstLaunchStatus]);
 
   useEffect(() => {
     loadUserData();
@@ -138,4 +123,12 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
       {children}
     </UserContext.Provider>
   );
+};
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUser must be used within a UserContextProvider');
+  }
+  return context;
 };

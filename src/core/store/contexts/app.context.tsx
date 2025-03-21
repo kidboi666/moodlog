@@ -9,13 +9,13 @@ import {
 } from 'react';
 import * as Localization from 'expo-localization';
 import { Nullable } from '@/types/common.types';
-import { useTranslation } from 'react-i18next';
 import { APP_VERSION } from '@/core/constants/common';
 import { ISODateString } from '@/types/date.types';
 import { Languages, TimeFormat, ViewFontSize } from '@/types/app.types';
 import { appReducer } from '@/core/store/reducers/app.reducer';
 import { AppState, AppStore } from '@/core/store/types/app.types';
 import { AppService } from '@/core/store/services/app.service';
+import { CalendarUtils } from 'react-native-calendars';
 
 const DEFAULT_LANGUAGE = Localization.getLocales()[0].languageCode as Languages;
 
@@ -36,53 +36,67 @@ export const AppContext = createContext<Nullable<AppStore>>(null);
 
 export const AppContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const { i18n } = useTranslation();
 
-  const handleLanguageChange = useCallback(async (language: Languages) => {
-    const nextSettings = { ...state.settings, language };
-    await AppService.saveSettings(nextSettings);
-    dispatch({ type: 'SET_LANGUAGE', payload: language });
-  }, []);
+  const handleLanguageChange = useCallback(
+    async (language: Languages) => {
+      try {
+        dispatch({ type: 'SET_LANGUAGE', payload: language });
+        await AppService.saveSetting(state.settings, 'language', language);
+      } catch (err) {
+        console.error('save settings failed : ', err);
+        dispatch({ type: 'SET_ERROR', payload: err });
+      }
+    },
+    [state.settings],
+  );
 
-  const handleFontSizeChange = useCallback((fontSize: ViewFontSize) => {
-    dispatch({ type: 'SET_FONT_SIZE', payload: fontSize });
-  }, []);
+  const handleFontSizeChange = useCallback(
+    async (fontSize: ViewFontSize) => {
+      try {
+        dispatch({ type: 'SET_FONT_SIZE', payload: fontSize });
+        await AppService.saveSetting(state.settings, 'fontSize', fontSize);
+      } catch (err) {
+        console.error('save settings failed : ', err);
+        dispatch({ type: 'SET_ERROR', payload: err });
+      }
+    },
+    [state.settings],
+  );
 
-  const handleTimeFormatChange = useCallback((timeFormat: TimeFormat) => {
-    dispatch({ type: 'SET_TIME_FORMAT', payload: timeFormat });
-  }, []);
+  const handleTimeFormatChange = useCallback(
+    async (timeFormat: TimeFormat) => {
+      try {
+        dispatch({ type: 'SET_TIME_FORMAT', payload: timeFormat });
+        await AppService.saveSetting(state.settings, 'timeFormat', timeFormat);
+      } catch (err) {
+        console.error('save settings failed : ', err);
+        dispatch({ type: 'SET_ERROR', payload: err });
+      }
+    },
+    [state.settings],
+  );
 
   const initFirstLaunchStatus = useCallback(async () => {
-    const firstLaunchDate = new Date()
-      .toISOString()
-      .split('T')[0] as ISODateString;
-
     try {
+      const firstLaunchDate = CalendarUtils.getCalendarDateString(new Date());
+
       await Promise.all([
         AppService.saveFirstLaunchStatus(firstLaunchDate),
-        AppService.saveSettings(state.settings),
+        AppService.initSettings(state.settings),
       ]);
       dispatch({
         type: 'INIT_APP',
         payload: { isInitialApp: true, firstLaunchDate },
       });
     } catch (err) {
+      console.error('load firstLaunchStatus failed : ', err);
       dispatch({ type: 'SET_ERROR', payload: err });
     }
-  }, []);
-
-  useEffect(() => {
-    if (state.settings.language) {
-      i18n
-        .changeLanguage(state.settings.language)
-        .catch(err => console.error('언어 변경 중 오류 발생:', err));
-    }
-  }, [state.settings.language, i18n]);
+  }, [state.settings]);
 
   useEffect(() => {
     const loadAppData = async () => {
       try {
-        dispatch({ type: 'SET_IS_LOADING', payload: true });
         const [firstLaunchDate, settings] = await Promise.all([
           AppService.loadFirstLaunchStatus(),
           AppService.loadSettings(),
@@ -100,9 +114,8 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
           dispatch({ type: 'INIT_SETTINGS', payload: settings });
         }
       } catch (err) {
+        console.error('load settings failed : ', err);
         dispatch({ type: 'SET_ERROR', payload: err });
-      } finally {
-        dispatch({ type: 'SET_IS_LOADING', payload: false });
       }
     };
 

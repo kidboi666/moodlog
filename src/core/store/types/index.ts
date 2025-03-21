@@ -4,16 +4,13 @@ import { Dispatch, SetStateAction } from 'react';
 import { Journal } from '@/types/journal.types';
 import { NewUserInfo, UserInfo } from '@/types/user.types';
 
-export type UserStore = WithState<
-  {
-    userInfo: UserInfo;
-    draftUserName: string;
-    signUp: (userName: string) => void;
-    onUserInfoChange: (newUserInfo: NewUserInfo) => void;
-    onDraftUserNameChange: (userName: string) => void;
-  },
-  LoadingState
->;
+export interface UserStore {
+  userInfo: UserInfo;
+  draftUserName: string;
+  signUp: (userName: string) => void;
+  onUserInfoChange: (newUserInfo: NewUserInfo) => void;
+  onDraftUserNameChange: (userName: string) => void;
+}
 
 export interface ScrollStore {
   scrollPosition: number;

@@ -1,5 +1,4 @@
 import { H1 } from 'tamagui';
-import { useUser } from '@/core/store/hooks/useUser';
 import { Container } from '@/core/components/Container.styleable';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { router } from 'expo-router';
@@ -8,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Signup.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
+import { useUser } from '@/core/store/contexts/user.context';
 
 export const SignupScreen = () => {
   const { goToPrevStep, currentStep } = useStepProgress();

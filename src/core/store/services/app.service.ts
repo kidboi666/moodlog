@@ -1,41 +1,45 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { Settings } from '@/core/store/types/app.types';
 import { Nullable } from '@/types/common.types';
 import { ISODateString } from '@/types/date.types';
+import { StorageService } from '@/core/store/services/storage.service';
 
-export class AppService {
+export class AppService extends StorageService {
   static async loadSettings(): Promise<Nullable<Settings>> {
     try {
-      const settings = await AsyncStorage.getItem(STORAGE_KEY.SETTINGS);
-      return settings ? JSON.parse(settings) : null;
+      const settings = await this.load(STORAGE_KEY.SETTINGS);
+      return settings ? settings : null;
     } catch (err) {
-      console.error('load settings failed');
-      throw new Error(err);
+      throw err;
     }
   }
 
-  static async saveSettings(settings: Settings): Promise<void> {
+  static async initSettings(newSettings: Settings): Promise<void> {
     try {
-      await AsyncStorage.setItem(
-        STORAGE_KEY.SETTINGS,
-        JSON.stringify(settings),
-      );
+      await this.save(STORAGE_KEY.SETTINGS, newSettings);
     } catch (err) {
-      console.error('save settings failed');
-      throw new Error(err);
+      throw err;
+    }
+  }
+
+  static async saveSetting<K extends keyof Settings>(
+    settings: Settings,
+    key: K,
+    value: Settings[K],
+  ): Promise<void> {
+    try {
+      const newSettings = { ...settings, [key]: value };
+      await this.save(STORAGE_KEY.SETTINGS, newSettings);
+    } catch (err) {
+      throw err;
     }
   }
 
   static async loadFirstLaunchStatus(): Promise<Nullable<ISODateString>> {
     try {
-      const firstLaunchDate = await AsyncStorage.getItem(
-        STORAGE_KEY.FIRST_LAUNCH,
-      );
-
-      return firstLaunchDate ? JSON.parse(firstLaunchDate) : null;
+      const firstLaunchDate = await this.load(STORAGE_KEY.FIRST_LAUNCH);
+      return firstLaunchDate ? firstLaunchDate : null;
     } catch (err) {
-      console.error('load firstLaunchStatus failed : ', err);
       throw err;
     }
   }
@@ -44,9 +48,8 @@ export class AppService {
     firstLaunchDate: ISODateString,
   ): Promise<void> {
     try {
-      await AsyncStorage.setItem(STORAGE_KEY.FIRST_LAUNCH, firstLaunchDate);
+      await this.save(STORAGE_KEY.FIRST_LAUNCH, firstLaunchDate);
     } catch (err) {
-      console.error('save firstLaunchStatus failed : ', err);
       throw err;
     }
   }

@@ -29,8 +29,18 @@ export const getMonthString = (month: number) => {
   return Object.keys(MONTHS)[month];
 };
 
-export const getISODateString = (year: number, month: number, date: number) => {
-  return `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}` as ISODateString;
+export const getISODateString = (
+  year: number,
+  month: number | string,
+  date: number,
+) => {
+  let intMonth: number;
+  if (typeof month === 'string') {
+    intMonth = Object.keys(MONTHS).findIndex(key => key === month) + 1;
+  } else {
+    intMonth = month;
+  }
+  return `${year}-${(intMonth + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}` as ISODateString;
 };
 
 export const getDayInISODateString = (date: ISODateString) => {
@@ -53,7 +63,7 @@ export const getMonthInISODateString = (
     .padStart(2, '0')}` as ISOMonthString;
 };
 
-export const getLastDate = (year: number, month: number | MonthKey) => {
+export const getLastDate = (year: number, month: number | string) => {
   if (typeof month === 'number') {
     return new Date(year, month + 1, 0).getDate();
   }
@@ -74,18 +84,6 @@ export const getMonthStringWithoutYear = (str: string) => {
   return Object.keys(MONTHS)[
     Number(removeLeadingZero(str.split('-')[1])) - 1
   ] as MonthKey;
-};
-
-export const getCountOfPrevMonth = (date: ISODateString) => {
-  const currentMonth = removeLeadingZero(date.split('-')[1]);
-
-  return parseInt(currentMonth, 10) - 1;
-};
-
-export const getCountOfNextMonth = (date: ISODateString) => {
-  const currentMonth = removeLeadingZero(date.split('-')[1]);
-
-  return 12 - parseInt(currentMonth, 10);
 };
 
 export const getMoodTheme = (type: MoodType | string, level: MoodLevel) => {

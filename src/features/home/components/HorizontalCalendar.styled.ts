@@ -61,7 +61,7 @@ export const DateText = styled(Text, {
   color: '$gray11',
 
   variants: {
-    isFuture: {
+    futureDateColor: {
       ':string': color => {
         return { color };
       },

@@ -14,11 +14,11 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useUser } from '@/core/store/hooks/useUser';
 import { ErrorBoundaryProps, Stack } from 'expo-router';
 import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
+import { useUser } from '@/core/store/contexts/user.context';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -35,14 +35,14 @@ const FONTS = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+export const ErrorBoundary = ({ error, retry }: ErrorBoundaryProps) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'red' }}>
       <Text>{error.message}</Text>
       <Text onPress={retry}>Try Again?</Text>
     </View>
   );
-}
+};
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts(FONTS);
@@ -71,7 +71,7 @@ export default function RootLayout() {
   );
 }
 
-function RootLayoutNav() {
+const RootLayoutNav = () => {
   const { resolvedTheme } = useAppTheme();
   const theme = useTheme();
   const { isLoading } = useUser();
@@ -120,4 +120,4 @@ function RootLayoutNav() {
       </ThemeProvider>
     </GestureHandlerRootView>
   );
-}
+};

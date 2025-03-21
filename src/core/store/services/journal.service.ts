@@ -3,8 +3,7 @@ import { Draft, Journal } from '@/types/journal.types';
 import { StorageService } from '@/core/store/services/storage.service';
 import { uuid } from 'expo-modules-core';
 import { CalendarUtils } from 'react-native-calendars';
-import { MONTHS } from '@/core/constants/date';
-import { getISODateString } from '@/core/utils/common';
+import { getISODateString, getLastDate } from '@/core/utils/common';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 
 export class JournalService extends StorageService {
@@ -89,14 +88,7 @@ export class JournalService extends StorageService {
     month: number | string,
     date: number,
   ) {
-    let intMonth: number;
-    if (typeof month === 'string') {
-      intMonth = Object.keys(MONTHS).findIndex(key => key === month) + 1;
-    } else {
-      intMonth = month;
-    }
-
-    const dateString = `${year}-${(intMonth + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+    const dateString = getISODateString(year, month, date);
     const foundJournals = journals.filter(
       journal => journal.localDate === dateString,
     );
@@ -123,18 +115,11 @@ export class JournalService extends StorageService {
     year: number,
     month: number | string,
   ) {
-    let intMonth: number;
-
-    if (typeof month === 'string') {
-      intMonth = Object.keys(MONTHS).findIndex(key => key === month) + 1;
-    } else {
-      intMonth = month;
-    }
-    const lastDay = new Date(year, intMonth, 0).getDate();
+    const lastDate = getLastDate(year, month);
     const counts: DateCounts = {};
 
-    for (let day = 1; day <= lastDay; day++) {
-      const dateKey = `${year}-${intMonth.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    for (let day = 1; day <= lastDate; day++) {
+      const dateKey = getISODateString(year, month, day);
       counts[dateKey] = 0;
     }
 

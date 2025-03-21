@@ -60,7 +60,7 @@ const initialState: StatisticsState = {
   moodStats: INITIAL_MOOD_STATS,
   selectedMonthStats: null,
   expressiveMonthStats: {
-    month: '0000-00',
+    currentMonth: '0000-00',
     count: 0,
   },
 };
@@ -103,7 +103,7 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     return Object.entries(monthlyCounts).reduce(
       (highest, [month, count]) => {
         if (count > highest.count) {
-          return { month, count };
+          return { month: currentMonth, count };
         }
         return highest;
       },

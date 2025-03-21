@@ -1,13 +1,13 @@
 import { Container } from '@/core/components/Container.styleable';
 import { Input } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { useUser } from '@/core/store/hooks/useUser';
 import { router } from 'expo-router';
 import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Nickname.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
+import { useUser } from '@/core/store/contexts/user.context';
 
 export const NicknameScreen = () => {
   const { draftUserName, onDraftUserNameChange } = useUser();
@@ -22,7 +22,6 @@ export const NicknameScreen = () => {
   };
 
   const handleNextStep = () => {
-    if (!draftUserName) return;
     if (currentStep === 1) {
       goToNextStep();
       router.push('/(onboarding)/signup');
