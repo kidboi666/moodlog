@@ -5,7 +5,8 @@ import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
 import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
 import { Redirect } from 'expo-router';
-import { useApp } from '@/core/store/hooks/useApp';
+
+import { useApp } from '@/core/store/contexts/app.context';
 
 export default function TabsLayout() {
   const { isInitialApp } = useApp();

@@ -2,26 +2,25 @@ import {
   createContext,
   PropsWithChildren,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
-  useState,
+  useReducer,
 } from 'react';
-import { useJournal } from '@/core/store/hooks/useJournal';
 import { Nullable } from '@/types/common.types';
 import { MONTHS } from '@/core/constants/date';
 import { getDayInISODateString } from '@/core/utils/common';
-import { useDate } from '@/core/store/hooks/useDate';
-import { StatisticsStore } from '@/core/store/types';
 import { ISOMonthString } from '@/types/date.types';
-import {
-  ExpressiveMonthStats,
-  JournalStats,
-  MoodStats,
-  ScoreBoard,
-  SelectedMonthStats,
-} from '@/types/statistic.types';
+import { ScoreBoard } from '@/types/statistic.types';
 import { Journal } from '@/types/journal.types';
 import { MoodLevel, SignatureMood } from '@/types/mood.types';
+import { statisticsReducer } from '@/core/store/reducers/statistics.reducer';
+import {
+  StatisticsState,
+  StatisticsStore,
+} from '@/core/store/types/statistics.types';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useDate } from '@/core/store/contexts/date.context';
 
 const INITIAL_JOURNAL_STATS = {
   totalCount: 0,
@@ -56,22 +55,23 @@ const INITIAL_MOOD_STATS = {
   },
 };
 
+const initialState: StatisticsState = {
+  journalStats: INITIAL_JOURNAL_STATS,
+  moodStats: INITIAL_MOOD_STATS,
+  selectedMonthStats: null,
+  expressiveMonthStats: {
+    month: '0000-00',
+    count: 0,
+  },
+};
+
 export const StatisticsContext = createContext<Nullable<StatisticsStore>>(null);
 
 export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
   const { journals, monthlyJournals } = useJournal();
-  const { selectedYear, selectedMonth } = useDate('statistic');
-  const [journalStats, setJournalStats] = useState<JournalStats>(
-    INITIAL_JOURNAL_STATS,
-  );
-  const [selectedMonthStats, setSelectedMonthStats] =
-    useState<Nullable<SelectedMonthStats>>(null);
-  const [expressiveMonthStats, setExpressiveMonthStats] =
-    useState<ExpressiveMonthStats>({
-      month: '0000-00',
-      count: 0,
-    });
-  const [moodStats, setMoodStats] = useState<MoodStats>(INITIAL_MOOD_STATS);
+  const { selectedYear, selectedMonth } = useDate();
+  const [state, dispatch] = useReducer(statisticsReducer, initialState);
+
   /**
    * 작성한 모든 일기의 갯수 가져오기
    */
@@ -231,11 +231,15 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     const monthlyCounts = getMonthlyCounts();
     const totalFrequency = getJournalFrequency(journals);
     const totalActiveDay = getMostActiveDay(journals);
-    setJournalStats({
-      totalFrequency,
-      totalActiveDay,
-      totalCount,
-      monthlyCounts,
+
+    dispatch({
+      type: 'SET_JOURNAL_STATS',
+      payload: {
+        totalFrequency,
+        totalActiveDay,
+        totalCount,
+        monthlyCounts,
+      },
     });
   }, [
     getTotalCount,
@@ -247,19 +251,27 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
 
   const getMonthlyStats = useCallback(() => {
     if (!selectedMonth) {
-      setSelectedMonthStats(null);
+      dispatch({
+        type: 'SET_SELECTED_MONTH_STATS',
+        payload: null,
+      });
       return;
     }
+
     const currentFrequency = getJournalFrequency(monthlyJournals);
     const currentActiveDay = getMostActiveDay(monthlyJournals);
     const scoreBoard = getTotalMoodAverage(monthlyJournals);
     const signatureMood = getSignatureMood(scoreBoard);
-    setSelectedMonthStats({
-      month: selectedMonth,
-      count: monthlyJournals.length,
-      frequency: currentFrequency,
-      activeDay: currentActiveDay,
-      signatureMood: signatureMood,
+
+    dispatch({
+      type: 'SET_SELECTED_MONTH_STATS',
+      payload: {
+        month: selectedMonth,
+        count: monthlyJournals.length,
+        frequency: currentFrequency,
+        activeDay: currentActiveDay,
+        signatureMood: signatureMood,
+      },
     });
   }, [
     getJournalFrequency,
@@ -272,18 +284,26 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
 
   const getExpressiveMonthStats = useCallback(() => {
     const expressiveMonth = getExpressiveMonth();
-    setExpressiveMonthStats({
-      month: expressiveMonth.month as ISOMonthString,
-      count: expressiveMonth.count,
+
+    dispatch({
+      type: 'SET_EXPRESSIVE_MONTH_STATS',
+      payload: {
+        month: expressiveMonth.month as ISOMonthString,
+        count: expressiveMonth.count,
+      },
     });
   }, [getExpressiveMonth]);
 
   const getMoodStats = useCallback(() => {
     const scoreBoard = getTotalMoodAverage(journals);
     const signatureMood = getSignatureMood(scoreBoard);
-    setMoodStats({
-      scoreBoard,
-      signatureMood: signatureMood,
+
+    dispatch({
+      type: 'SET_MOOD_STATS',
+      payload: {
+        scoreBoard,
+        signatureMood: signatureMood,
+      },
     });
   }, [getTotalMoodAverage, getSignatureMood, journals]);
 
@@ -299,19 +319,35 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     getMonthlyStats();
   }, [selectedMonth, getMonthlyStats]);
 
+  // Context 값
+  const contextValue = useMemo(
+    () => ({
+      journalStats: state.journalStats,
+      moodStats: state.moodStats,
+      selectedMonthStats: state.selectedMonthStats,
+      expressiveMonthStats: state.expressiveMonthStats,
+    }),
+    [
+      state.journalStats,
+      state.moodStats,
+      state.selectedMonthStats,
+      state.expressiveMonthStats,
+    ],
+  );
+
   return (
-    <StatisticsContext.Provider
-      value={useMemo(
-        () => ({
-          journalStats,
-          moodStats,
-          selectedMonthStats,
-          expressiveMonthStats,
-        }),
-        [journalStats, moodStats, selectedMonthStats, expressiveMonthStats],
-      )}
-    >
+    <StatisticsContext.Provider value={contextValue}>
       {children}
     </StatisticsContext.Provider>
   );
+};
+
+export const useStatistics = () => {
+  const context = useContext(StatisticsContext);
+  if (!context) {
+    throw new Error(
+      'useStatistics must be used within a StatisticsContextProvider',
+    );
+  }
+  return context;
 };

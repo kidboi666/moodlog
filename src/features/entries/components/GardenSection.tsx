@@ -1,5 +1,4 @@
 import { ScrollView } from 'tamagui';
-import { useJournal } from '@/core/store/hooks/useJournal';
 import { GardenTitleHeader } from '@/features/entries/components/GardenTitleHeader';
 import { GardenDayUnits } from '@/features/entries/components/GardenDayUnits';
 import {
@@ -9,16 +8,17 @@ import {
   getWeekLength,
 } from '@/core/utils/common';
 import { useCallback, useMemo } from 'react';
-import { useDate } from '@/core/store/hooks/useDate';
 import { MONTHS } from '@/core/constants/date';
 import { MonthItem } from '@/features/entries/components/MonthItem';
 import * as S from './GardenSection.styled';
 import { ISOMonthString, MonthKey } from '@/types/date.types';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useDate } from '@/core/store/contexts/date.context';
 
 export const GardenSection = () => {
   const { selectedYear, selectedMonth, onSelectedMonthChange } =
     useDate('entries');
-  const { getMoodForDate, getJournalsByMonth } = useJournal('entries');
+  const { getMoodForDate, onMonthlyJournalsChange } = useJournal('entries');
   const months = useMemo(
     () =>
       Object.keys(MONTHS).map((month, i) => ({
@@ -36,12 +36,17 @@ export const GardenSection = () => {
     (ISOMonth: MonthKey) => {
       if (selectedMonth === getMonthInISODateString(selectedYear, ISOMonth)) {
         onSelectedMonthChange(null);
-        getJournalsByMonth('0000-00');
+        onMonthlyJournalsChange('0000-00');
       } else {
         onSelectedMonthChange(getMonthInISODateString(selectedYear, ISOMonth));
       }
     },
-    [selectedYear, selectedMonth, onSelectedMonthChange, getJournalsByMonth],
+    [
+      selectedYear,
+      selectedMonth,
+      onSelectedMonthChange,
+      onMonthlyJournalsChange,
+    ],
   );
 
   return (

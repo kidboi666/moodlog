@@ -1,20 +1,5 @@
-import { Mood } from '@/types/mood.types';
 import { Draft } from '@/types/journal.types';
-import { Nullable } from '@/types/common.types';
-import { ISODateString } from '@/types/date.types';
-
-type DraftState = {
-  content: string;
-  mood?: Mood;
-  imageUri: Nullable<string>;
-  localDate: ISODateString;
-};
-
-type DraftAction =
-  | { type: 'SET_CONTENT'; payload: string }
-  | { type: 'SET_MOOD'; payload: Mood }
-  | { type: 'SET_IMAGE_URI'; payload: string }
-  | { type: 'INIT_DRAFT'; payload: Draft };
+import { DraftAction, DraftState } from '@/core/store/types/draft.types';
 
 export const draftReducer = (state: DraftState, action: DraftAction): Draft => {
   switch (action.type) {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTheme } from 'tamagui';
-import { useApp } from '@/core/store/hooks/useApp';
 import { moodTheme } from '@/core/constants/themes';
 import {
   KeyboardAvoidingView,
@@ -8,8 +7,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useDraft } from '@/core/store/hooks/useDraft';
-import { useJournal } from '@/core/store/hooks/useJournal';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
 import { EnhancedTextInput } from '@/features/write/components/EnhancedTextInput';
@@ -17,6 +14,9 @@ import { WriteHeader } from '@/features/write/components/WriteHeader';
 import { ActionButtons } from '@/features/write/components/ActionButtons';
 import { useRouter } from 'expo-router';
 import * as S from './JournalWrite.styled';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useApp } from '@/core/store/contexts/app.context';
+import { useDraft } from '@/core/store/contexts/draft.context';
 
 export const JournalWriteScreen = () => {
   const router = useRouter();

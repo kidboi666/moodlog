@@ -1,5 +1,6 @@
 import { StatusBar as RNStatusBar } from 'react-native';
-import { useAppTheme } from '@/core/store/hooks/useAppTheme';
+
+import { useAppTheme } from '@/core/store/contexts/theme.context';
 
 export const StatusBar = () => {
   const { resolvedTheme } = useAppTheme();

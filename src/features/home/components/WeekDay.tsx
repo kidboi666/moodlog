@@ -6,11 +6,11 @@ import {
   getLastDate,
   getMonthString,
 } from '@/core/utils/common';
-import { useJournal } from '@/core/store/hooks/useJournal';
-import { useDate } from '@/core/store/hooks/useDate';
 import * as S from './WeekDay.styled';
 
 import { ISODateString } from '@/types/date.types';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useDate } from '@/core/store/contexts/date.context';
 
 export const WeekDay = memo(() => {
   const {
@@ -20,11 +20,11 @@ export const WeekDay = memo(() => {
     selectedDate,
     onSelectedDateChange,
   } = useDate('week');
-  const { journals, getDateCountsForMonth } = useJournal('week');
+  const { journals, getCountForMonth } = useJournal('week');
   const { t } = useTranslation();
 
   const dateCounts = useMemo(
-    () => getDateCountsForMonth(currentYear, getMonthString(currentMonth)),
+    () => getCountForMonth(currentYear, getMonthString(currentMonth)),
     [journals, currentMonth],
   );
 

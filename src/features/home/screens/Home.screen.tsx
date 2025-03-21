@@ -1,8 +1,6 @@
-import { useJournal } from '@/core/store/hooks/useJournal';
 import { useTranslation } from 'react-i18next';
 import { useScroll } from '@/core/store/hooks/useScroll';
 import { useUser } from '@/core/store/hooks/useUser';
-import { useDraft } from '@/core/store/hooks/useDraft';
 import { Fragment, useEffect } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
@@ -14,6 +12,8 @@ import { WeekDay } from '@/features/home/components/WeekDay';
 import { JournalCard } from '@/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import * as S from './Home.styled';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useDraft } from '@/core/store/contexts/draft.context';
 
 export const HomeScreen = () => {
   const { dailyJournals, isSubmitted, onSubmittedChange, removeJournal } =

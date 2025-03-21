@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
-import { useJournal } from '@/core/store/hooks/useJournal';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
+import { useJournal } from '@/core/store/contexts/journal.context';
 
 interface Props {
   journalId: string;

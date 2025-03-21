@@ -3,8 +3,7 @@ import { RootProvider } from '@/core/providers/RootProvider';
 import { useFonts } from 'expo-font';
 import { useEffect, useMemo } from 'react';
 import { StatusBar } from '@/core/components/StatusBar';
-import { useAppTheme } from '@/core/store/hooks/useAppTheme';
-import { Platform } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { useTheme } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -16,9 +15,10 @@ import {
 } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useUser } from '@/core/store/hooks/useUser';
-import { Stack } from 'expo-router';
+import { ErrorBoundaryProps, Stack } from 'expo-router';
 import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
+import { useAppTheme } from '@/core/store/contexts/theme.context';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -34,6 +34,15 @@ const FONTS = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return (
+    <View style={{ flex: 1, backgroundColor: 'red' }}>
+      <Text>{error.message}</Text>
+      <Text onPress={retry}>Try Again?</Text>
+    </View>
+  );
+}
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts(FONTS);

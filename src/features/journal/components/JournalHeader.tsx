@@ -1,4 +1,3 @@
-import { useJournal } from '@/core/store/hooks/useJournal';
 import React from 'react';
 import { BottomModal } from '@/core/components/modals/BottomModal';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
@@ -6,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useBottomModal } from '@/core/hooks/useBottomModal';
 import * as S from './JournalHeader.styled';
 import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
+import { useJournal } from '@/core/store/contexts/journal.context';
 
 export default function JournalHeader() {
   const router = useRouter();

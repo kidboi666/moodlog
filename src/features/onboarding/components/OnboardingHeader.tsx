@@ -1,5 +1,5 @@
-import { useStepProgress } from '@/core/store/hooks/useStepProgress';
 import * as S from './OnboardingHeader.styled';
+import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 
 export const OnboardingHeader = () => {
   const { currentStep, totalSteps } = useStepProgress();

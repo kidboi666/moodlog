@@ -4,10 +4,10 @@ import { ArrowRight } from '@tamagui/lucide-icons';
 import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { useStepProgress } from '@/core/store/hooks/useStepProgress';
 import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Welcome.styled';
+import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 
 export const WelcomeScreen = () => {
   const { t } = useTranslation();

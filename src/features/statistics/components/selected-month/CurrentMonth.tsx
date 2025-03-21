@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useStatistics } from '@/core/store/hooks/useStatistics';
 import { ExpandedContent } from '@/features/statistics/components/selected-month/ExpandedContent';
 import { CollapsedContent } from '@/features/statistics/components/selected-month/CollapsedContent';
 import { EmptyContent } from '@/features/statistics/components/EmptyContent';
 import * as S from './CurrentMonth.styled';
+import { useStatistics } from '@/core/store/contexts/statistics.context';
 
 export const CurrentMonth = () => {
   const { selectedMonthStats } = useStatistics();

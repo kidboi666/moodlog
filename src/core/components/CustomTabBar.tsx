@@ -8,7 +8,6 @@ import {
   Settings,
 } from '@tamagui/lucide-icons';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useDraft } from '@/core/store/hooks/useDraft';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
@@ -17,7 +16,9 @@ import * as NavigationBar from 'expo-navigation-bar';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
 import { ShowTabBar } from '@/types/app.types';
-import { useAppTheme } from '@/core/store/hooks/useAppTheme';
+
+import { useAppTheme } from '@/core/store/contexts/theme.context';
+import { useDraft } from '@/core/store/contexts/draft.context';
 
 const translates = {
   show: {

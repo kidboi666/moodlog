@@ -1,13 +1,13 @@
 import { ScrollView } from 'tamagui';
 import React, { useEffect } from 'react';
-import { useJournal } from '@/core/store/hooks/useJournal';
-import { useApp } from '@/core/store/hooks/useApp';
 import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import { useScroll } from '@/core/store/hooks/useScroll';
 import { toSingle } from '@/core/utils/common';
 import JournalHeader from '@/features/journal/components/JournalHeader';
 import * as S from './Journal.styled';
+import { useJournal } from '@/core/store/contexts/journal.context';
+import { useApp } from '@/core/store/contexts/app.context';
 
 interface Props {
   journalId: string;

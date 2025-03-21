@@ -2,6 +2,7 @@ import {
   createContext,
   PropsWithChildren,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useReducer,
@@ -9,23 +10,26 @@ import {
 import * as Localization from 'expo-localization';
 import { Nullable } from '@/types/common.types';
 import { useTranslation } from 'react-i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEY } from '@/core/constants/storage';
 import { APP_VERSION } from '@/core/constants/common';
-import { AppStore } from '@/core/store/types';
 import { ISODateString } from '@/types/date.types';
 import { Languages, TimeFormat, ViewFontSize } from '@/types/app.types';
 import { appReducer } from '@/core/store/reducers/app.reducer';
+import { AppState, AppStore } from '@/core/store/types/app.types';
+import { AppService } from '@/core/store/services/app.service';
 
 const DEFAULT_LANGUAGE = Localization.getLocales()[0].languageCode as Languages;
 
-const initialState = {
+const initialState: AppState = {
   appVersion: APP_VERSION,
-  fontSize: ViewFontSize.SMALL,
-  language: DEFAULT_LANGUAGE,
   isInitialApp: false,
-  timeFormat: TimeFormat.HOUR_24,
   firstLaunchDate: null,
+  settings: {
+    fontSize: ViewFontSize.SMALL,
+    language: DEFAULT_LANGUAGE,
+    timeFormat: TimeFormat.HOUR_24,
+  },
+  error: null,
+  isLoading: false,
 };
 
 export const AppContext = createContext<Nullable<AppStore>>(null);
@@ -34,7 +38,9 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const { i18n } = useTranslation();
 
-  const handleLanguageChange = useCallback((language: Languages) => {
+  const handleLanguageChange = useCallback(async (language: Languages) => {
+    const nextSettings = { ...state.settings, language };
+    await AppService.saveSettings(nextSettings);
     dispatch({ type: 'SET_LANGUAGE', payload: language });
   }, []);
 
@@ -46,85 +52,90 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: 'SET_TIME_FORMAT', payload: timeFormat });
   }, []);
 
-  const initializeFirstLaunchStatus = useCallback(async () => {
+  const initFirstLaunchStatus = useCallback(async () => {
     const firstLaunchDate = new Date()
       .toISOString()
       .split('T')[0] as ISODateString;
 
     try {
       await Promise.all([
-        AsyncStorage.setItem(STORAGE_KEY.INIT, 'true'),
-        AsyncStorage.setItem(STORAGE_KEY.FIRST_LAUNCH, firstLaunchDate),
+        AppService.saveFirstLaunchStatus(firstLaunchDate),
+        AppService.saveSettings(state.settings),
       ]);
-
       dispatch({
         type: 'INIT_APP',
         payload: { isInitialApp: true, firstLaunchDate },
       });
-
-      return firstLaunchDate;
     } catch (err) {
-      console.error('초기화 중 오류 발생:', err);
-      return null;
+      dispatch({ type: 'SET_ERROR', payload: err });
     }
   }, []);
 
   useEffect(() => {
-    if (state.language) {
+    if (state.settings.language) {
       i18n
-        .changeLanguage(state.language)
+        .changeLanguage(state.settings.language)
         .catch(err => console.error('언어 변경 중 오류 발생:', err));
     }
-  }, [state.language, i18n]);
+  }, [state.settings.language, i18n]);
 
   useEffect(() => {
-    const loadInitialValue = async () => {
+    const loadAppData = async () => {
       try {
-        const [isInitialApp, firstLaunchDate] = await Promise.all([
-          AsyncStorage.getItem(STORAGE_KEY.INIT),
-          AsyncStorage.getItem(STORAGE_KEY.FIRST_LAUNCH),
+        dispatch({ type: 'SET_IS_LOADING', payload: true });
+        const [firstLaunchDate, settings] = await Promise.all([
+          AppService.loadFirstLaunchStatus(),
+          AppService.loadSettings(),
         ]);
 
-        if (isInitialApp === 'true') {
-          dispatch({
-            type: 'INIT_APP',
-            payload: {
-              isInitialApp: true,
-              firstLaunchDate: firstLaunchDate as ISODateString,
-            },
-          });
+        dispatch({
+          type: 'INIT_APP',
+          payload: {
+            isInitialApp: !!firstLaunchDate,
+            firstLaunchDate: firstLaunchDate as ISODateString,
+          },
+        });
+
+        if (settings) {
+          dispatch({ type: 'INIT_SETTINGS', payload: settings });
         }
       } catch (err) {
-        console.error('초기 값 로드 중 오류 발생:', err);
+        dispatch({ type: 'SET_ERROR', payload: err });
+      } finally {
+        dispatch({ type: 'SET_IS_LOADING', payload: false });
       }
     };
 
-    loadInitialValue();
+    void loadAppData();
   }, []);
 
   return (
     <AppContext.Provider
       value={useMemo(
         () => ({
-          language: state.language,
-          isInitialApp: state.isInitialApp,
           appVersion: state.appVersion,
+          isInitialApp: state.isInitialApp,
           firstLaunchDate: state.firstLaunchDate,
-          fontSize: state.fontSize,
-          timeFormat: state.timeFormat,
-          initializeFirstLaunchStatus,
+          language: state.settings.language,
+          fontSize: state.settings.fontSize,
+          timeFormat: state.settings.timeFormat,
+          error: state.error,
+          isLoading: state.isLoading,
+          initFirstLaunchStatus,
           onFontSizeChange: handleFontSizeChange,
           onLanguageChange: handleLanguageChange,
           onTimeFormatChange: handleTimeFormatChange,
         }),
         [
-          state.language,
-          state.isInitialApp,
           state.appVersion,
+          state.isInitialApp,
           state.firstLaunchDate,
-          state.fontSize,
-          state.timeFormat,
-          initializeFirstLaunchStatus,
+          state.settings.language,
+          state.settings.fontSize,
+          state.settings.timeFormat,
+          state.error,
+          state.isLoading,
+          initFirstLaunchStatus,
           handleFontSizeChange,
           handleLanguageChange,
           handleTimeFormatChange,
@@ -134,4 +145,12 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useApp must be used within a AppContextProvider');
+  }
+  return context;
 };

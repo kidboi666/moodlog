@@ -1,27 +1,4 @@
-import { Journal } from '@/types/journal.types';
-import { ISODateString } from '@/types/date.types';
-
-type JournalState = {
-  journals: Journal[];
-  isSubmitted: boolean;
-  yearlyJournals: Journal[];
-  monthlyJournals: Journal[];
-  dailyJournals: Journal[] | ISODateString;
-  selectedJournal: Journal | null;
-  isLoading: boolean;
-};
-
-type JournalAction =
-  | {
-      type: 'SET_SELECTED_JOURNAL';
-      payload: Journal | null;
-    }
-  | { type: 'SET_YEARLY_JOURNAL'; payload: Journal[] }
-  | { type: 'SET_MONTHLY_JOURNAL'; payload: Journal[] }
-  | { type: 'SET_DAILY_JOURNALS'; payload: Journal[] | ISODateString }
-  | { type: 'SET_IS_SUBMITTED'; payload: boolean }
-  | { type: 'SET_IS_LOADING'; payload: boolean }
-  | { type: 'SET_JOURNALS'; payload: Journal[] };
+import { JournalAction, JournalState } from '@/core/store/types/journal.types';
 
 export const journalReducer = (state: JournalState, action: JournalAction) => {
   switch (action.type) {
@@ -39,6 +16,10 @@ export const journalReducer = (state: JournalState, action: JournalAction) => {
       return { ...state, isLoading: action.payload };
     case 'SET_JOURNALS':
       return { ...state, journals: action.payload };
+    case 'SET_ERROR': {
+      console.error('data load failed : ', action.payload);
+      return { ...state, error: action.payload };
+    }
     default:
       return state;
   }

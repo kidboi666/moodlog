@@ -2,14 +2,15 @@ import {
   createContext,
   PropsWithChildren,
   useCallback,
+  useContext,
   useMemo,
   useReducer,
 } from 'react';
 import { Nullable } from '@/types/common.types';
 import { CalendarUtils } from 'react-native-calendars';
-import { DateStore } from '@/core/store/types';
 import { ISODateString, ISOMonthString } from '@/types/date.types';
 import { dateReducer } from '@/core/store/reducers/date.reducer';
+import { DateStore } from '@/core/store/types/date.types';
 
 export const DateContext = createContext<Nullable<DateStore>>(null);
 
@@ -85,4 +86,12 @@ export const DateContextProvider = ({ children }: PropsWithChildren) => {
   return (
     <DateContext.Provider value={contextValue}>{children}</DateContext.Provider>
   );
+};
+
+export const useDate = () => {
+  const context = useContext(DateContext);
+  if (!context) {
+    throw new Error('useDate must be used within a DateContextProvider');
+  }
+  return context;
 };

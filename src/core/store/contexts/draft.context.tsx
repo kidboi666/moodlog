@@ -2,6 +2,7 @@ import {
   createContext,
   PropsWithChildren,
   useCallback,
+  useContext,
   useMemo,
   useReducer,
   useRef,
@@ -13,11 +14,11 @@ import {
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
-import { DraftStore } from '@/core/store/types';
 import { Mood } from '@/types/mood.types';
 import { CalendarUtils } from 'react-native-calendars';
 import { saveImage } from '@/core/utils/imageUtils';
 import { draftReducer } from '@/core/store/reducers/draft.reducer';
+import { DraftStore } from '@/core/store/types/draft.types';
 
 const initialDraft = {
   content: '',
@@ -99,4 +100,11 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
       {children}
     </DraftContext.Provider>
   );
+};
+export const useDraft = () => {
+  const context = useContext(DraftContext);
+  if (!context) {
+    throw new Error('useDraft must be used within a DraftContextProvider');
+  }
+  return context;
 };

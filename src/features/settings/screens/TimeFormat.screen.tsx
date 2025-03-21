@@ -2,10 +2,10 @@ import { Container } from '@/core/components/Container.styleable';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
 import { RadioGroup, Separator, useEvent } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
-import { useApp } from '@/core/store/hooks/useApp';
 import { useTranslation } from 'react-i18next';
 
 import { TimeFormat } from '@/types/app.types';
+import { useApp } from '@/core/store/contexts/app.context';
 
 export const TimeFormatScreen = () => {
   const { timeFormat, onTimeFormatChange } = useApp();

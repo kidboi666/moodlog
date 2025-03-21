@@ -1,25 +1,5 @@
-import { Nullable } from '@/types/common.types';
-import { ISODateString, ISOMonthString } from '@/types/date.types';
 import { getMonthInISODateString } from '@/core/utils/common';
-
-type DateAction =
-  | { type: 'SET_SELECTED_YEAR'; payload: number }
-  | { type: 'SET_SELECTED_MONTH'; payload: Nullable<ISOMonthString> }
-  | { type: 'SET_SELECTED_DATE'; payload: ISODateString }
-  | {
-      type: 'INIT_SELECTED_DATES';
-      payload: {
-        currentYear: number;
-        currentMonth: number;
-        initialISODate: ISODateString;
-      };
-    };
-
-export type DateState = {
-  selectedYear: number;
-  selectedMonth: Nullable<ISOMonthString>;
-  selectedDate: ISODateString;
-};
+import { DateAction, DateState } from '@/core/store/types/date.types';
 
 export const dateReducer = (
   state: DateState,

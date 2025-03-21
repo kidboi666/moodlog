@@ -1,11 +1,11 @@
 import { H3, Text } from 'tamagui';
-import { useStatistics } from '@/core/store/hooks/useStatistics';
 import { ProgressGraph } from '@/features/statistics/components/mood-average/ProgressGraph';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';
 
 import { MoodType } from '@/types/mood.types';
+import { useStatistics } from '@/core/store/contexts/statistics.context';
 
 export const ExpandedContent = () => {
   const { moodStats } = useStatistics();

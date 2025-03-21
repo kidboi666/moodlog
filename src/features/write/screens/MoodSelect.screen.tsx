@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDraft } from '@/core/store/hooks/useDraft';
 import { MoodSelectTitle } from '@/features/write/components/MoodSelectTitle';
 import { SelectedMoodContainer } from '@/features/write/components/SelectedMoodContainer';
 import { PickerMood } from '@/features/write/components/PickerMood';
@@ -9,6 +8,7 @@ import { MoodBar } from '@/features/write/components/MoodBar';
 import { WriteHeader } from '@/features/write/components/WriteHeader';
 import { CARD_DELAY } from '@/core/constants/time';
 import * as S from './MoodSelect.styled';
+import { useDraft } from '@/core/store/contexts/draft.context';
 
 export const MoodSelectScreen = () => {
   const { draft, onMoodChange } = useDraft();
