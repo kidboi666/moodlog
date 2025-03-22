@@ -1,7 +1,7 @@
 import '../../tamagui-web.css';
 import { RootProvider } from '@/core/providers/RootProvider';
 import { useFonts } from 'expo-font';
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StatusBar } from '@/core/components/StatusBar';
 import { Platform, Text, View } from 'react-native';
 import { useTheme } from 'tamagui';
@@ -18,7 +18,6 @@ import { ErrorBoundaryProps, Stack } from 'expo-router';
 import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
-import { useUser } from '@/core/store/contexts/user.context';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -74,7 +73,6 @@ export default function RootLayout() {
 const RootLayoutNav = () => {
   const { resolvedTheme } = useAppTheme();
   const theme = useTheme();
-  const { isLoading } = useUser();
 
   const backgroundStyle = useMemo(
     () => ({
@@ -101,8 +99,6 @@ const RootLayoutNav = () => {
     }
   }, [resolvedTheme]);
 
-  if (isLoading) return null;
-
   return (
     <GestureHandlerRootView style={backgroundStyle}>
       <ThemeProvider
@@ -111,6 +107,7 @@ const RootLayoutNav = () => {
         <StatusBar />
         <BottomSheetModalProvider>
           <Stack screenOptions={screenOptions}>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="(onboarding)" />
             <Stack.Screen name="+not-found" />

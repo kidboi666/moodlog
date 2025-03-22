@@ -1,4 +1,4 @@
-import { Button, Circle as TamaguiCircle, styled, View, XStack } from 'tamagui';
+import { Button, styled, View, XStack } from 'tamagui';
 import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/constants/styles';
 import { Platform } from 'react-native';
 
@@ -13,9 +13,10 @@ export const TabBarContainer = styled(XStack, {
   borderWidth: 1,
   borderBottomWidth: 0,
   borderColor: '$gray7',
-  animation: 'lazy',
   bg: '$gray4',
   width: '100%',
+  animation: 'lazy',
+  animateOnly: ['transform'],
 });
 
 export const Container = styled(XStack, {
@@ -59,25 +60,6 @@ export const WriteInnerBox = styled(View, {
   position: 'relative',
   px: '$4',
   py: '$3',
-});
-
-export const Circle = styled(TamaguiCircle, {
-  position: 'absolute',
-  l: 8,
-  t: 8,
-  rounded: '$4',
-  bg: '$green9',
-  opacity: 0,
-  width: '$0.75',
-  height: '$0.75',
-
-  variants: {
-    showDraftNotification: {
-      true: {
-        opacity: 1,
-      },
-    },
-  } as const,
 });
 
 export const RecordButton = styled(TabButton);

@@ -11,7 +11,7 @@ import * as S from './MoodSelect.styled';
 import { useDraft } from '@/core/store/contexts/draft.context';
 
 export const MoodSelectScreen = () => {
-  const { draft, onMoodChange } = useDraft();
+  const { mood, onMoodChange } = useDraft();
   return (
     <S.ViewContainer edges={['bottom']} Header={<WriteHeader />}>
       <S.XStackContainer>
@@ -21,17 +21,17 @@ export const MoodSelectScreen = () => {
           </FadeIn>
 
           <FadeIn delay={CARD_DELAY.SECOND} flex={1}>
-            <SelectedMoodContainer mood={draft.mood ?? null} />
+            <SelectedMoodContainer mood={mood ?? null} />
           </FadeIn>
 
           <FadeIn delay={CARD_DELAY.THIRD}>
-            <PickerMood mood={draft?.mood} onMoodChange={onMoodChange} />
+            <PickerMood mood={mood} onMoodChange={onMoodChange} />
           </FadeIn>
 
-          <NextButton mood={draft?.mood} />
+          <NextButton mood={mood} />
         </S.YStackContainer>
 
-        <MoodBar mood={draft?.mood} />
+        <MoodBar mood={mood} />
       </S.XStackContainer>
     </S.ViewContainer>
   );

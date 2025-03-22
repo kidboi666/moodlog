@@ -7,45 +7,51 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Nullable } from '@/types/common.types';
-import { STORAGE_KEY } from '@/core/constants/storage';
-import { UserStore } from '@/core/store/types';
 import { NewUserInfo } from '@/types/user.types';
 import { useApp } from '@/core/store/contexts/app.context';
 import { userReducer } from '@/core/store/reducers/user.reducer';
-import { UserState } from '@/core/store/types/user.types';
+import { UserInfoContextType, UserState } from '@/core/store/types/user.types';
 import { UserService } from '@/core/store/services/user.service';
+import { StatusState } from '../types/state.types';
+import { statusReducer } from '@/core/store/reducers/status.reducer';
 
 const initialState: UserState = {
-  id: '',
-  userName: '',
-  email: null,
-  provider: null,
-  age: null,
-  avatarUrl: null,
-  daysSinceSignup: 0,
-  error: null,
+  userInfo: {
+    id: '',
+    userName: '',
+    email: null,
+    provider: null,
+    age: null,
+    avatarUrl: null,
+    daysSinceSignup: 0,
+  },
 };
 
-export const UserContext = createContext<Nullable<UserStore>>(null);
+export const UserInfoContext =
+  createContext<Nullable<UserInfoContextType>>(null);
+export const UserStatusContext = createContext<Nullable<StatusState>>(null);
 
 export const UserContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
+  const [status, setStatus] = useReducer(statusReducer, {
+    isLoading: false,
+    error: null,
+  });
   const { initFirstLaunchStatus, firstLaunchDate } = useApp();
 
-  const signUp = useCallback(
+  const registerUser = useCallback(
     async (userName: string) => {
       try {
-        const newUser = await UserService.saveUser(state, userName);
+        const newUser = await UserService.saveNewUser(state.userInfo, userName);
         dispatch({ type: 'SET_USER_INFO', payload: newUser });
         await initFirstLaunchStatus();
       } catch (err) {
         console.error('failed to save user data : ', err);
-        dispatch({ type: 'SET_ERROR', payload: err });
+        setStatus({ type: 'SET_ERROR', payload: err });
       }
     },
-    [initFirstLaunchStatus, state.userName],
+    [initFirstLaunchStatus, state.userInfo.userName],
   );
 
   const handleDraftUserNameChange = useCallback((userName: string) => {
@@ -53,45 +59,53 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const updateDaysSinceSignup = useCallback(async () => {
-    if (!firstLaunchDate) return;
     try {
+      if (!firstLaunchDate) return;
+
       const newDaysSinceSignup = await UserService.saveDaysSinceSignup(
-        state,
+        state.userInfo,
         firstLaunchDate,
       );
       dispatch({ type: 'SET_DAYS_SINCE_SIGNUP', payload: newDaysSinceSignup });
     } catch (err) {
       console.error('failed to save user data : ', err);
-      dispatch({ type: 'SET_ERROR', payload: err });
+      setStatus({ type: 'SET_ERROR', payload: err });
     }
   }, [firstLaunchDate]);
 
-  const handleUserInfoChange = useCallback((newUserInfo: NewUserInfo) => {
-    setUserInfo(prev => {
-      const updated = { ...prev, ...newUserInfo };
-      AsyncStorage.setItem(
-        STORAGE_KEY.USER_INFO,
-        JSON.stringify(updated),
-      ).catch(err => console.error('유저 정보 업데이트 실패', err));
-      return updated;
-    });
-  }, []);
-
-  const loadUserData = useCallback(async () => {
-    try {
-      const savedUserData = await AsyncStorage.getItem(STORAGE_KEY.USER_INFO);
-      if (savedUserData) {
-        setUserInfo(JSON.parse(savedUserData));
-        await initFirstLaunchStatus();
+  const handleUserInfoChange = useCallback(
+    async (updatedUserInfo: NewUserInfo) => {
+      try {
+        const newUserInfo = await UserService.saveUser(
+          state.userInfo,
+          updatedUserInfo,
+        );
+        dispatch({ type: 'SET_USER_INFO', payload: newUserInfo });
+      } catch (err) {
+        console.error('failed to save user data : ', err);
+        setStatus({ type: 'SET_ERROR', payload: err });
       }
-    } catch (err) {
-      console.error('failed to load user data', err);
-    }
-  }, [initFirstLaunchStatus]);
+    },
+    [],
+  );
 
   useEffect(() => {
-    loadUserData();
-  }, [loadUserData]);
+    const loadUserData = async () => {
+      try {
+        const savedUserData = await UserService.loadUser();
+
+        if (savedUserData) {
+          dispatch({ type: 'SET_USER_INFO', payload: savedUserData });
+          await initFirstLaunchStatus();
+        }
+      } catch (err) {
+        console.error('failed to load user data', err);
+        setStatus({ type: 'SET_ERROR', payload: err });
+      }
+    };
+
+    void loadUserData();
+  }, []);
 
   useEffect(() => {
     if (firstLaunchDate) {
@@ -100,35 +114,44 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
   }, [firstLaunchDate, updateDaysSinceSignup]);
 
   return (
-    <UserContext.Provider
+    <UserInfoContext.Provider
       value={useMemo(
         () => ({
-          signUp,
-          userInfo,
-          isLoading,
-          draftUserName,
+          userInfo: state.userInfo,
+          draftUserName: state.userInfo.userName,
+          registerUser,
           onUserInfoChange: handleUserInfoChange,
           onDraftUserNameChange: handleDraftUserNameChange,
         }),
         [
-          signUp,
-          userInfo,
-          isLoading,
-          draftUserName,
+          state.userInfo,
+          state.userInfo.userName,
+          registerUser,
           handleUserInfoChange,
           handleDraftUserNameChange,
         ],
       )}
     >
-      {children}
-    </UserContext.Provider>
+      <UserStatusContext.Provider
+        value={useMemo(
+          () => ({
+            isLoading: status.isLoading,
+            error: status.error,
+          }),
+          [status.isLoading, status.error],
+        )}
+      >
+        {children}
+      </UserStatusContext.Provider>
+    </UserInfoContext.Provider>
   );
 };
 
 export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
+  const userInfo = useContext(UserInfoContext);
+  const userStatus = useContext(UserStatusContext);
+  if (!userInfo || !userStatus) {
     throw new Error('useUser must be used within a UserContextProvider');
   }
-  return context;
+  return userInfo;
 };

@@ -7,9 +7,8 @@ export class StorageService {
     try {
       const dataList = await AsyncStorage.getItem(key);
 
-      return dataList ? JSON.parse(dataList) : [];
+      return dataList ? JSON.parse(dataList) : null;
     } catch (err) {
-      console.error('load failed : ', err);
       throw err;
     }
   }
@@ -18,16 +17,14 @@ export class StorageService {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(data));
     } catch (err) {
-      console.error('save failed : ', err);
       throw err;
     }
   }
 
   static async delete(key: ValueOf<typeof STORAGE_KEY>) {
     try {
-      await AsyncStorage.removeItem(key as unknown as string);
+      await AsyncStorage.removeItem(key);
     } catch (err) {
-      console.error('delete failed : ', err);
       throw err;
     }
   }

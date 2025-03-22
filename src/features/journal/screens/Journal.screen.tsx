@@ -2,7 +2,6 @@ import { ScrollView } from 'tamagui';
 import React, { useEffect } from 'react';
 import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
-import { useScroll } from '@/core/store/hooks/useScroll';
 import { toSingle } from '@/core/utils/common';
 import JournalHeader from '@/features/journal/components/JournalHeader';
 import * as S from './Journal.styled';
@@ -16,7 +15,6 @@ interface Props {
 export const JournalScreen = ({ journalId }: Props) => {
   const { selectedJournal, onSelectedJournalChange } = useJournal();
   const { fontSize } = useApp();
-  const { onScroll } = useScroll();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export const JournalScreen = ({ journalId }: Props) => {
   if (!selectedJournal || selectedJournal?.id !== journalId) return null;
 
   return (
-    <ScrollView onScroll={onScroll} overScrollMode="always">
+    <ScrollView overScrollMode="always">
       <S.ViewContainer edges={['bottom']} Header={<JournalHeader />}>
         <S.XStackContainer>
           <S.MoodBar

@@ -13,8 +13,6 @@ export type AppState = {
   isInitialApp: boolean;
   firstLaunchDate: Nullable<ISODateString>;
   settings: Settings;
-  isLoading: boolean;
-  error: Nullable<Error>;
 };
 
 export type AppAction =
@@ -30,21 +28,21 @@ export type AppAction =
         isInitialApp: boolean;
         firstLaunchDate: Nullable<ISODateString>;
       };
-    }
-  | { type: 'SET_IS_LOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: Error };
+    };
 
-export interface AppStore {
+export type AppInfoContextType = {
   appVersion: string;
-  language: any;
   isInitialApp: boolean;
-  timeFormat: TimeFormat;
-  fontSize: ViewFontSize;
   initFirstLaunchStatus: () => Promise<void>;
   firstLaunchDate: Nullable<ISODateString>;
+  initAppData: () => Promise<void>;
+};
+
+export type AppSettingsContextType = {
+  language: any;
+  timeFormat: TimeFormat;
+  fontSize: ViewFontSize;
   onLanguageChange: (language: any) => void;
   onFontSizeChange: (fontSize: ViewFontSize) => void;
   onTimeFormatChange: (timeFormat: TimeFormat) => void;
-  isLoading: boolean;
-  error: Error | null;
-}
+};

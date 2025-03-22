@@ -1,25 +1,22 @@
 import { Grass } from '@/features/entries/components/Grass';
-import { getMonthNumber } from '@/core/utils/common';
 import { memo, useMemo } from 'react';
 import * as S from './Garden.styled';
-import { MonthKey } from '@/types/date.types';
+import { ISODateString, ISOMonthString } from '@/types/date.types';
 import { Mood } from '@/types/mood.types';
 
 interface Props {
   weekLength: number;
-  monthKey: MonthKey;
   firstDateDay: number;
-  selectedYear: number;
+  monthDate: ISOMonthString;
   lastDate: number;
-  getMoodForDate: (year: number, month: number, date: number) => Mood[];
+  getMoodForDate: (date: ISODateString) => Mood[];
 }
 
 export const Garden = memo(
   ({
     weekLength,
-    monthKey,
+    monthDate,
     firstDateDay,
-    selectedYear,
     lastDate,
     getMoodForDate,
   }: Props) => {
@@ -32,22 +29,14 @@ export const Garden = memo(
           if (dateNum <= 0 || dateNum > lastDate) {
             weekData.push(null);
           } else {
-            weekData.push(
-              getMoodForDate(selectedYear, getMonthNumber(monthKey), dateNum),
-            );
+            const dateString = `${monthDate}-${dateNum}` as ISODateString;
+            weekData.push(getMoodForDate(dateString));
           }
         }
         data.push(weekData);
       }
       return data;
-    }, [
-      weekLength,
-      monthKey,
-      firstDateDay,
-      selectedYear,
-      lastDate,
-      getMoodForDate,
-    ]);
+    }, [weekLength, firstDateDay, lastDate, getMoodForDate]);
 
     return (
       <S.GardenContainer>

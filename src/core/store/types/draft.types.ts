@@ -1,6 +1,5 @@
 import { Mood } from '@/types/mood.types';
 import { Nullable } from '@/types/common.types';
-import { ISODateString } from '@/types/date.types';
 import { Draft } from '@/types/journal.types';
 import {
   NativeSyntheticEvent,
@@ -13,7 +12,6 @@ export type DraftState = {
   content: string;
   mood?: Mood;
   imageUri: Nullable<string>;
-  localDate: ISODateString;
 };
 
 export type DraftAction =
@@ -22,16 +20,24 @@ export type DraftAction =
   | { type: 'SET_IMAGE_URI'; payload: string }
   | { type: 'INIT_DRAFT'; payload: Draft };
 
-export interface DraftStore {
-  draft: Draft;
-  initDraft: () => void;
+export type DraftContentContextType = {
+  content: string;
+  onContentChange: (content: string) => void;
+};
+
+export type DraftMetadataContextType = {
+  mood?: Mood;
+  imageUri: Nullable<string>;
+};
+
+export type DraftActionContextType = {
   selection: { start: number; end: number };
   onSelectionChange: (
     event: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
   ) => void;
+  initDraft: () => void;
   enhancedInputRef: MutableRefObject<EnhancedTextInputRef | null>;
   onTimeStamp: () => void;
   onMoodChange: (mood: Mood) => void;
   onImageUriChange: () => Promise<Nullable<void>>;
-  onContentChange: (content: string) => void;
-}
+};

@@ -22,9 +22,7 @@ export const SettingsScreen = () => {
               href="/settings/theme"
             />
             <Separator />
-          </FadeIn>
 
-          <FadeIn delay={CARD_DELAY.SECOND}>
             {/* Language Setting */}
             <NavigationSettingItem
               icon={Globe}
@@ -32,8 +30,7 @@ export const SettingsScreen = () => {
               href="/settings/language"
             />
             <Separator />
-          </FadeIn>
-          <FadeIn delay={CARD_DELAY.THIRD}>
+
             {/* TimeFormat Setting */}
             <NavigationSettingItem
               icon={Clock}

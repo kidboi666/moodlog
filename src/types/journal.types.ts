@@ -15,7 +15,6 @@ export type Draft = {
   content: string;
   mood?: Mood;
   imageUri: Nullable<string>;
-  localDate: ISODateString;
 };
 
 export enum CardPosition {

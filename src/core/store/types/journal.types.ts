@@ -1,52 +1,43 @@
 import { Draft, Journal } from '@/types/journal.types';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
-import { Nullable } from '@/types/common.types';
 import { Mood } from '@/types/mood.types';
+
+type SelectedJournal = Journal | null;
+type SelectedJournals = Journal[] | ISODateString | null;
 
 export type JournalState = {
   journals: Journal[];
-  isSubmitted: boolean;
-  yearlyJournals: Journal[];
-  monthlyJournals: Journal[];
-  dailyJournals: Journal[] | ISODateString;
-  selectedJournal: Journal | null;
-  isLoading: boolean;
-  error: Error | null;
+  selectedJournals: SelectedJournals;
+  selectedJournal: SelectedJournal;
 };
 
 export type JournalAction =
-  | {
-      type: 'SET_SELECTED_JOURNAL';
-      payload: Journal | null;
-    }
-  | { type: 'SET_YEARLY_JOURNAL'; payload: Journal[] }
-  | { type: 'SET_MONTHLY_JOURNAL'; payload: Journal[] }
-  | { type: 'SET_DAILY_JOURNALS'; payload: Journal[] | ISODateString }
-  | { type: 'SET_IS_SUBMITTED'; payload: boolean }
-  | { type: 'SET_IS_LOADING'; payload: boolean }
-  | { type: 'SET_JOURNALS'; payload: Journal[] }
-  | { type: 'SET_ERROR'; payload: Error | null };
+  | { type: 'SET_SELECTED_JOURNAL'; payload: SelectedJournal }
+  | { type: 'SET_SELECTED_JOURNALS'; payload: SelectedJournals }
+  | { type: 'SET_JOURNALS'; payload: Journal[] };
 
-export interface JournalStore {
+export type JournalBaseContextType = {
   journals: Journal[];
-  dailyJournals: Journal[] | ISODateString;
-  selectedJournal: Nullable<Journal>;
-  monthlyJournals: Journal[];
-  yearlyJournals: Journal[];
-  isSubmitted: boolean;
-  error: Error | null;
-  addJournal: (journal: Draft) => void;
-  removeJournal: (id: string) => void;
+};
+
+export type JournalDataContextType = {
+  selectedJournals: SelectedJournals;
+  selectedJournal: SelectedJournal;
+  onSelectedJournalChange: (journalId: string) => void;
+  onSelectedJournalsChange: (
+    date: ISODateString | ISOMonthString | null,
+  ) => void;
+};
+
+export type JournalActionContextType = {
+  addJournal: (journal: Draft) => Promise<void>;
+  removeJournal: (id: string) => Promise<void>;
+  updateJournals: (newJournal: Journal) => Promise<void>;
   getCountForMonth: (year: number, month: number | string) => DateCounts;
   getCountForDate: (
     year: number,
     month: number | string,
     date: number,
   ) => number;
-  getMoodForDate: (year: number, month: number, date: number) => Mood[];
-  onSelectedJournalChange: (journalId: string) => void;
-  updateJournals: (newJournal: Journal) => void;
-  onDailyJournalsChange: (date: ISODateString) => void;
-  onMonthlyJournalsChange: (date: ISOMonthString) => void;
-  onYearlyJournalsChange: (year: number) => void;
-}
+  getMoodForDate: (date: ISODateString) => Mood[];
+};

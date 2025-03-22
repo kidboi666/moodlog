@@ -4,7 +4,7 @@ import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const WeekDayContainer = styled(YStack, {
   mb: '$4',
-  animation: 'quick',
+  animation: 'bouncy',
   enterStyle: FALL_STYLE,
   animateOnly: FALL_STYLE_KEY,
 });

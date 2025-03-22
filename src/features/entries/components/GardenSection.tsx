@@ -4,7 +4,6 @@ import { GardenDayUnits } from '@/features/entries/components/GardenDayUnits';
 import {
   getFirstDateDay,
   getLastDate,
-  getMonthInISODateString,
   getWeekLength,
 } from '@/core/utils/common';
 import { useCallback, useMemo } from 'react';
@@ -13,12 +12,11 @@ import { MonthItem } from '@/features/entries/components/MonthItem';
 import * as S from './GardenSection.styled';
 import { ISOMonthString, MonthKey } from '@/types/date.types';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { useDate } from '@/core/store/contexts/date.context';
+import { useCalendar } from '@/core/hooks/useCalendar';
 
 export const GardenSection = () => {
-  const { selectedYear, selectedMonth, onSelectedMonthChange } =
-    useDate('entries');
-  const { getMoodForDate, onMonthlyJournalsChange } = useJournal('entries');
+  const { getMoodForDate, onSelectedJournalsChange } = useJournal();
+  const { selectedYear, selectedMonth, onSelectedMonthChange } = useCalendar();
   const months = useMemo(
     () =>
       Object.keys(MONTHS).map((month, i) => ({
@@ -29,23 +27,22 @@ export const GardenSection = () => {
         firstDateDay: getFirstDateDay(selectedYear, month),
         weekLength: getWeekLength(selectedYear, month),
       })),
-    [selectedYear],
+    [selectedYear, selectedMonth],
   );
 
   const handleMonthChange = useCallback(
-    (ISOMonth: MonthKey) => {
-      if (selectedMonth === getMonthInISODateString(selectedYear, ISOMonth)) {
-        onSelectedMonthChange(null);
-        onMonthlyJournalsChange('0000-00');
+    (monthDate: ISOMonthString) => {
+      if (selectedMonth === monthDate) {
+        onSelectedMonthChange(null, onSelectedJournalsChange);
       } else {
-        onSelectedMonthChange(getMonthInISODateString(selectedYear, ISOMonth));
+        onSelectedMonthChange(monthDate, onSelectedJournalsChange);
       }
     },
     [
       selectedYear,
       selectedMonth,
       onSelectedMonthChange,
-      onMonthlyJournalsChange,
+      onSelectedJournalsChange,
     ],
   );
 
@@ -63,7 +60,6 @@ export const GardenSection = () => {
                 monthData={monthData}
                 isSelected={isSelected}
                 onMonthChange={handleMonthChange}
-                selectedYear={selectedYear}
                 getMoodForDate={getMoodForDate}
               />
             );

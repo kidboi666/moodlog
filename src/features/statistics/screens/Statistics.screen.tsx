@@ -1,5 +1,4 @@
 import { H1, ScrollView } from 'tamagui';
-import { useScroll } from '@/core/store/hooks/useScroll';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { CARD_DELAY } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ import { useStatistics } from '@/core/store/contexts/statistics.context';
 import { useUser } from '@/core/store/contexts/user.context';
 
 export const StatisticsScreen = () => {
-  const { onScroll } = useScroll();
   const [timeRange, setTimeRange] = useState<'weekly' | 'monthly'>('weekly');
   const { t } = useTranslation();
   const { journalStats, moodStats, expressiveMonthStats } = useStatistics();
@@ -29,7 +27,7 @@ export const StatisticsScreen = () => {
   }, [setTimeRange]);
 
   return (
-    <ScrollView onScroll={onScroll} scrollEventThrottle={16}>
+    <ScrollView>
       <S.CardContainer edges={['top', 'bottom']} padded>
         <S.OrderBox>
           <H1>{t('statistics.title')}</H1>

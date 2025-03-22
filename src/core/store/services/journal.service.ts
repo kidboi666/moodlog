@@ -11,7 +11,7 @@ export class JournalService extends StorageService {
     try {
       const newJournals = await this.load(STORAGE_KEY.JOURNALS);
 
-      return newJournals ? JSON.parse(newJournals) : [];
+      return newJournals ? newJournals : [];
     } catch (err) {
       throw err;
     }
@@ -19,7 +19,7 @@ export class JournalService extends StorageService {
 
   static async saveJournals(journals: Journal[]): Promise<void> {
     try {
-      await this.save(STORAGE_KEY.JOURNALS, JSON.stringify(journals));
+      await this.save(STORAGE_KEY.JOURNALS, journals);
     } catch (err) {
       throw err;
     }
@@ -96,15 +96,9 @@ export class JournalService extends StorageService {
     return foundJournals.length;
   }
 
-  static getMoodForDate(
-    journals: Journal[],
-    year: number,
-    month: number,
-    date: number,
-  ) {
-    const dateString = getISODateString(year, month, date);
+  static getMoodForDate(journals: Journal[], date: ISODateString) {
     const foundJournals = journals.filter(
-      journal => journal.localDate === dateString,
+      journal => journal.localDate === date,
     );
 
     return foundJournals.map(journal => journal.mood);
@@ -132,15 +126,46 @@ export class JournalService extends StorageService {
     return counts;
   }
 
+  static getJournals(
+    journals: Journal[],
+    date: ISODateString | ISOMonthString | null,
+  ) {
+    if (!date) return null;
+    const splitDate = date.split('-');
+
+    if (splitDate?.[2]) {
+      return this.getJournalsByDate(journals, date as ISODateString);
+    }
+    return this.getJournalsByMonth(journals, date as ISOMonthString);
+  }
+
   static getJournalById(journals: Journal[], journalId: string) {
     return journals.find(journal => journal.id === journalId) ?? null;
   }
 
   static getJournalsByDate(journals: Journal[], date: ISODateString) {
-    return journals.filter(journal => journal.localDate === date);
+    const dailyJournals = journals.filter(
+      journal => journal.localDate === date,
+    );
+    if (dailyJournals.length === 0) {
+      return date;
+    }
+    return dailyJournals;
   }
 
   static getJournalsByMonth(journals: Journal[], monthDate: ISOMonthString) {
-    return journals.filter(journal => journal.localDate.startsWith(monthDate));
+    const monthlyJournals = journals.filter(journal =>
+      journal.localDate.startsWith(monthDate),
+    );
+    if (monthlyJournals.length === 0) {
+      return null;
+    }
+    return monthlyJournals;
+  }
+
+  static getJournalsByYear(journals: Journal[], year: number) {
+    return journals.filter(journal =>
+      journal.localDate.startsWith(year.toString()),
+    );
   }
 }

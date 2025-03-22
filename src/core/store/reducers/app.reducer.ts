@@ -27,10 +27,6 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       };
     case 'INIT_SETTINGS':
       return { ...state, settings: action.payload };
-    case 'SET_ERROR':
-      return { ...state, error: action.payload };
-    case 'SET_IS_LOADING':
-      return { ...state, isLoading: action.payload };
     default:
       return state;
   }

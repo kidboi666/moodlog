@@ -36,11 +36,11 @@ export const getISODateString = (
 ) => {
   let intMonth: number;
   if (typeof month === 'string') {
-    intMonth = Object.keys(MONTHS).findIndex(key => key === month) + 1;
+    intMonth = Object.keys(MONTHS).findIndex(key => key === month);
   } else {
     intMonth = month;
   }
-  return `${year}-${(intMonth + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}` as ISODateString;
+  return `${year}-${intMonth.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}` as ISODateString;
 };
 
 export const getDayInISODateString = (date: ISODateString) => {

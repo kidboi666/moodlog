@@ -1,8 +1,8 @@
 import { StorageService } from '@/core/store/services/storage.service';
 import { uuid } from 'expo-modules-core';
 import { STORAGE_KEY } from '@/core/constants/storage';
-import { UserState } from '@/core/store/types/user.types';
 import { ISODateString } from '@/types/date.types';
+import { NewUserInfo, UserInfo } from '@/types/user.types';
 
 export class UserService extends StorageService {
   static async loadUser() {
@@ -14,13 +14,13 @@ export class UserService extends StorageService {
     }
   }
 
-  static async saveUser(
-    userState: UserState,
+  static async saveNewUser(
+    userInfo: UserInfo,
     userName: string,
-  ): Promise<UserState> {
+  ): Promise<UserInfo> {
     try {
       const newUser = {
-        ...userState,
+        ...userInfo,
         id: uuid.v4(),
         userName,
       };
@@ -31,8 +31,21 @@ export class UserService extends StorageService {
     }
   }
 
+  static async saveUser(userInfo: UserInfo, updatedUserInfo: NewUserInfo) {
+    try {
+      const newUserInfo = {
+        ...userInfo,
+        ...updatedUserInfo,
+      };
+      await this.save(STORAGE_KEY.USER_INFO, newUserInfo);
+      return newUserInfo;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   static async saveDaysSinceSignup(
-    userState: UserState,
+    userInfo: UserInfo,
     firstLaunchDate: ISODateString,
   ): Promise<number> {
     try {
@@ -41,7 +54,7 @@ export class UserService extends StorageService {
       const diffTime = today.getTime() - signupDate.getTime();
       const daysSinceSignup = Math.floor(diffTime / (1000 * 60 * 60 * 24));
       const newUserInfo = {
-        ...userState,
+        ...userInfo,
         daysSinceSignup,
       };
       await this.save(STORAGE_KEY.USER_INFO, newUserInfo);

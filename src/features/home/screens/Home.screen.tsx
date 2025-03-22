@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useScroll } from '@/core/store/hooks/useScroll';
-import { Fragment, useEffect } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
@@ -12,32 +11,30 @@ import { JournalCard } from '@/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import * as S from './Home.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { useDraft } from '@/core/store/contexts/draft.context';
 import { useUser } from '@/core/store/contexts/user.context';
+import { useCalendar } from '@/core/hooks/useCalendar';
+import { useFocusEffect } from 'expo-router';
 
 export const HomeScreen = () => {
-  const { dailyJournals, isSubmitted, onSubmittedChange, removeJournal } =
-    useJournal('week');
+  const {
+    journals,
+    selectedJournals,
+    removeJournal,
+    onSelectedJournalsChange,
+  } = useJournal();
+  const { isToday, todayString } = useCalendar();
   const { t } = useTranslation();
-  const { onScroll } = useScroll();
   const { userInfo } = useUser();
-  const { initDraft } = useDraft();
   const isDev = __DEV__;
-  // const isDev = false;
 
-  useEffect(() => {
-    if (isSubmitted) {
-      initDraft();
-      onSubmittedChange();
-    }
-  }, [isSubmitted, initDraft, onSubmittedChange]);
+  useFocusEffect(
+    useCallback(() => {
+      onSelectedJournalsChange(todayString);
+    }, [journals.length]),
+  );
 
   return (
-    <ScrollView
-      onScroll={onScroll}
-      scrollEventThrottle={32}
-      overScrollMode="always"
-    >
+    <ScrollView overScrollMode="always">
       <Container
         edges={isDev ? ['bottom'] : ['top', 'bottom']}
         Header={isDev ? <HomeHeader /> : undefined}
@@ -61,8 +58,8 @@ export const HomeScreen = () => {
           <WeekDay />
         </S.ContentHeaderContainer>
 
-        {Array.isArray(dailyJournals) ? (
-          dailyJournals.map((journal, index) => {
+        {Array.isArray(selectedJournals) ? (
+          selectedJournals.map((journal, index) => {
             const { id, content, createdAt, mood, imageUri } = journal;
             return (
               <Fragment key={journal.id}>
@@ -81,7 +78,7 @@ export const HomeScreen = () => {
             );
           })
         ) : (
-          <EmptyJournal isToday={!!dailyJournals.length} />
+          <EmptyJournal isToday={isToday(selectedJournals)} />
         )}
       </Container>
     </ScrollView>

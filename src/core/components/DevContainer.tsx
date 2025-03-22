@@ -1,5 +1,5 @@
-import { useDev } from '@/core/store/hooks/useDev';
 import { Button, H2, ScrollView, YStack } from 'tamagui';
+import { useDev } from '@/core/store/contexts/dev.context';
 
 export const DevContainer = () => {
   const {

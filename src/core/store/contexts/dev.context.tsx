@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren } from 'react';
+import { createContext, PropsWithChildren, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { dummyJournals } from '../../../../dummy';
@@ -50,4 +50,12 @@ export const DevContextProvider = ({ children }: PropsWithChildren) => {
       {children}
     </DevContext.Provider>
   );
+};
+
+export const useDev = () => {
+  const context = useContext(DevContext);
+  if (!context) {
+    throw new Error('useDev must be used within a DevContextProvider');
+  }
+  return context;
 };

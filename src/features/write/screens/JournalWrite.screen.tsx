@@ -22,7 +22,9 @@ export const JournalWriteScreen = () => {
   const router = useRouter();
   const { fontSize } = useApp();
   const {
-    draft,
+    mood,
+    content,
+    imageUri,
     onContentChange,
     onTimeStamp,
     onSelectionChange,
@@ -30,18 +32,23 @@ export const JournalWriteScreen = () => {
     onImageUriChange,
     enhancedInputRef,
   } = useDraft();
-  const { addJournal } = useJournal('week');
+  const { addJournal } = useJournal();
   const toast = useToastController();
   const { t } = useTranslation();
   const theme = useTheme();
   const [inputKey, setInputKey] = useState(0);
 
-  const handleSubmit = () => {
-    addJournal(draft);
+  const handleSubmit = async () => {
+    const newDraft = {
+      content,
+      imageUri,
+      mood,
+    };
+    await addJournal(newDraft);
     toast.show(t('notifications.success.journal.title'), {
       message: t('notifications.success.journal.message'),
     });
-    router.push('/');
+    router.push('/(tabs)');
   };
 
   const triggerFocus = () => {
@@ -73,9 +80,9 @@ export const JournalWriteScreen = () => {
           }
         >
           <S.XStackContainer>
-            {draft.mood ? (
+            {mood ? (
               <S.ColoredMoodBar
-                moodColor={moodTheme[draft.mood?.type][draft.mood?.level]}
+                moodColor={moodTheme[mood?.type][mood?.level]}
               />
             ) : (
               <S.UncoloredMoodBar />
@@ -84,9 +91,9 @@ export const JournalWriteScreen = () => {
               <EnhancedTextInput
                 key={inputKey}
                 ref={enhancedInputRef}
-                imageUri={draft.imageUri}
+                imageUri={imageUri}
                 fontSize={fontSize}
-                contentValue={draft.content}
+                contentValue={content}
                 onContentChange={onContentChange}
                 selection={selection}
                 onSelectionChange={onSelectionChange}

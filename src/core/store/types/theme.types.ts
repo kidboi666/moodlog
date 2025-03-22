@@ -9,8 +9,8 @@ export type ThemeAction = {
   payload: Theme;
 };
 
-export interface ThemeStore {
+export type ThemeStore = {
   changeTheme: (theme: Theme) => void;
   currentTheme: Theme;
   resolvedTheme: Omit<Theme, 'system'>;
-}
+};

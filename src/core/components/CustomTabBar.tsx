@@ -7,7 +7,7 @@ import {
   Plus,
   Settings,
 } from '@tamagui/lucide-icons';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
@@ -15,10 +15,8 @@ import { HIDE_TAB_BAR_ROUTES } from '@/core/constants/routes';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as S from './CustomTabBar.styled';
 import { TabTrigger } from 'expo-router/ui';
-import { ShowTabBar } from '@/types/app.types';
-
-import { useAppTheme } from '@/core/store/contexts/theme.context';
-import { useDraft } from '@/core/store/contexts/draft.context';
+import { ShowTabBar, Theme } from '@/types/app.types';
+import { NotificationIcon } from '@/core/components/NotificationIcon';
 
 const translates = {
   show: {
@@ -29,11 +27,13 @@ const translates = {
   },
 } as const;
 
-export const CustomTabBar = () => {
+interface Props {
+  resolvedTheme: Omit<Theme, 'system'>;
+}
+
+export const CustomTabBar = memo(({ resolvedTheme }: Props) => {
   const theme = useTheme();
-  const { resolvedTheme } = useAppTheme();
   const pathname = usePathname();
-  const { draft } = useDraft();
   const insets = useSafeAreaInsets();
   const [tabBarState, setShouldHideTabBar] = useControllableState<ShowTabBar>({
     strategy: 'most-recent-wins',
@@ -70,11 +70,6 @@ export const CustomTabBar = () => {
     [isActive],
   );
 
-  const showDraftNotification = useMemo(
-    () => Boolean(draft.content || draft.mood?.type),
-    [draft.content, draft.mood?.type],
-  );
-
   return (
     <S.TabBarContainer
       height={TAB_BAR_HEIGHT + insets.bottom}
@@ -95,7 +90,7 @@ export const CustomTabBar = () => {
           <S.WriteButton>
             <S.WriteInnerBox>
               <Plus size="$1" />
-              <S.Circle showDraftNotification={showDraftNotification} />
+              <NotificationIcon />
             </S.WriteInnerBox>
           </S.WriteButton>
         </TabTrigger>
@@ -114,4 +109,4 @@ export const CustomTabBar = () => {
       </S.Container>
     </S.TabBarContainer>
   );
-};
+});

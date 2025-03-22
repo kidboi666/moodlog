@@ -10,7 +10,7 @@ import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 
 export const EntriesScreen = () => {
-  const { monthlyJournals, removeJournal } = useJournal('entries');
+  const { selectedJournals, removeJournal } = useJournal();
   const { t } = useTranslation();
   return (
     <ScrollView>
@@ -20,29 +20,27 @@ export const EntriesScreen = () => {
           <GardenSection />
         </FadeIn>
 
-        <FadeIn delay={CARD_DELAY.SECOND}>
-          <S.JournalBox>
-            {Array.isArray(monthlyJournals) ? (
-              monthlyJournals.map(journal => {
-                const { content, imageUri, id, createdAt, mood } = journal;
-                return (
-                  <Fragment key={id}>
-                    <JournalCard
-                      id={id}
-                      content={content}
-                      imageUri={imageUri}
-                      createdAt={createdAt}
-                      mood={mood}
-                      onDelete={removeJournal}
-                    />
-                  </Fragment>
-                );
-              })
-            ) : (
-              <EmptyJournal isToday={false} />
-            )}
-          </S.JournalBox>
-        </FadeIn>
+        <S.JournalBox>
+          {Array.isArray(selectedJournals) ? (
+            selectedJournals.map(journal => {
+              const { content, imageUri, id, createdAt, mood } = journal;
+              return (
+                <Fragment key={id}>
+                  <JournalCard
+                    id={id}
+                    content={content}
+                    imageUri={imageUri}
+                    createdAt={createdAt}
+                    mood={mood}
+                    onDelete={removeJournal}
+                  />
+                </Fragment>
+              );
+            })
+          ) : (
+            <EmptyJournal isToday={false} />
+          )}
+        </S.JournalBox>
       </S.Container>
     </ScrollView>
   );

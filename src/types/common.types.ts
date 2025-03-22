@@ -7,13 +7,10 @@ export type WithState<T, S> = T & S;
 
 export type ValueOf<T> = T[keyof T];
 
-/**
- * interface
- */
-export interface LoadingState {
+export type LoadingStatus = {
   isLoading: boolean;
-}
+};
 
-export interface ErrorState {
+export type ErrorStatus = {
   error: Error | null;
-}
+};

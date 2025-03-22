@@ -15,19 +15,26 @@ import {
   TextInputSelectionChangeEventData,
 } from 'react-native';
 import { Mood } from '@/types/mood.types';
-import { CalendarUtils } from 'react-native-calendars';
-import { saveImage } from '@/core/utils/imageUtils';
 import { draftReducer } from '@/core/store/reducers/draft.reducer';
-import { DraftStore } from '@/core/store/types/draft.types';
+import {
+  DraftActionContextType,
+  DraftContentContextType,
+  DraftMetadataContextType,
+} from '@/core/store/types/draft.types';
+import { DraftService } from '@/core/store/services/draft.service';
 
 const initialDraft = {
   content: '',
   mood: undefined,
   imageUri: '',
-  localDate: CalendarUtils.getCalendarDateString(new Date()),
 };
 
-export const DraftContext = createContext<Nullable<DraftStore>>(null);
+export const DraftContentContext =
+  createContext<Nullable<DraftContentContextType>>(null);
+export const DraftMetadataContext =
+  createContext<Nullable<DraftMetadataContextType>>(null);
+export const DraftActionContext =
+  createContext<Nullable<DraftActionContextType>>(null);
 
 export const DraftContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(draftReducer, initialDraft);
@@ -60,51 +67,76 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
 
   const handleImageUriChange = useCallback(async () => {
     try {
-      const newFilePath = await saveImage();
-      if (newFilePath) {
-        dispatch({ type: 'SET_IMAGE_URI', payload: newFilePath });
-      }
+      const newFilePath = await DraftService.saveImage();
+      newFilePath
+        ? dispatch({ type: 'SET_IMAGE_URI', payload: newFilePath })
+        : null;
     } catch (err) {
       console.error('Image saving error ', err);
       return null;
     }
   }, []);
 
+  const draftContentValue = useMemo(
+    () => ({
+      content: state.content,
+      onContentChange: handleContentChange,
+    }),
+    [state.content, handleContentChange],
+  );
+
+  const draftMetadataValue = useMemo(
+    () => ({
+      mood: state.mood,
+      imageUri: state.imageUri,
+    }),
+    [state.mood, state.imageUri],
+  );
+
+  const draftActionValue = useMemo(
+    () => ({
+      initDraft,
+      enhancedInputRef,
+      selection,
+      onTimeStamp: handleTimeStamp,
+      onImageUriChange: handleImageUriChange,
+      onMoodChange: handleMoodChange,
+      onSelectionChange: handleSelectionChange,
+    }),
+    [
+      initDraft,
+      enhancedInputRef,
+      selection,
+      handleTimeStamp,
+      handleImageUriChange,
+      handleMoodChange,
+      handleSelectionChange,
+    ],
+  );
+
   return (
-    <DraftContext.Provider
-      value={useMemo(
-        () => ({
-          draft: state,
-          initDraft,
-          enhancedInputRef,
-          selection,
-          onTimeStamp: handleTimeStamp,
-          onImageUriChange: handleImageUriChange,
-          onMoodChange: handleMoodChange,
-          onContentChange: handleContentChange,
-          onSelectionChange: handleSelectionChange,
-        }),
-        [
-          state,
-          initDraft,
-          enhancedInputRef,
-          selection,
-          handleTimeStamp,
-          handleImageUriChange,
-          handleMoodChange,
-          handleContentChange,
-          handleSelectionChange,
-        ],
-      )}
-    >
-      {children}
-    </DraftContext.Provider>
+    <DraftContentContext.Provider value={draftContentValue}>
+      <DraftMetadataContext.Provider value={draftMetadataValue}>
+        <DraftActionContext.Provider value={draftActionValue}>
+          {children}
+        </DraftActionContext.Provider>
+      </DraftMetadataContext.Provider>
+    </DraftContentContext.Provider>
   );
 };
+
 export const useDraft = () => {
-  const context = useContext(DraftContext);
-  if (!context) {
+  const draftContent = useContext(DraftContentContext);
+  const draftMetadata = useContext(DraftMetadataContext);
+  const draftAction = useContext(DraftActionContext);
+
+  if (!draftContent || !draftMetadata || !draftAction) {
     throw new Error('useDraft must be used within a DraftContextProvider');
   }
-  return context;
+
+  return {
+    ...draftContent,
+    ...draftMetadata,
+    ...draftAction,
+  };
 };

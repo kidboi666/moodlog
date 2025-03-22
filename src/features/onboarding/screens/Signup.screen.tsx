@@ -1,18 +1,21 @@
 import { H1 } from 'tamagui';
 import { Container } from '@/core/components/Container.styleable';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Signup.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 import { useUser } from '@/core/store/contexts/user.context';
+import { useApp } from '@/core/store/contexts/app.context';
 
 export const SignupScreen = () => {
   const { goToPrevStep, currentStep } = useStepProgress();
-  const { draftUserName, signUp } = useUser();
+  const { draftUserName, registerUser } = useUser();
+  const { isInitialApp } = useApp();
   const { t } = useTranslation();
+  const router = useRouter();
 
   const handlePrevStep = () => {
     if (currentStep === 2) {
@@ -22,7 +25,10 @@ export const SignupScreen = () => {
   };
 
   const handleSubmit = (userName: string) => {
-    signUp(userName);
+    registerUser(userName);
+    if (isInitialApp) {
+      router.replace('/');
+    }
   };
 
   return (

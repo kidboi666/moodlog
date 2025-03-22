@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { ScrollView, View } from 'tamagui';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
 import { DateCountDot } from '@/features/home/components/DateCountDot';
@@ -15,17 +15,24 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
 
 export const HorizontalCalendar = () => {
-  const { journals, getCountForMonth, onDailyJournalsChange } = useJournal();
+  const { journals, getCountForMonth, onSelectedJournalsChange } = useJournal();
   const { t } = useTranslation();
   const scrollViewRef = useRef<ScrollView>(null);
   const {
     currentYear,
     currentMonth,
     onSelectedDateChange,
+    selectedDate,
     isToday,
     isFuture,
     isSelected,
-  } = useCalendar(onDailyJournalsChange);
+  } = useCalendar();
+
+  const handleCalendarDateChange = useCallback(
+    (date: ISODateString) =>
+      onSelectedDateChange(date, onSelectedJournalsChange(date)),
+    [onSelectedDateChange, onSelectedJournalsChange],
+  );
 
   const dateCounts = useMemo(
     () => getCountForMonth(currentYear, currentMonth),
@@ -56,7 +63,7 @@ export const HorizontalCalendar = () => {
     }
 
     return () => clearTimeout(timeout);
-  }, [dates]);
+  }, [dates, selectedDate]);
 
   return (
     <S.CalendarContainer>
@@ -75,7 +82,7 @@ export const HorizontalCalendar = () => {
                 key={date}
                 isSelected={isSelected(date)}
                 isToday={isToday(date)}
-                onPress={() => onSelectedDateChange(date)}
+                onPress={() => handleCalendarDateChange(date)}
               >
                 <S.DateWrapper>
                   <S.DateTextWrapper>

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Welcome.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
+import React from 'react';
 
 export const WelcomeScreen = () => {
   const { t } = useTranslation();

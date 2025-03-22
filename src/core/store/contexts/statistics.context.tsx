@@ -22,14 +22,14 @@ import {
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useDate } from '@/core/store/contexts/date.context';
 
-const INITIAL_JOURNAL_STATS = {
+const initialJournalStats = {
   totalCount: 0,
   totalFrequency: 0,
   totalActiveDay: '',
   monthlyCounts: {},
 };
 
-const INITIAL_MOOD_STATS = {
+const initialMoodStats = {
   signatureMood: {
     type: '',
     count: 0,
@@ -56,11 +56,11 @@ const INITIAL_MOOD_STATS = {
 };
 
 const initialState: StatisticsState = {
-  journalStats: INITIAL_JOURNAL_STATS,
-  moodStats: INITIAL_MOOD_STATS,
+  journalStats: initialJournalStats,
+  moodStats: initialMoodStats,
   selectedMonthStats: null,
   expressiveMonthStats: {
-    currentMonth: '0000-00',
+    month: '0000-00',
     count: 0,
   },
 };
@@ -103,7 +103,7 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     return Object.entries(monthlyCounts).reduce(
       (highest, [month, count]) => {
         if (count > highest.count) {
-          return { month: currentMonth, count };
+          return { month, count };
         }
         return highest;
       },

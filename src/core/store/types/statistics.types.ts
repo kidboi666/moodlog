@@ -19,9 +19,9 @@ export type StatisticsAction =
   | { type: 'SET_SELECTED_MONTH_STATS'; payload: Nullable<SelectedMonthStats> }
   | { type: 'SET_EXPRESSIVE_MONTH_STATS'; payload: ExpressiveMonthStats };
 
-export interface StatisticsStore {
+export type StatisticsStore = {
   journalStats: JournalStats;
   moodStats: MoodStats;
   expressiveMonthStats: ExpressiveMonthStats;
   selectedMonthStats: Nullable<SelectedMonthStats>;
-}
+};
