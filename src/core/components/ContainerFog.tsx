@@ -1,7 +1,8 @@
 import * as S from './ContainerFog.styled';
 import { useTheme } from 'tamagui';
+import { memo } from 'react';
 
-export const ContainerFog = () => {
+export const ContainerFog = memo(() => {
   const theme = useTheme();
   const backgroundColor = theme.background.val;
 
@@ -38,4 +39,4 @@ export const ContainerFog = () => {
       ]}
     />
   );
-};
+});

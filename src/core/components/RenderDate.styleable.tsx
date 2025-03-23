@@ -57,3 +57,5 @@ export const RenderDate = Text.styleable<Props>(
     );
   },
 );
+
+RenderDate.displayName = 'RenderDate';

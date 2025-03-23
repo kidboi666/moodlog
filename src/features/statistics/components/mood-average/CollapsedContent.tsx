@@ -3,8 +3,7 @@ import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { Nullable } from '@/types/common.types';
 import * as S from './CollapsedContent.styled';
-import { MoodLevel, SignatureMood } from '@/types/mood.types';
-import { getMoodTheme } from '@/core/utils/common';
+import { SignatureMood } from '@/types/mood.types';
 
 interface Props {
   hasSignatureMood: boolean;
@@ -17,13 +16,7 @@ export const CollapsedContent = ({
 }: Props) => {
   const { t } = useTranslation();
   return (
-    <S.ViewContainer
-      moodColor={
-        hasSignatureMood
-          ? getMoodTheme(signatureMood!.type, MoodLevel.FULL)
-          : '$gray5'
-      }
-    >
+    <S.ViewContainer>
       <S.YStackContainer>
         <S.CardTitle signatureMood={hasSignatureMood}>
           {t('statistics.mood.title')}

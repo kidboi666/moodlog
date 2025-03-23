@@ -22,6 +22,7 @@ export const Garden = memo(
   }: Props) => {
     const moodData = useMemo(() => {
       const data = [];
+
       for (let week = 0; week < weekLength; week++) {
         const weekData = [];
         for (let day = 0; day < 7; day++) {
@@ -35,6 +36,7 @@ export const Garden = memo(
         }
         data.push(weekData);
       }
+
       return data;
     }, [weekLength, firstDateDay, lastDate, getMoodForDate]);
 

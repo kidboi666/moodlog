@@ -53,3 +53,5 @@ export const BottomModal = forwardRef<
     </BottomSheetModal>
   );
 });
+
+BottomModal.displayName = 'BottomModal';

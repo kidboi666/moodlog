@@ -12,6 +12,7 @@ export class StorageService {
       throw err;
     }
   }
+
   // TODO any
   static async save(key: ValueOf<typeof STORAGE_KEY>, data: any) {
     try {

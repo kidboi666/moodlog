@@ -1,10 +1,12 @@
 import { StatusBar as RNStatusBar } from 'react-native';
+import { memo } from 'react';
+import { Theme } from '@/types/app.types';
 
-import { useAppTheme } from '@/core/store/contexts/theme.context';
+interface Props {
+  resolvedTheme?: Omit<Theme, 'system'>;
+}
 
-export const StatusBar = () => {
-  const { resolvedTheme } = useAppTheme();
-
+export const StatusBar = memo(({ resolvedTheme }: Props) => {
   return (
     <RNStatusBar
       backgroundColor="transparent"
@@ -12,4 +14,4 @@ export const StatusBar = () => {
       barStyle={resolvedTheme === 'dark' ? 'light-content' : 'dark-content'}
     />
   );
-};
+});

@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { getMonthStringWithoutYear, getMoodTheme } from '@/core/utils/common';
+import { getMonthStringWithoutYear } from '@/core/utils/common';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
 
 import { SelectedMonthStats } from '@/types/statistic.types';
 import { MoodLevel, MoodType } from '@/types/mood.types';
+import { moodTheme } from '@/core/constants/themes';
 
 interface Props {
   selectedMonthStats: SelectedMonthStats;
@@ -27,7 +28,7 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
   return (
     <S.MonthlyStatsContainer>
       <S.MoodSummaryHeader
-        bg={getMoodTheme(signatureMood.type as MoodType, MoodLevel.FULL)}
+        bg={moodTheme[signatureMood.type as MoodType][MoodLevel.FULL]}
       >
         <S.SignatureMoodLabel>
           {t('statistics.statistics.currentMonth.mood', { month })}

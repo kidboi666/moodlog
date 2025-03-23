@@ -9,7 +9,6 @@ import {
 } from 'react';
 import { Nullable } from '@/types/common.types';
 import { ISODateString, ISOMonthString } from '@/types/date.types';
-import { Draft, Journal } from '@/types/journal.types';
 import { journalReducer } from '@/core/store/reducers/journal.reducer';
 import { JournalService } from '@/core/store/services/journal.service';
 import {
@@ -21,10 +20,14 @@ import {
 import { StatusState } from '@/core/store/types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';
 
+import { Draft } from '@/types/draft.types';
+
 const initialState: JournalState = {
-  journals: [],
-  selectedJournals: [],
-  selectedJournal: null,
+  journals: {},
+  indexes: {
+    byMonth: {},
+    byDate: {},
+  },
 };
 
 export const JournalBaseContext =
@@ -48,30 +51,12 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
         setStatus({ type: 'SET_IS_LOADING', payload: true });
         const newJournals = await JournalService.addJournal(
           state.journals,
+          state.indexes,
           draft,
         );
-        dispatch({ type: 'SET_JOURNALS', payload: newJournals });
+        dispatch({ type: 'SET_STORE', payload: newJournals });
       } catch (err) {
         console.error('Failed to save journals :', err);
-        setStatus({ type: 'SET_ERROR', payload: err });
-      } finally {
-        setStatus({ type: 'SET_IS_LOADING', payload: false });
-      }
-    },
-    [state.journals],
-  );
-
-  const updateJournals = useCallback(
-    async (updatedJournal: Journal) => {
-      try {
-        setStatus({ type: 'SET_IS_LOADING', payload: true });
-        const newJournals = await JournalService.updateJournal(
-          state.journals,
-          updatedJournal,
-        );
-        dispatch({ type: 'SET_JOURNALS', payload: newJournals });
-      } catch (err) {
-        console.error('Failed to update journal :', err);
         setStatus({ type: 'SET_ERROR', payload: err });
       } finally {
         setStatus({ type: 'SET_IS_LOADING', payload: false });
@@ -101,11 +86,7 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
 
   const handleSelectedJournalChange = useCallback(
     async (journalId: string) => {
-      const selectedJournal = JournalService.getJournalById(
-        state.journals,
-        journalId,
-      );
-      dispatch({ type: 'SET_SELECTED_JOURNAL', payload: selectedJournal });
+      return JournalService.getJournalById(state.journals, journalId);
     },
     [state.journals],
   );
@@ -160,31 +141,22 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
 
   const journalDataValue = useMemo(
     () => ({
-      selectedJournals: state.selectedJournals,
-      selectedJournal: state.selectedJournal,
       onSelectedJournalChange: handleSelectedJournalChange,
       onSelectedJournalsChange: handleSelectedJournalsChange,
     }),
-    [
-      state.selectedJournals,
-      state.selectedJournal,
-      handleSelectedJournalChange,
-      handleSelectedJournalsChange,
-    ],
+    [handleSelectedJournalChange, handleSelectedJournalsChange],
   );
 
   const journalActionValue = useMemo(
     () => ({
       addJournal,
       removeJournal,
-      updateJournals,
       getCountForMonth,
       getCountForDate,
       getMoodForDate,
     }),
     [
       addJournal,
-      updateJournals,
       removeJournal,
       getCountForMonth,
       getCountForDate,

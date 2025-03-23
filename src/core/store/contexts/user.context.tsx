@@ -113,34 +113,33 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     }
   }, [firstLaunchDate, updateDaysSinceSignup]);
 
+  const userInfoValue = useMemo(
+    () => ({
+      userInfo: state.userInfo,
+      draftUserName: state.userInfo.userName,
+      registerUser,
+      onUserInfoChange: handleUserInfoChange,
+      onDraftUserNameChange: handleDraftUserNameChange,
+    }),
+    [
+      state.userInfo,
+      state.userInfo.userName,
+      registerUser,
+      handleUserInfoChange,
+      handleDraftUserNameChange,
+    ],
+  );
+  const userStatusValue = useMemo(
+    () => ({
+      isLoading: status.isLoading,
+      error: status.error,
+    }),
+    [status.isLoading, status.error],
+  );
+
   return (
-    <UserInfoContext.Provider
-      value={useMemo(
-        () => ({
-          userInfo: state.userInfo,
-          draftUserName: state.userInfo.userName,
-          registerUser,
-          onUserInfoChange: handleUserInfoChange,
-          onDraftUserNameChange: handleDraftUserNameChange,
-        }),
-        [
-          state.userInfo,
-          state.userInfo.userName,
-          registerUser,
-          handleUserInfoChange,
-          handleDraftUserNameChange,
-        ],
-      )}
-    >
-      <UserStatusContext.Provider
-        value={useMemo(
-          () => ({
-            isLoading: status.isLoading,
-            error: status.error,
-          }),
-          [status.isLoading, status.error],
-        )}
-      >
+    <UserInfoContext.Provider value={userInfoValue}>
+      <UserStatusContext.Provider value={userStatusValue}>
         {children}
       </UserStatusContext.Provider>
     </UserInfoContext.Provider>

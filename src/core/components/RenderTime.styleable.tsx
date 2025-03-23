@@ -19,3 +19,5 @@ export const RenderTime = Text.styleable<Props>(
     );
   },
 );
+
+RenderTime.displayName = 'RenderTime';

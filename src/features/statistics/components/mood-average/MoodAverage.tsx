@@ -1,15 +1,15 @@
 import { Nullable } from '@/types/common.types';
 import { CollapsedContent } from '@/features/statistics/components/mood-average/CollapsedContent';
 import { ExpandedContent } from '@/features/statistics/components/mood-average/ExpandedContent';
-import { getMoodTheme } from '@/core/utils/common';
 import * as S from './MoodAverage.styled';
-import { MoodLevel, SignatureMood } from '@/types/mood.types';
+import { MoodLevel, MoodType, SignatureMood } from '@/types/mood.types';
 import { useControllableState, useEvent } from 'tamagui';
 import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
 import { ExpansionState } from '@/types/statistic.types';
+import { moodTheme } from '@/core/constants/themes';
 
 interface Props {
   signatureMood: Nullable<SignatureMood>;
@@ -49,7 +49,7 @@ export const MoodAverage = ({ signatureMood }: Props) => {
         isExpanded
           ? '$gray4'
           : hasSignatureMood
-            ? getMoodTheme(signatureMood!.type, MoodLevel.FULL)
+            ? moodTheme[signatureMood?.type as MoodType][MoodLevel.FULL]
             : '$gray4'
       }
       onPress={handleIsExpandedChange}

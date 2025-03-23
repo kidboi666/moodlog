@@ -1,12 +1,13 @@
 import { Mood } from '@/types/mood.types';
 import { Nullable } from '@/types/common.types';
-import { Draft } from '@/types/journal.types';
 import {
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
 import { MutableRefObject } from 'react';
 import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
+
+import { Draft } from '@/types/draft.types';
 
 export type DraftState = {
   content: string;

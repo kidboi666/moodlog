@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useDraft } from '@/core/store/contexts/draft.context';
 import * as S from './NotificationIcon.styled';
 
-export const NotificationIcon = () => {
+export const NotificationIcon = memo(() => {
   const { mood } = useDraft();
 
   const showDraftNotification = useMemo(
@@ -11,4 +11,4 @@ export const NotificationIcon = () => {
   );
 
   return <S.Circle showDraftNotification={showDraftNotification} />;
-};
+});

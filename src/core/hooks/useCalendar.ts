@@ -65,6 +65,7 @@ export const useCalendar = () => {
 
     isToday: (date: ISODateString | null) => date === todayString,
     isSelected: (date: ISODateString) => date === selectedDate,
+    isSelectedMonth: (month: ISOMonthString) => month === selectedMonth,
     isFuture: (date: ISODateString) => date > todayString,
   };
 };

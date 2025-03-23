@@ -104,7 +104,7 @@ const RootLayoutNav = () => {
       <ThemeProvider
         value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}
       >
-        <StatusBar />
+        <StatusBar resolvedTheme={resolvedTheme} />
         <BottomSheetModalProvider>
           <Stack screenOptions={screenOptions}>
             <Stack.Screen name="index" options={{ headerShown: false }} />

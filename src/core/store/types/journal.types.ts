@@ -1,28 +1,30 @@
-import { Draft, Journal } from '@/types/journal.types';
+import { Journal, Journals } from '@/types/journal.types';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 import { Mood } from '@/types/mood.types';
+import { Draft } from '@/types/draft.types';
 
-type SelectedJournal = Journal | null;
-type SelectedJournals = Journal[] | ISODateString | null;
+export type ByMonth = Record<ISOMonthString, string[]>;
+export type ByDate = Record<ISODateString, string[]>;
+export type Indexes = {
+  byMonth: ByMonth;
+  byDate: ByDate;
+};
 
 export type JournalState = {
-  journals: Journal[];
-  selectedJournals: SelectedJournals;
-  selectedJournal: SelectedJournal;
+  journals: Journals;
+  indexes: Indexes;
 };
 
 export type JournalAction =
-  | { type: 'SET_SELECTED_JOURNAL'; payload: SelectedJournal }
-  | { type: 'SET_SELECTED_JOURNALS'; payload: SelectedJournals }
-  | { type: 'SET_JOURNALS'; payload: Journal[] };
+  | { type: 'SET_STORE'; payload: JournalState }
+  | { type: 'SET_MONTH_INDEXES'; payload: ByMonth }
+  | { type: 'SET_DATE_INDEXES'; payload: ByDate };
 
 export type JournalBaseContextType = {
-  journals: Journal[];
+  journals: Journals;
 };
 
 export type JournalDataContextType = {
-  selectedJournals: SelectedJournals;
-  selectedJournal: SelectedJournal;
   onSelectedJournalChange: (journalId: string) => void;
   onSelectedJournalsChange: (
     date: ISODateString | ISOMonthString | null,

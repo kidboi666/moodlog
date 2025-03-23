@@ -16,8 +16,14 @@ import { useCalendar } from '@/core/hooks/useCalendar';
 
 export const GardenSection = () => {
   const { getMoodForDate, onSelectedJournalsChange } = useJournal();
-  const { selectedYear, selectedMonth, onSelectedMonthChange } = useCalendar();
-  const months = useMemo(
+  const {
+    selectedYear,
+    selectedMonth,
+    onSelectedMonthChange,
+    isSelectedMonth,
+  } = useCalendar();
+
+  const staticMonths = useMemo(
     () =>
       Object.keys(MONTHS).map((month, i) => ({
         monthKey: month as MonthKey,
@@ -27,23 +33,17 @@ export const GardenSection = () => {
         firstDateDay: getFirstDateDay(selectedYear, month),
         weekLength: getWeekLength(selectedYear, month),
       })),
-    [selectedYear, selectedMonth],
+    [selectedYear],
   );
 
   const handleMonthChange = useCallback(
     (monthDate: ISOMonthString) => {
-      if (selectedMonth === monthDate) {
-        onSelectedMonthChange(null, onSelectedJournalsChange);
-      } else {
-        onSelectedMonthChange(monthDate, onSelectedJournalsChange);
-      }
+      onSelectedMonthChange(
+        selectedMonth === monthDate ? null : monthDate,
+        onSelectedJournalsChange,
+      );
     },
-    [
-      selectedYear,
-      selectedMonth,
-      onSelectedMonthChange,
-      onSelectedJournalsChange,
-    ],
+    [selectedMonth, onSelectedMonthChange, onSelectedJournalsChange],
   );
 
   return (
@@ -52,18 +52,15 @@ export const GardenSection = () => {
       <ScrollView horizontal>
         <GardenDayUnits />
         <S.StackBox>
-          {months.map(monthData => {
-            const isSelected = selectedMonth === monthData.monthDate;
-            return (
-              <MonthItem
-                key={monthData.monthKey}
-                monthData={monthData}
-                isSelected={isSelected}
-                onMonthChange={handleMonthChange}
-                getMoodForDate={getMoodForDate}
-              />
-            );
-          })}
+          {staticMonths.map(staticMonth => (
+            <MonthItem
+              key={staticMonth.monthKey}
+              monthData={staticMonth}
+              isSelected={isSelectedMonth(staticMonth.monthDate)}
+              onMonthChange={handleMonthChange}
+              getMoodForDate={getMoodForDate}
+            />
+          ))}
         </S.StackBox>
       </ScrollView>
     </S.Container>

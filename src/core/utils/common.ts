@@ -1,7 +1,5 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
-import { moodTheme } from '@/core/constants/themes';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
-import { MoodLevel, MoodType } from '@/types/mood.types';
 
 /**
  * month에 +1 하는 규칙:
@@ -17,14 +15,6 @@ export const removeLeadingZero = (str: string) => {
 
   return str;
 };
-
-export const getMonthNumber = (month: number | MonthKey) => {
-  if (typeof month === 'number') {
-    return month + 1;
-  }
-  return Object.keys(MONTHS).indexOf(month);
-};
-
 export const getMonthString = (month: number) => {
   return Object.keys(MONTHS)[month];
 };
@@ -86,10 +76,17 @@ export const getMonthStringWithoutYear = (str: string) => {
   ] as MonthKey;
 };
 
-export const getMoodTheme = (type: MoodType | string, level: MoodLevel) => {
-  return moodTheme[type as MoodType][level];
-};
-
 export const toSingle = <T>(value: T | T[]): T => {
   return Array.isArray(value) ? value[0] : value;
+};
+
+export const getMonthFromDate = (date: ISODateString): ISOMonthString => {
+  return date.substring(0, 7) as ISOMonthString;
+};
+
+export const addToIndex = (index, key, id) => {
+  const newIndex = { ...index };
+  if (!newIndex[key]) {
+    newIndex[key] = newIndex;
+  }
 };

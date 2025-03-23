@@ -19,3 +19,5 @@ export const RenderDay = Text.styleable<Props>(
     );
   },
 );
+
+RenderDay.displayName = 'RenderDay';

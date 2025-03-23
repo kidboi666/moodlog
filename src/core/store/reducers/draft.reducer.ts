@@ -1,5 +1,6 @@
-import { Draft } from '@/types/journal.types';
 import { DraftAction, DraftState } from '@/core/store/types/draft.types';
+
+import { Draft } from '@/types/draft.types';
 
 export const draftReducer = (state: DraftState, action: DraftAction): Draft => {
   switch (action.type) {

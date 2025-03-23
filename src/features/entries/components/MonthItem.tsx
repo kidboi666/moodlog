@@ -1,10 +1,8 @@
-import { YStack } from 'tamagui';
-import { GardenMonthUnits } from '@/features/entries/components/GardenMonthUnits';
-import { Garden } from '@/features/entries/components/Garden';
 import { memo } from 'react';
 import * as S from './MonthItem.styled';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { Mood } from '@/types/mood.types';
+import { MonthItemContent } from '@/features/entries/components/MonthItemContent';
 
 interface Props {
   monthData: {
@@ -23,23 +21,21 @@ export const MonthItem = memo(
   ({ monthData, isSelected, onMonthChange, getMoodForDate }: Props) => {
     const { monthKey, monthDate, lastDate, firstDateDay, weekLength } =
       monthData;
-
     return (
       <S.MonthItemButton
         key={monthKey}
         isSelected={isSelected}
         onPress={() => onMonthChange(monthDate)}
       >
-        <YStack>
-          <GardenMonthUnits month={monthKey} isSelected={isSelected} />
-          <Garden
-            weekLength={weekLength}
-            firstDateDay={firstDateDay}
-            monthDate={monthDate}
-            lastDate={lastDate}
-            getMoodForDate={getMoodForDate}
-          />
-        </YStack>
+        <MonthItemContent
+          monthKey={monthKey}
+          isSelected={isSelected}
+          weekLength={weekLength}
+          firstDateDay={firstDateDay}
+          monthDate={monthDate}
+          lastDate={lastDate}
+          getMoodForDate={getMoodForDate}
+        />
       </S.MonthItemButton>
     );
   },
