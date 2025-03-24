@@ -15,7 +15,7 @@ export const DevContextProvider = ({ children }: PropsWithChildren) => {
 
   const handleClearJournalStorage = async () => {
     console.log('Clearing journal storage...');
-    await AsyncStorage.removeItem(STORAGE_KEY.JOURNALS);
+    await AsyncStorage.removeItem(STORAGE_KEY.JOURNAL_STORE);
   };
 
   const handleClearStorage = async () => {
@@ -26,7 +26,7 @@ export const DevContextProvider = ({ children }: PropsWithChildren) => {
   const insertDummyData = async () => {
     console.log('Inserting dummy data...');
     await AsyncStorage.setItem(
-      STORAGE_KEY.JOURNALS,
+      STORAGE_KEY.JOURNAL_STORE,
       JSON.stringify(dummyJournals),
     );
   };

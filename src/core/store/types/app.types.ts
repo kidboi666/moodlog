@@ -42,6 +42,9 @@ export type AppSettingsContextType = {
   language: any;
   timeFormat: TimeFormat;
   fontSize: ViewFontSize;
+};
+
+export type AppActionContextType = {
   onLanguageChange: (language: any) => void;
   onFontSizeChange: (fontSize: ViewFontSize) => void;
   onTimeFormatChange: (timeFormat: TimeFormat) => void;

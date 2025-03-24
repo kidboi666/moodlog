@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
@@ -14,24 +14,27 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { useFocusEffect } from 'expo-router';
+import { useDraft } from '@/core/store/contexts/draft.context';
 
 export const HomeScreen = () => {
-  const {
-    journals,
-    selectedJournals,
-    removeJournal,
-    onSelectedJournalsChange,
-  } = useJournal();
-  const { isToday, todayString } = useCalendar();
+  const { selectedJournals, removeJournal, selectJournals } = useJournal();
+  const { isToday, selectedDate } = useCalendar();
+  const { initDraft } = useDraft();
   const { t } = useTranslation();
   const { userInfo } = useUser();
   const isDev = __DEV__;
 
   useFocusEffect(
     useCallback(() => {
-      onSelectedJournalsChange(todayString);
-    }, [journals.length]),
+      selectJournals(selectedDate);
+    }, [selectedDate, selectJournals]),
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      initDraft();
+    }, 0);
+  }, []);
 
   return (
     <ScrollView overScrollMode="always">

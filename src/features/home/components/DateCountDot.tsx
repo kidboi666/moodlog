@@ -1,23 +1,20 @@
 import * as S from './DateCountDot.styled';
-import { DateCounts } from '@/types/date.types';
 
 interface Props {
-  dateCounts?: DateCounts;
-  dateString: string;
+  journalCount?: number;
   isSelected?: boolean;
   variant?: 'default' | 'contained';
 }
 
 export const DateCountDot = ({
-  dateCounts,
-  dateString,
+  journalCount,
   isSelected,
   variant = 'default',
 }: Props) => {
-  if (!dateCounts) return null;
+  if (!journalCount) return null;
   return (
     <S.DotContainer>
-      {Array.from({ length: dateCounts[dateString] }, (_, i) => {
+      {Array.from({ length: journalCount }, (_, i) => {
         if (i >= 3) return null;
         return (
           <S.Dot

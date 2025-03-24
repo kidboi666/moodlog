@@ -12,6 +12,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 export const EntriesScreen = () => {
   const { selectedJournals, removeJournal } = useJournal();
   const { t } = useTranslation();
+
   return (
     <ScrollView>
       <S.Container edges={['top']} padded>

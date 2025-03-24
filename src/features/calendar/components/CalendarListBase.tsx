@@ -11,7 +11,7 @@ import { Direction } from 'react-native-calendars/src/types';
 import { CustomDayComponent } from '@/features/calendar/components/CustomDayComponent';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
 import { CalendarCustomHeader } from '@/features/calendar/components/CalendarCustomHeader';
-import { getMonthInISODateString } from '@/core/utils/common';
+import { getISOMonthString } from '@/core/utils/common';
 import { ArrowButton } from '@/features/calendar/components/ArrowButton';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 
@@ -105,7 +105,7 @@ export const CalendarListBase = memo(
         futureScrollRange={futureScrollRange}
         onMonthChange={({ dateString }: Pick<DateData, 'dateString'>) =>
           onSelectedMonthChange(
-            getMonthInISODateString(
+            getISOMonthString(
               new Date(dateString).getFullYear(),
               new Date(dateString).getMonth(),
             ),

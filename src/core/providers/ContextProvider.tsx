@@ -1,5 +1,4 @@
 import { DraftContextProvider } from '@/core/store/contexts/draft.context';
-import { StatisticsContextProvider } from '@/core/store/contexts/statistics.context';
 import { AppContextProvider } from '@/core/store/contexts/app.context';
 import { UserContextProvider } from '@/core/store/contexts/user.context';
 import { DevContextProvider } from '@/core/store/contexts/dev.context';
@@ -12,13 +11,13 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
     <DateContextProvider>
       <JournalContextProvider>
         <DraftContextProvider>
-          <StatisticsContextProvider>
-            <AppContextProvider>
-              <UserContextProvider>
-                <DevContextProvider>{children}</DevContextProvider>
-              </UserContextProvider>
-            </AppContextProvider>
-          </StatisticsContextProvider>
+          {/*<StatisticsContextProvider>*/}
+          <AppContextProvider>
+            <UserContextProvider>
+              <DevContextProvider>{children}</DevContextProvider>
+            </UserContextProvider>
+          </AppContextProvider>
+          {/*</StatisticsContextProvider>*/}
         </DraftContextProvider>
       </JournalContextProvider>
     </DateContextProvider>

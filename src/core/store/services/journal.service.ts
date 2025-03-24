@@ -5,43 +5,44 @@ import { uuid } from 'expo-modules-core';
 import { CalendarUtils } from 'react-native-calendars';
 import {
   getISODateString,
-  getLastDate,
+  getISOMonthString,
   getMonthFromDate,
 } from '@/core/utils/common';
-import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
-import { Indexes, JournalState } from '@/core/store/types/journal.types';
+import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
+import { JournalIndexes, JournalStore } from '@/core/store/types/journal.types';
 
 import { Draft } from '@/types/draft.types';
 
 export class JournalService extends StorageService {
-  static async loadJournals(): Promise<Journal[]> {
+  static async loadJournalStore(): Promise<JournalStore> {
     try {
-      const newJournals = await this.load(STORAGE_KEY.JOURNALS);
+      const newJournals = await this.load(STORAGE_KEY.JOURNAL_STORE);
       return newJournals ? newJournals : [];
     } catch (err) {
       throw err;
     }
   }
 
-  static async saveJournals(journals: JournalState): Promise<void> {
+  static async saveJournalStore(journals: JournalStore): Promise<void> {
     try {
-      await this.save(STORAGE_KEY.JOURNALS, journals);
+      await this.save(STORAGE_KEY.JOURNAL_STORE, journals);
     } catch (err) {
       throw err;
     }
   }
 
   static async addJournal(
-    journals: Journals,
-    indexes: Indexes,
+    store: JournalStore,
     draft: Draft,
-  ): Promise<JournalState> {
+  ): Promise<JournalStore> {
+    console.log(draft);
     if (!draft.content || !draft.mood) {
       throw new Error('not content or mood');
     }
     try {
       const localDate = CalendarUtils.getCalendarDateString(new Date());
       const monthString = getMonthFromDate(localDate);
+      const moodType = draft.mood.type;
 
       const newJournal = {
         id: uuid.v4(),
@@ -52,131 +53,140 @@ export class JournalService extends StorageService {
         imageUri: draft.imageUri ? draft.imageUri : null,
       };
 
-      const newState = {
+      const newStore = {
         journals: {
-          ...journals,
+          ...store.journals,
           [newJournal.id]: newJournal,
         },
         indexes: {
-          ...indexes,
+          ...store.indexes,
           byMonth: {
-            ...indexes.byMonth,
+            ...store.indexes.byMonth,
             [monthString]: [
-              ...(indexes.byMonth[monthString] || []),
+              ...(store.indexes.byMonth[monthString] || []),
               newJournal.id,
             ],
           },
           byDate: {
-            ...indexes.byDate,
-            [localDate]: [...(indexes.byDate[localDate] || []), newJournal.id],
+            ...store.indexes.byDate,
+            [localDate]: [
+              ...(store.indexes.byDate[localDate] || []),
+              newJournal.id,
+            ],
+          },
+          byMood: {
+            ...store.indexes.byMood,
+            [moodType]: [
+              ...(store.indexes.byMood[moodType] || []),
+              newJournal.id,
+            ],
           },
         },
       };
 
-      await this.saveJournals(newState);
+      await this.saveJournalStore(newStore);
 
-      return newState;
+      return newStore;
     } catch (err) {
       throw err;
     }
   }
 
   static async removeJournal(
-    journals: Journal[],
+    store: JournalStore,
     journalId: string,
-  ): Promise<Journal[]> {
+  ): Promise<JournalStore> {
     try {
-      const newJournals = journals.filter(journal => journal.id !== journalId);
-      await this.saveJournals(newJournals);
-      return newJournals;
+      const journal = store.journals[journalId];
+      if (!journal) {
+        return { journals: store.journals, indexes: store.indexes };
+      }
+      const date = journal.localDate;
+      const month = getMonthFromDate(date);
+      const mood = journal.mood.type;
+
+      const newStore = {
+        journals: { ...store.journals },
+        indexes: { ...store.indexes },
+      };
+
+      delete newStore.journals[journalId];
+
+      newStore.indexes.byDate[date] = (
+        newStore.indexes.byDate[date] || []
+      ).filter(id => id !== journalId);
+      newStore.indexes.byMonth[month] = (
+        newStore.indexes.byMonth[month] || []
+      ).filter(id => id !== journalId);
+      newStore.indexes.byMood[mood] = (
+        newStore.indexes.byMood[mood] || []
+      ).filter(id => id !== journalId);
+      await this.saveJournalStore(newStore);
+      return newStore;
     } catch (err) {
       throw err;
     }
   }
 
   static getCountForDate(
-    journals: Journal[],
+    indexes: JournalIndexes,
     year: number,
     month: number | string,
     date: number,
-  ) {
+  ): number {
     const dateString = getISODateString(year, month, date);
-    const foundJournals = journals.filter(
-      journal => journal.localDate === dateString,
-    );
-
-    return foundJournals.length;
-  }
-
-  static getMoodForDate(journals: Journal[], date: ISODateString) {
-    const foundJournals = journals.filter(
-      journal => journal.localDate === date,
-    );
-
-    return foundJournals.map(journal => journal.mood);
+    return (indexes?.byDate[dateString] || []).length;
   }
 
   static getCountForMonth(
-    journals: Journal[],
+    indexes: JournalIndexes,
     year: number,
-    month: number | string,
-  ) {
-    const lastDate = getLastDate(year, month);
-    const counts: DateCounts = {};
+    month: number | MonthKey,
+  ): number {
+    const monthString = getISOMonthString(year, month);
+    return (indexes?.byMonth[monthString] || []).length;
+  }
 
-    for (let day = 1; day <= lastDate; day++) {
-      const dateKey = getISODateString(year, month, day);
-      counts[dateKey] = 0;
-    }
-
-    journals.forEach(journal => {
-      if (counts.hasOwnProperty(journal.localDate)) {
-        counts[journal.localDate]++;
-      }
-    });
-
-    return counts;
+  static getMoodForDate(store: JournalStore, date: ISODateString) {
+    const thatDays = store.indexes.byDate[date] || [];
+    return thatDays.map(day => store.journals[day].mood);
   }
 
   static getJournals(
-    journals: Journals,
-    indexes: Indexes,
+    store: JournalStore,
     date: ISODateString | ISOMonthString | null,
-  ) {
+  ): Journal[] | ISODateString | null {
     if (!date) return null;
     const splitDate = date.split('-');
 
     if (splitDate?.[2]) {
-      return this.getJournalsByDate(journals, indexes, date as ISODateString);
+      return this.getJournalsByDate(store, date as ISODateString);
     }
-    return this.getJournalsByMonth(journals, indexes, date as ISOMonthString);
+    return this.getJournalsByMonth(store, date as ISOMonthString);
   }
 
-  static getJournalById(journals: Journals, journalId: string) {
+  static getJournalById(journals: Journals, journalId: string): Journal | null {
     return journals[journalId] || null;
   }
 
   static getJournalsByDate(
-    journals: Journals,
-    indexes: Indexes,
+    store: JournalStore,
     date: ISODateString,
-  ) {
-    const dailyJournalsIndex = indexes.byDate[date];
+  ): Journal[] | ISODateString | null {
+    const dailyJournalsIndex = store.indexes.byDate[date] || [];
     if (dailyJournalsIndex.length === 0) {
       return date;
     }
-    return dailyJournalsIndex.map(journalIndex => journals[journalIndex]);
+    return dailyJournalsIndex.map(journalIndex => store.journals[journalIndex]);
   }
 
-  static getJournalsByMonth(
-    journals: Journals,
-    indexes: Indexes,
-    monthDate: ISOMonthString,
-  ) {
-    const monthlyJournalsIndex = indexes.byMonth[monthDate];
+  static getJournalsByMonth(store: JournalStore, monthDate: ISOMonthString) {
+    const monthlyJournalsIndex = store.indexes.byMonth[monthDate] || [];
     if (monthlyJournalsIndex.length === 0) {
       return null;
     }
-    return monthlyJournalsIndex.map(journalIndex => journals[journalIndex]);
+    return monthlyJournalsIndex.map(
+      journalIndex => store.journals[journalIndex],
+    );
   }
 }

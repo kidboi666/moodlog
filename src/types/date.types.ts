@@ -1,7 +1,7 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
 
 export type DateCounts = {
-  [date: string]: number;
+  [date: ISODateString]: number;
 };
 
 export type ISODateString = `${number}-${number}-${number}`;

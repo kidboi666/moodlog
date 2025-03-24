@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useTheme } from 'tamagui';
 import { moodTheme } from '@/core/constants/themes';
 import {
@@ -9,55 +9,43 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
-import { EnhancedTextInput } from '@/features/write/components/EnhancedTextInput';
 import { WriteHeader } from '@/features/write/components/WriteHeader';
 import { ActionButtons } from '@/features/write/components/ActionButtons';
 import { useRouter } from 'expo-router';
 import * as S from './JournalWrite.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { useApp } from '@/core/store/contexts/app.context';
 import { useDraft } from '@/core/store/contexts/draft.context';
+import {
+  EnhancedTextInput,
+  EnhancedTextInputRef,
+} from '../components/EnhancedTextInput';
 
 export const JournalWriteScreen = () => {
   const router = useRouter();
-  const { fontSize } = useApp();
-  const {
-    mood,
-    content,
-    imageUri,
-    onContentChange,
-    onTimeStamp,
-    onSelectionChange,
-    selection,
-    onImageUriChange,
-    enhancedInputRef,
-  } = useDraft();
+  const { mood, content, imageUri, onContentChange, onImageUriChange } =
+    useDraft();
   const { addJournal } = useJournal();
   const toast = useToastController();
   const { t } = useTranslation();
   const theme = useTheme();
-  const [inputKey, setInputKey] = useState(0);
+  const inputRef = useRef<EnhancedTextInputRef>(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     const newDraft = {
       content,
-      imageUri,
       mood,
+      imageUri,
     };
     await addJournal(newDraft);
     toast.show(t('notifications.success.journal.title'), {
       message: t('notifications.success.journal.message'),
     });
     router.push('/(tabs)');
-  };
+  }, []);
 
-  const triggerFocus = () => {
-    if (enhancedInputRef.current) {
-      enhancedInputRef.current.focus();
-    } else {
-      setInputKey(prev => prev + 1);
-    }
-  };
+  const handleTimeStamp = useCallback(() => {
+    inputRef.current?.insertCurrentTime();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -66,11 +54,7 @@ export const JournalWriteScreen = () => {
       behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? -40 : 0}
     >
-      <TouchableOpacity
-        activeOpacity={1}
-        style={StyleSheet.absoluteFill}
-        onPress={triggerFocus}
-      >
+      <TouchableOpacity activeOpacity={1} style={StyleSheet.absoluteFill}>
         <S.ViewContainer
           edges={['bottom']}
           Header={
@@ -89,19 +73,14 @@ export const JournalWriteScreen = () => {
             )}
             <S.TextContentBox>
               <EnhancedTextInput
-                key={inputKey}
-                ref={enhancedInputRef}
+                ref={inputRef}
                 imageUri={imageUri}
-                fontSize={fontSize}
                 contentValue={content}
                 onContentChange={onContentChange}
-                selection={selection}
-                onSelectionChange={onSelectionChange}
-                autoFocus={true}
               />
               <S.ButtonsViewBox>
                 <ActionButtons
-                  onTimeStamp={onTimeStamp}
+                  onTimeStamp={handleTimeStamp}
                   onImageUriChange={onImageUriChange}
                   onSubmit={handleSubmit}
                 />

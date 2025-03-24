@@ -6,22 +6,16 @@ export const journalReducer = (
 ): JournalState => {
   switch (action.type) {
     case 'SET_STORE':
-      return action.payload;
-    case 'SET_MONTH_INDEXES':
+      return { ...state, store: action.payload };
+    case 'SET_SELECTED_JOURNALS':
       return {
         ...state,
-        indexes: {
-          ...state.indexes,
-          byMonth: action.payload,
-        },
+        selectedJournals: action.payload,
       };
-    case 'SET_DATE_INDEXES':
+    case 'SET_SELECTED_JOURNAL':
       return {
         ...state,
-        indexes: {
-          ...state.indexes,
-          byDate: action.payload,
-        },
+        selectedJournal: action.payload,
       };
     default:
       return state;

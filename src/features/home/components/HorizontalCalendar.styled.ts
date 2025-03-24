@@ -1,4 +1,4 @@
-import { Button, styled, Text, XStack, YStack } from 'tamagui';
+import { Button, styled, Text, View, XStack, YStack } from 'tamagui';
 import { ENTER_STYLE, ENTER_STYLE_KEY } from '@/core/constants/styles';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
 
@@ -12,8 +12,7 @@ export const CalendarContainer = styled(XStack, {
   items: 'center',
 });
 
-export const DateContainer = styled(Button, {
-  unstyled: true,
+export const DateContainer = styled(View, {
   py: '$3',
   width: CALENDAR_SCROLL_SIZE,
   rounded: '$4',
@@ -33,7 +32,8 @@ export const DateContainer = styled(Button, {
   } as const,
 });
 
-export const DateWrapper = styled(YStack, {
+export const DateWrapper = styled(Button, {
+  unstyled: true,
   items: 'center',
 });
 

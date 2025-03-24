@@ -5,15 +5,8 @@ import {
   useContext,
   useMemo,
   useReducer,
-  useRef,
-  useState,
 } from 'react';
 import { Nullable } from '@/types/common.types';
-import { EnhancedTextInputRef } from '@/features/write/components/EnhancedTextInput';
-import {
-  NativeSyntheticEvent,
-  TextInputSelectionChangeEventData,
-} from 'react-native';
 import { Mood } from '@/types/mood.types';
 import { draftReducer } from '@/core/store/reducers/draft.reducer';
 import {
@@ -23,12 +16,6 @@ import {
 } from '@/core/store/types/draft.types';
 import { DraftService } from '@/core/store/services/draft.service';
 
-const initialDraft = {
-  content: '',
-  mood: undefined,
-  imageUri: '',
-};
-
 export const DraftContentContext =
   createContext<Nullable<DraftContentContextType>>(null);
 export const DraftMetadataContext =
@@ -37,10 +24,13 @@ export const DraftActionContext =
   createContext<Nullable<DraftActionContextType>>(null);
 
 export const DraftContextProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(draftReducer, initialDraft);
+  const initialDraft = {
+    content: '',
+    mood: undefined,
+    imageUri: '',
+  };
 
-  const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const enhancedInputRef = useRef<EnhancedTextInputRef>(null);
+  const [state, dispatch] = useReducer(draftReducer, initialDraft);
 
   const handleMoodChange = useCallback((mood: Mood) => {
     dispatch({ type: 'SET_MOOD', payload: mood });
@@ -50,19 +40,8 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: 'SET_CONTENT', payload: content });
   }, []);
 
-  const handleTimeStamp = useCallback(() => {
-    enhancedInputRef.current?.insertCurrentTime();
-  }, []);
-
-  const handleSelectionChange = useCallback(
-    (event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
-      setSelection(event.nativeEvent.selection);
-    },
-    [],
-  );
-
   const initDraft = useCallback(() => {
-    dispatch({ type: 'INIT_DRAFT', payload: initialDraft });
+    dispatch({ type: 'INIT_DRAFT' });
   }, []);
 
   const handleImageUriChange = useCallback(async () => {
@@ -80,9 +59,8 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
   const draftContentValue = useMemo(
     () => ({
       content: state.content,
-      onContentChange: handleContentChange,
     }),
-    [state.content, handleContentChange],
+    [state.content],
   );
 
   const draftMetadataValue = useMemo(
@@ -96,22 +74,11 @@ export const DraftContextProvider = ({ children }: PropsWithChildren) => {
   const draftActionValue = useMemo(
     () => ({
       initDraft,
-      enhancedInputRef,
-      selection,
-      onTimeStamp: handleTimeStamp,
+      onContentChange: handleContentChange,
       onImageUriChange: handleImageUriChange,
       onMoodChange: handleMoodChange,
-      onSelectionChange: handleSelectionChange,
     }),
-    [
-      initDraft,
-      enhancedInputRef,
-      selection,
-      handleTimeStamp,
-      handleImageUriChange,
-      handleMoodChange,
-      handleSelectionChange,
-    ],
+    [initDraft, handleImageUriChange, handleMoodChange, handleContentChange],
   );
 
   return (

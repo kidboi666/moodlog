@@ -1,4 +1,4 @@
-import { getMonthInISODateString } from '@/core/utils/common';
+import { getISOMonthString } from '@/core/utils/common';
 import { DateAction, DateState } from '@/core/store/types/date.types';
 
 export const dateReducer = (
@@ -16,7 +16,7 @@ export const dateReducer = (
       const { currentYear, currentMonth, initialISODate } = action.payload;
       return {
         selectedYear: currentYear,
-        selectedMonth: getMonthInISODateString(currentYear, currentMonth),
+        selectedMonth: getISOMonthString(currentYear, currentMonth),
         selectedDate: initialISODate,
       };
     }

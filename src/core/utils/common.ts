@@ -1,19 +1,14 @@
 import { MONTHS, WEEK_DAY } from '@/core/constants/date';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 
-/**
- * month에 +1 하는 규칙:
- * 1. ISODateString을 만들때
- * 2. 해당 달의 마지막날을 구할때 (getLastDate)
- */
 export const removeLeadingZero = (str: string) => {
   str = String(str);
 
   if (str.charAt(0) === '0' && str.length > 1) {
-    return str.substring(1);
+    return Number(str.substring(1));
   }
 
-  return str;
+  return Number(str);
 };
 export const getMonthString = (month: number) => {
   return Object.keys(MONTHS)[month];
@@ -37,14 +32,15 @@ export const getDayInISODateString = (date: ISODateString) => {
   return Object.keys(WEEK_DAY)[new Date(date).getDay()];
 };
 
+export const getDayNumberInISODateString = (date: ISODateString) => {
+  return new Date(date).getDay();
+};
+
 export const getDateInISODateString = (date: ISODateString) => {
   return removeLeadingZero(date.split('-')[2]);
 };
 
-export const getMonthInISODateString = (
-  year: number,
-  month: number | MonthKey,
-) => {
+export const getISOMonthString = (year: number, month: number | MonthKey) => {
   if (typeof month === 'number') {
     return `${year}-${(month + 1).toString().padStart(2, '0')}` as ISOMonthString;
   }
@@ -82,11 +78,4 @@ export const toSingle = <T>(value: T | T[]): T => {
 
 export const getMonthFromDate = (date: ISODateString): ISOMonthString => {
   return date.substring(0, 7) as ISOMonthString;
-};
-
-export const addToIndex = (index, key, id) => {
-  const newIndex = { ...index };
-  if (!newIndex[key]) {
-    newIndex[key] = newIndex;
-  }
 };

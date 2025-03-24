@@ -8,30 +8,42 @@ import {
   useReducer,
 } from 'react';
 import { Nullable } from '@/types/common.types';
-import { ISODateString, ISOMonthString } from '@/types/date.types';
+import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { journalReducer } from '@/core/store/reducers/journal.reducer';
 import { JournalService } from '@/core/store/services/journal.service';
 import {
   JournalActionContextType,
-  JournalBaseContextType,
   JournalDataContextType,
+  JournalIndexes,
   JournalState,
+  JournalStore,
 } from '@/core/store/types/journal.types';
 import { StatusState } from '@/core/store/types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';
 
 import { Draft } from '@/types/draft.types';
 
-const initialState: JournalState = {
-  journals: {},
-  indexes: {
-    byMonth: {},
-    byDate: {},
+const initialIndexes: JournalIndexes = {
+  byMonth: {},
+  byDate: {},
+  byMood: {
+    happy: [],
+    sad: [],
+    peace: [],
+    angry: [],
   },
 };
+const initialStore: JournalStore = {
+  journals: {},
+  indexes: initialIndexes,
+};
 
-export const JournalBaseContext =
-  createContext<Nullable<JournalBaseContextType>>(null);
+const initialState: JournalState = {
+  store: initialStore,
+  selectedJournals: null,
+  selectedJournal: null,
+};
+
 export const JournalDataContext =
   createContext<Nullable<JournalDataContextType>>(null);
 export const JournalActionContext =
@@ -49,11 +61,7 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
     async (draft: Draft) => {
       try {
         setStatus({ type: 'SET_IS_LOADING', payload: true });
-        const newJournals = await JournalService.addJournal(
-          state.journals,
-          state.indexes,
-          draft,
-        );
+        const newJournals = await JournalService.addJournal(state.store, draft);
         dispatch({ type: 'SET_STORE', payload: newJournals });
       } catch (err) {
         console.error('Failed to save journals :', err);
@@ -62,18 +70,15 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
         setStatus({ type: 'SET_IS_LOADING', payload: false });
       }
     },
-    [state.journals],
+    [state.store],
   );
 
   const removeJournal = useCallback(
     async (id: string) => {
       try {
         setStatus({ type: 'SET_IS_LOADING', payload: true });
-        const newJournals = await JournalService.removeJournal(
-          state.journals,
-          id,
-        );
-        dispatch({ type: 'SET_JOURNALS', payload: newJournals });
+        const newStore = await JournalService.removeJournal(state.store, id);
+        dispatch({ type: 'SET_STORE', payload: newStore });
       } catch (err) {
         console.error('Failed to remove journal :', err);
         setStatus({ type: 'SET_ERROR', payload: err });
@@ -81,74 +86,102 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
         setStatus({ type: 'SET_IS_LOADING', payload: false });
       }
     },
-    [state.journals],
+    [state.store],
   );
 
-  const handleSelectedJournalChange = useCallback(
+  const selectJournal = useCallback(
     async (journalId: string) => {
-      return JournalService.getJournalById(state.journals, journalId);
+      const journal = JournalService.getJournalById(
+        state.store.journals,
+        journalId,
+      );
+      dispatch({ type: 'SET_SELECTED_JOURNAL', payload: journal });
     },
-    [state.journals],
+    [state.store],
   );
 
-  const handleSelectedJournalsChange = useCallback(
+  const selectJournals = useCallback(
     (date: ISODateString | ISOMonthString | null) => {
-      const selectedJournals = JournalService.getJournals(state.journals, date);
-      dispatch({ type: 'SET_SELECTED_JOURNALS', payload: selectedJournals });
+      const journals = JournalService.getJournals(state.store, date);
+      dispatch({ type: 'SET_SELECTED_JOURNALS', payload: journals });
     },
-    [state.journals],
+    [state.store],
   );
 
   const getCountForDate = useCallback(
     (year: number, month: number | string, date: number) => {
-      return JournalService.getCountForDate(state.journals, year, month, date);
+      return JournalService.getCountForDate(
+        state.store.indexes || initialIndexes,
+        year,
+        month,
+        date,
+      );
     },
-    [state.journals],
+    [state.store.indexes],
+  );
+
+  const getCountForMonth = useCallback(
+    (year: number, month: number | MonthKey) => {
+      return JournalService.getCountForMonth(
+        state.store.indexes || initialIndexes,
+        year,
+        month,
+      );
+    },
+    [state.store.indexes],
   );
 
   const getMoodForDate = useCallback(
     (date: ISODateString) => {
-      return JournalService.getMoodForDate(state.journals, date);
+      return JournalService.getMoodForDate(state.store, date);
     },
-    [state.journals],
-  );
-
-  const getCountForMonth = useCallback(
-    (year: number, month: number | string) => {
-      return JournalService.getCountForMonth(state.journals, year, month);
-    },
-    [state.journals],
+    [state.store],
   );
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const newJournals = await JournalService.loadJournals();
-        dispatch({ type: 'SET_JOURNALS', payload: newJournals });
+        setStatus({ type: 'SET_IS_LOADING', payload: true });
+        const newStore = await JournalService.loadJournalStore();
+        const safeStore = {
+          journals: newStore.journals || {},
+          indexes: {
+            byMonth: newStore.indexes?.byMonth || {},
+            byDate: newStore.indexes?.byDate || {},
+            byMood: newStore.indexes?.byMood || {
+              happy: [],
+              sad: [],
+              peace: [],
+              angry: [],
+            },
+          },
+        };
+
+        dispatch({ type: 'SET_STORE', payload: safeStore });
       } catch (err) {
         console.error('Failed to init journals :', err);
         setStatus({ type: 'SET_ERROR', payload: err });
+      } finally {
+        setStatus({ type: 'SET_IS_LOADING', payload: false });
       }
     };
 
     void loadData();
   }, []);
 
-  const journalBaseValue = useMemo(
-    () => ({ journals: state.journals }),
-    [state.journals],
-  );
-
   const journalDataValue = useMemo(
     () => ({
-      onSelectedJournalChange: handleSelectedJournalChange,
-      onSelectedJournalsChange: handleSelectedJournalsChange,
+      journals: state.store.journals,
+      selectedJournals: state.selectedJournals,
+      selectedJournal: state.selectedJournal,
     }),
-    [handleSelectedJournalChange, handleSelectedJournalsChange],
+    [state.store.journals, state.selectedJournals, state.selectedJournal],
   );
 
   const journalActionValue = useMemo(
     () => ({
+      selectJournal,
+      selectJournals,
       addJournal,
       removeJournal,
       getCountForMonth,
@@ -156,6 +189,8 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
       getMoodForDate,
     }),
     [
+      selectJournal,
+      selectJournals,
       addJournal,
       removeJournal,
       getCountForMonth,
@@ -173,29 +208,25 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <JournalBaseContext.Provider value={journalBaseValue}>
-      <JournalDataContext.Provider value={journalDataValue}>
-        <JournalActionContext.Provider value={journalActionValue}>
-          <JournalStatusContext.Provider value={journalStatusValue}>
-            {children}
-          </JournalStatusContext.Provider>
-        </JournalActionContext.Provider>
-      </JournalDataContext.Provider>
-    </JournalBaseContext.Provider>
+    <JournalDataContext.Provider value={journalDataValue}>
+      <JournalActionContext.Provider value={journalActionValue}>
+        <JournalStatusContext.Provider value={journalStatusValue}>
+          {children}
+        </JournalStatusContext.Provider>
+      </JournalActionContext.Provider>
+    </JournalDataContext.Provider>
   );
 };
 
 export const useJournal = () => {
-  const journalBase = useContext(JournalBaseContext);
   const journalData = useContext(JournalDataContext);
   const journalAction = useContext(JournalActionContext);
   const journalStatus = useContext(JournalStatusContext);
 
-  if (!journalBase || !journalData || !journalAction || !journalStatus) {
+  if (!journalData || !journalAction || !journalStatus) {
     throw new Error('useJournal must be used within a JournalContextProvider');
   }
   return {
-    ...journalBase,
     ...journalData,
     ...journalAction,
     ...journalStatus,

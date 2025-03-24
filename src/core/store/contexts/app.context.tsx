@@ -13,6 +13,7 @@ import { ISODateString } from '@/types/date.types';
 import { Languages, TimeFormat, ViewFontSize } from '@/types/app.types';
 import { appReducer } from '@/core/store/reducers/app.reducer';
 import {
+  AppActionContextType,
   AppInfoContextType,
   AppSettingsContextType,
   AppState,
@@ -39,6 +40,8 @@ export const AppInfoContext = createContext<Nullable<AppInfoContextType>>(null);
 export const AppSettingsContext =
   createContext<Nullable<AppSettingsContextType>>(null);
 export const AppStatusContext = createContext<Nullable<StatusState>>(null);
+export const AppActionContext =
+  createContext<Nullable<AppActionContextType>>(null);
 
 export const AppContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
@@ -133,7 +136,7 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
     }
   }, []);
 
-  const appInfoValue = useMemo(
+  const infoValue = useMemo(
     () => ({
       appVersion: state.appVersion,
       isInitialApp: state.isInitialApp,
@@ -150,23 +153,26 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
     ],
   );
 
-  const appSettingsValue = useMemo(
+  const settingsValue = useMemo(
     () => ({
       language: state.settings.language,
       fontSize: state.settings.fontSize,
       timeFormat: state.settings.timeFormat,
-      onFontSizeChange: handleFontSizeChange,
-      onLanguageChange: handleLanguageChange,
-      onTimeFormatChange: handleTimeFormatChange,
     }),
     [
       state.settings.language,
       state.settings.fontSize,
       state.settings.timeFormat,
-      handleFontSizeChange,
-      handleLanguageChange,
-      handleTimeFormatChange,
     ],
+  );
+
+  const actionValue = useMemo(
+    () => ({
+      onFontSizeChange: handleFontSizeChange,
+      onLanguageChange: handleLanguageChange,
+      onTimeFormatChange: handleTimeFormatChange,
+    }),
+    [handleFontSizeChange, handleLanguageChange, handleTimeFormatChange],
   );
 
   const appStatusValue = useMemo(
@@ -178,10 +184,12 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <AppInfoContext.Provider value={appInfoValue}>
-      <AppSettingsContext.Provider value={appSettingsValue}>
+    <AppInfoContext.Provider value={infoValue}>
+      <AppSettingsContext.Provider value={settingsValue}>
         <AppStatusContext.Provider value={appStatusValue}>
-          {children}
+          <AppActionContext.Provider value={actionValue}>
+            {children}
+          </AppActionContext.Provider>
         </AppStatusContext.Provider>
       </AppSettingsContext.Provider>
     </AppInfoContext.Provider>

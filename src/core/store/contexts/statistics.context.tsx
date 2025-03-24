@@ -76,8 +76,8 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
    * 작성한 모든 일기의 갯수 가져오기
    */
   const getTotalCount = useCallback(() => {
-    return journals.length;
-  }, [journals.length]);
+    return Array.from(journals).length;
+  }, [journals]);
 
   /**
    * 각 달마다 작성한 일기의 갯수 가져오기

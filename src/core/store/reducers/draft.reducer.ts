@@ -11,7 +11,7 @@ export const draftReducer = (state: DraftState, action: DraftAction): Draft => {
     case 'SET_IMAGE_URI':
       return { ...state, imageUri: action.payload };
     case 'INIT_DRAFT':
-      return action.payload;
+      return { content: '', mood: undefined, imageUri: '' };
     default:
       return state;
   }

@@ -13,12 +13,12 @@ interface Props {
 }
 
 export const JournalScreen = ({ journalId }: Props) => {
-  const { selectedJournal, onSelectedJournalChange } = useJournal();
+  const { selectedJournal, selectJournal } = useJournal();
   const { fontSize } = useApp();
   const { t } = useTranslation();
 
   useEffect(() => {
-    onSelectedJournalChange(toSingle(journalId));
+    selectJournal(toSingle(journalId));
   }, [journalId]);
 
   if (!selectedJournal || selectedJournal?.id !== journalId) return null;
