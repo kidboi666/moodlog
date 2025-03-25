@@ -199,12 +199,14 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
 export const useApp = () => {
   const appInfo = useContext(AppInfoContext);
   const appSettings = useContext(AppSettingsContext);
+  const appAction = useContext(AppActionContext);
   const status = useContext(AppStatusContext);
-  if (!appInfo || !appSettings || !status) {
+  if (!appInfo || !appSettings || !status || !appAction) {
     throw new Error('useApp must be used within a AppContextProvider');
   }
   return {
     ...appInfo,
+    ...appAction,
     ...appSettings,
     ...status,
   };

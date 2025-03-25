@@ -17,3 +17,9 @@ export enum CardPosition {
   LEFT = 'left',
   RIGHT = 'right',
 }
+
+export type Draft = {
+  content: string;
+  mood?: Mood;
+  imageUri: Nullable<string>;
+};

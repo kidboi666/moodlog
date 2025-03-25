@@ -1,5 +1,5 @@
 import { styled, YStack } from 'tamagui';
-import { PRESS_STYLE } from '@/core/constants/styles';
+import { PRESS_STYLE } from '@/core/styles/animations';
 
 export const CardContainer = styled(YStack, {
   flex: 1,

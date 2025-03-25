@@ -12,7 +12,7 @@ import {
   ENTER_STYLE,
   ENTER_STYLE_KEY,
   EXIT_STYLE,
-} from '@/core/constants/styles';
+} from '@/core/styles/animations';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
 

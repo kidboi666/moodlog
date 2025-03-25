@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Nullable } from '@/types/common.types';
 import * as S from './SelectedMoodContainer.styled';
-import { Mood } from '@/types/mood.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 
 interface Props {
-  mood: Nullable<Mood>;
+  moodType?: MoodType;
+  moodLevel?: MoodLevel;
 }
 
-export const SelectedMoodContainer = ({ mood }: Props) => {
-  const [animationKey, setAnimationKey] = useState(0);
+export const SelectedMoodContainer = memo(({ moodType, moodLevel }: Props) => {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setAnimationKey(key => key + 1);
-  }, [mood?.type, mood?.level]);
 
   return (
     <S.ViewContainer>
-      <S.XStackContainer key={animationKey}>
+      <S.XStackContainer>
         <S.MoodLevelText>
-          {mood ? t(`moods.levels.${mood.level}`) : '??'}
+          {moodType ? t(`moods.levels.${moodLevel}`) : '??'}
         </S.MoodLevelText>
         <S.MoodTypeText>
-          {mood ? t(`moods.types.${mood.type}`) : '??'}
+          {moodType ? t(`moods.types.${moodType}`) : '??'}
         </S.MoodTypeText>
       </S.XStackContainer>
     </S.ViewContainer>
   );
-};
+});

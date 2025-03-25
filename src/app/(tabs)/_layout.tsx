@@ -4,23 +4,20 @@ import { ContainerFog } from '@/core/components/ContainerFog';
 import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
 import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
-import { useAppTheme } from '@/core/store/contexts/theme.context';
 
 export default function TabsLayout() {
-  const { resolvedTheme } = useAppTheme();
-
   return (
     <Tabs>
       <TabSlot />
       <ContainerFog />
-      <CustomTabBar resolvedTheme={resolvedTheme} />
+      <CustomTabBar />
       <TabList style={{ display: 'none' }}>
-        <TabTrigger name="home" href="/(tabs)" />
-        <TabTrigger name="entries" href="/(tabs)/entries" />
-        <TabTrigger name="write" href="/(tabs)/write/mood_select" />
-        <TabTrigger name="statistics" href="/(tabs)/statistics" />
-        <TabTrigger name="settings" href="/(tabs)/settings" />
-        <TabTrigger name="journal" href="/(tabs)/journal/[journalId]" />
+        <TabTrigger name="home" href="/" />
+        <TabTrigger name="entries" href="/entries" />
+        <TabTrigger name="write" href="/write" />
+        <TabTrigger name="statistics" href="/statistics" />
+        <TabTrigger name="settings" href="/settings" />
+        <TabTrigger name="journal" href="/journal" />
       </TabList>
       <BottomModal>
         <DevContainer />

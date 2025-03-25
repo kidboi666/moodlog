@@ -1,54 +1,27 @@
-import { Check } from '@tamagui/lucide-icons';
-import { moodTheme } from '@/core/constants/themes';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 import * as S from './PickerMood.styled';
 import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
+import { MoodTypeBox } from '@/features/write/components/MoodTypeBox';
+import { View } from 'tamagui';
 
 interface Props {
   mood?: Mood;
-  onMoodChange: (mood: Mood) => void;
+  onMoodChange: (type: MoodType, level: MoodLevel) => void;
 }
 
-export const PickerMood = ({ onMoodChange, mood }: Props) => {
-  const { t } = useTranslation();
+export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
   return (
-    <S.ViewContainer>
+    <View>
       <S.XStackContainer>
-        {Object.values(MoodType).map((type, index) => (
-          <S.MoodTypeContainer key={index}>
-            <S.MoodLevelContainer>
-              {Object.values(MoodLevel).map(level => (
-                <S.MoodLevelButton
-                  key={type + level}
-                  moodColor={moodTheme[type][level]}
-                  onPress={() =>
-                    onMoodChange({
-                      type,
-                      level,
-                    })
-                  }
-                  icon={
-                    mood?.type === type && mood?.level === level ? (
-                      <Check
-                        position="absolute"
-                        z="$1"
-                        color={level === MoodLevel.ZERO ? '$gray10' : '$gray4'}
-                        size="$1"
-                      />
-                    ) : null
-                  }
-                />
-              ))}
-            </S.MoodLevelContainer>
-            <S.SelectedMoodBox key={index}>
-              <S.SelectedMoodText>
-                {t(`moods.types.${type}`)}
-              </S.SelectedMoodText>
-            </S.SelectedMoodBox>
-          </S.MoodTypeContainer>
+        {Object.values(MoodType).map(type => (
+          <MoodTypeBox
+            key={type}
+            type={type}
+            mood={mood}
+            onMoodChange={onMoodChange}
+          />
         ))}
       </S.XStackContainer>
-    </S.ViewContainer>
+    </View>
   );
-};
+});

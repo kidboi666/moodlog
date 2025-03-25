@@ -8,7 +8,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ENTER_STYLE, ENTER_STYLE_KEY } from '@/core/constants/styles';
+import { ENTER_STYLE, ENTER_STYLE_KEY } from '@/core/styles/animations';
 
 export const ViewContainer = styled(HOSContainer, {
   pl: 0,

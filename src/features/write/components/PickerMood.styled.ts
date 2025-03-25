@@ -1,17 +1,5 @@
 import { Button, styled, Text, View, XStack, YStack } from 'tamagui';
 
-export const ViewContainer = styled(View, {
-  animation: 'bouncy',
-  enterStyle: {
-    opacity: 0,
-    y: 10,
-  },
-  exitStyle: {
-    opacity: 0,
-    y: 10,
-  },
-});
-
 export const XStackContainer = styled(XStack, {
   justify: 'space-between',
 });

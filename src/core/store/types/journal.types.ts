@@ -1,7 +1,6 @@
-import { Journal, Journals } from '@/types/journal.types';
+import { Draft, Journal, Journals } from '@/types/journal.types';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { Mood, MoodType } from '@/types/mood.types';
-import { Draft } from '@/types/draft.types';
 
 /**
  * Types

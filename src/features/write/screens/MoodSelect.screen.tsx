@@ -1,34 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MoodSelectTitle } from '@/features/write/components/MoodSelectTitle';
-import { SelectedMoodContainer } from '@/features/write/components/SelectedMoodContainer';
 import { PickerMood } from '@/features/write/components/PickerMood';
 import { NextButton } from '@/features/write/components/NextButton';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { MoodBar } from '@/features/write/components/MoodBar';
 import { WriteHeader } from '@/features/write/components/WriteHeader';
-import { CARD_DELAY } from '@/core/constants/time';
 import * as S from './MoodSelect.styled';
-import { useDraft } from '@/core/store/contexts/draft.context';
+import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
+import { SelectedMoodContainer } from '@/features/write/components/SelectedMoodContainer';
 
 export const MoodSelectScreen = () => {
-  const { mood, onMoodChange } = useDraft();
+  const [mood, setMood] = useState<Mood>();
+
+  const handleMoodChange = (type: MoodType, level: MoodLevel) => {
+    setMood({ type, level });
+  };
+
   return (
     <S.ViewContainer edges={['bottom']} Header={<WriteHeader />}>
       <S.XStackContainer>
         <S.YStackContainer>
-          <FadeIn delay={CARD_DELAY.FIRST}>
+          <FadeIn>
             <MoodSelectTitle />
           </FadeIn>
 
-          <FadeIn delay={CARD_DELAY.SECOND} flex={1}>
-            <SelectedMoodContainer mood={mood ?? null} />
+          <FadeIn flex={1}>
+            <SelectedMoodContainer
+              moodType={mood?.type}
+              moodLevel={mood?.level}
+            />
           </FadeIn>
 
-          <FadeIn delay={CARD_DELAY.THIRD}>
-            <PickerMood mood={mood} onMoodChange={onMoodChange} />
+          <FadeIn>
+            <PickerMood mood={mood} onMoodChange={handleMoodChange} />
           </FadeIn>
 
-          <NextButton mood={mood} />
+          <NextButton moodType={mood?.type} moodLevel={mood?.level} />
         </S.YStackContainer>
 
         <MoodBar mood={mood} />

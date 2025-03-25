@@ -21,7 +21,7 @@ import {
 import { StatusState } from '@/core/store/types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';
 
-import { Draft } from '@/types/draft.types';
+import { Draft } from '@/types/journal.types';
 
 const initialIndexes: JournalIndexes = {
   byMonth: {},

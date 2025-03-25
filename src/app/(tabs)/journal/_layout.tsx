@@ -14,7 +14,8 @@ export default function JournalLayout() {
         gestureEnabled: true,
       }}
     >
-      <Stack.Screen name="[journalId]" />
+      <Stack.Screen name="index" />
+      <Stack.Screen name="[id]" />
     </Stack>
   );
 }

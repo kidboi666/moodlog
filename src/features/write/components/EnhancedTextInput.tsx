@@ -50,15 +50,12 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
 
     const handleTextChange = (text: string) => {
       setLocalContent(text);
-    };
-
-    const handleContentChange = (localContent: string) => {
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
       debounceTimeout.current = setTimeout(() => {
         onContentChange(localContent);
-      }, 100);
+      }, 300);
     };
 
     useImperativeHandle(ref, () => ({
@@ -78,7 +75,6 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
             onSelectionChange={event =>
               setSelection(event.nativeEvent.selection)
             }
-            onEndEditing={() => handleContentChange(localContent)}
             placeholder={t('placeholders.journal.content')}
           />
         </S.InputContainer>

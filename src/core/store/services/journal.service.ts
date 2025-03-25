@@ -1,5 +1,5 @@
 import { STORAGE_KEY } from '@/core/constants/storage';
-import { Journal, Journals } from '@/types/journal.types';
+import { Draft, Journal, Journals } from '@/types/journal.types';
 import { StorageService } from '@/core/store/services/storage.service';
 import { uuid } from 'expo-modules-core';
 import { CalendarUtils } from 'react-native-calendars';
@@ -10,8 +10,6 @@ import {
 } from '@/core/utils/common';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { JournalIndexes, JournalStore } from '@/core/store/types/journal.types';
-
-import { Draft } from '@/types/draft.types';
 
 export class JournalService extends StorageService {
   static async loadJournalStore(): Promise<JournalStore> {

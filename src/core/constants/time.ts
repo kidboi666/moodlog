@@ -11,5 +11,3 @@ export const CARD_DELAY = {
   THIRD: 900,
   FOURTH: 1200,
 } as const;
-
-export const FEEDBACK_DURATION = 300;

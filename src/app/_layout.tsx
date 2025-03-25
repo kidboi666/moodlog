@@ -18,6 +18,7 @@ import { ErrorBoundaryProps, Stack } from 'expo-router';
 import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
+import { AppInitializer } from '@/core/components/AppInitializer';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -36,7 +37,15 @@ SplashScreen.preventAutoHideAsync();
 
 export const ErrorBoundary = ({ error, retry }: ErrorBoundaryProps) => {
   return (
-    <View style={{ flex: 1, backgroundColor: 'red' }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'red',
+        padding: 24,
+      }}
+    >
       <Text>{error.message}</Text>
       <Text onPress={retry}>Try Again?</Text>
     </View>
@@ -107,12 +116,12 @@ const RootLayoutNav = () => {
         <StatusBar resolvedTheme={resolvedTheme} />
         <BottomSheetModalProvider>
           <Stack screenOptions={screenOptions}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="(onboarding)" />
             <Stack.Screen name="+not-found" />
           </Stack>
           <CurrentToast />
+          <AppInitializer />
         </BottomSheetModalProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

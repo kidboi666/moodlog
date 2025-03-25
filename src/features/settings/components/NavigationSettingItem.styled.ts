@@ -1,5 +1,5 @@
 import { Button, styled } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/constants/styles';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/styles/animations';
 
 export const SettingsNavigationButton = styled(Button, {
   unstyled: true,

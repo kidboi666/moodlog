@@ -3,17 +3,17 @@ import React, { useEffect } from 'react';
 import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import { toSingle } from '@/core/utils/common';
-import JournalHeader from '@/features/journal/components/JournalHeader';
 import * as S from './Journal.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useApp } from '@/core/store/contexts/app.context';
+import { useLocalSearchParams } from 'expo-router';
+import { JournalHeader } from '@/features/journal/components/JournalHeader';
 
-interface Props {
-  journalId: string;
-}
-
-export const JournalScreen = ({ journalId }: Props) => {
+export const JournalScreen = () => {
+  const { id } = useLocalSearchParams();
+  const journalId = toSingle(id);
   const { selectedJournal, selectJournal } = useJournal();
+
   const { fontSize } = useApp();
   const { t } = useTranslation();
 

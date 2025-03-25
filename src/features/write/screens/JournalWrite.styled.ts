@@ -1,4 +1,4 @@
-import { styled, View, XStack, YStack } from 'tamagui';
+import { styled, View, XStack } from 'tamagui';
 import { Container as HOSContainer } from '@/core/components/Container.styleable';
 
 export const ViewContainer = styled(HOSContainer, {
@@ -34,12 +34,6 @@ export const ColoredMoodBar = styled(MoodBarBase, {
 
 export const UncoloredMoodBar = styled(MoodBarBase, {
   bg: '$gray8',
-});
-
-export const TextContentBox = styled(YStack, {
-  gap: '$6',
-  flex: 1,
-  z: 1,
 });
 
 export const ButtonsViewBox = styled(View, {

@@ -1,14 +1,10 @@
-import React, { memo, useMemo } from 'react';
-import { useDraft } from '@/core/store/contexts/draft.context';
+import React, { memo } from 'react';
 import * as S from './NotificationIcon.styled';
 
-export const NotificationIcon = memo(() => {
-  const { mood } = useDraft();
+interface Props {
+  showDraftNotification: boolean;
+}
 
-  const showDraftNotification = useMemo(
-    () => Boolean(mood?.type),
-    [mood?.type],
-  );
-
+export const NotificationIcon = memo(({ showDraftNotification }: Props) => {
   return <S.Circle showDraftNotification={showDraftNotification} />;
 });

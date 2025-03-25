@@ -14,7 +14,7 @@ export default function WriteLayout() {
         gestureEnabled: true,
       }}
     >
-      <Stack.Screen name="mood_select" />
+      <Stack.Screen name="index" />
       <Stack.Screen name="journal_write" />
     </Stack>
   );

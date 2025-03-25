@@ -4,7 +4,7 @@ import {
   ENTER_STYLE_KEY,
   PRESS_STYLE,
   PRESS_STYLE_KEY,
-} from '@/core/constants/styles';
+} from '@/core/styles/animations';
 
 export const TodayContainer = styled(YStack, {
   justify: 'center',

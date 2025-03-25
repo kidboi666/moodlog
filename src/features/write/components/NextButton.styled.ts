@@ -3,7 +3,7 @@ import {
   ENTER_STYLE,
   PRESS_STYLE,
   PRESS_STYLE_KEY,
-} from '@/core/constants/styles';
+} from '@/core/styles/animations';
 
 export const ViewContainer = styled(View, {
   items: 'center',

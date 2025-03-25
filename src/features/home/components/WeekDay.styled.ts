@@ -1,5 +1,5 @@
 import { H1, styled, XStack, YStack } from 'tamagui';
-import { FALL_STYLE, FALL_STYLE_KEY } from '@/core/constants/styles';
+import { FALL_STYLE, FALL_STYLE_KEY } from '@/core/styles/animations';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const WeekDayContainer = styled(YStack, {

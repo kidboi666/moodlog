@@ -17,10 +17,7 @@ export const EmptyJournal = memo(({ isToday }: Props) => {
   return isToday ? (
     <S.TodayContainer>
       <S.TodayTitle>{t('common.fallback.today')}</S.TodayTitle>
-      <S.WriteButton
-        icon={Plus}
-        onPress={() => router.push('/(tabs)/write/mood_select')}
-      />
+      <S.WriteButton icon={Plus} onPress={() => router.push('/write')} />
     </S.TodayContainer>
   ) : (
     <S.PastDaysContainer

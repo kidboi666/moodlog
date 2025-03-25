@@ -1,8 +1,5 @@
 import { Dimensions } from 'react-native';
 
-/**
- * ANIMATIONS
- */
 export const ENTER_STYLE = {
   opacity: 0,
   scale: 0.92,
@@ -24,3 +21,12 @@ export const FALL_STYLE = {
 } as const;
 
 export const FALL_STYLE_KEY = ['transform'];
+
+export const TAB_BAR_TRANSLATE = {
+  show: {
+    y: 0,
+  },
+  hide: {
+    y: 140,
+  },
+} as const;

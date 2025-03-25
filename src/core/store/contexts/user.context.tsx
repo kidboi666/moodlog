@@ -43,12 +43,15 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
   const registerUser = useCallback(
     async (userName: string) => {
       try {
+        setStatus({ type: 'SET_IS_LOADING', payload: true });
         const newUser = await UserService.saveNewUser(state.userInfo, userName);
         dispatch({ type: 'SET_USER_INFO', payload: newUser });
         await initFirstLaunchStatus();
       } catch (err) {
         console.error('failed to save user data : ', err);
         setStatus({ type: 'SET_ERROR', payload: err });
+      } finally {
+        setStatus({ type: 'SET_IS_LOADING', payload: false });
       }
     },
     [initFirstLaunchStatus, state.userInfo.userName],
@@ -152,5 +155,5 @@ export const useUser = () => {
   if (!userInfo || !userStatus) {
     throw new Error('useUser must be used within a UserContextProvider');
   }
-  return userInfo;
+  return { ...userInfo, ...userStatus };
 };

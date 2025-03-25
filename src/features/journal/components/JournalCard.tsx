@@ -53,8 +53,8 @@ export const JournalCard = ({
       handleSwipeRight();
     } else {
       router.push({
-        pathname: '/journal/[journalId]',
-        params: { journalId: id },
+        pathname: '/journal/[id]',
+        params: { id },
       });
     }
   });

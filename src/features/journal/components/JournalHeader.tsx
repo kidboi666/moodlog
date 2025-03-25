@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { BottomModal } from '@/core/components/modals/BottomModal';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 import { useRouter } from 'expo-router';
@@ -7,7 +7,7 @@ import * as S from './JournalHeader.styled';
 import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
 import { useJournal } from '@/core/store/contexts/journal.context';
 
-export default function JournalHeader() {
+export const JournalHeader = memo(() => {
   const router = useRouter();
   const { selectedJournal } = useJournal();
   const { modalRef, openModal } = useBottomModal();
@@ -33,4 +33,4 @@ export default function JournalHeader() {
       </BottomModal>
     </>
   );
-}
+});

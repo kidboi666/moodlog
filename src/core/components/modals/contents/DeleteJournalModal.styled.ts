@@ -1,5 +1,5 @@
 import { Button, H3, Paragraph, styled, YStack } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/constants/styles';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/styles/animations';
 
 export const ModalContainer = styled(YStack, {
   gap: '$4',

@@ -1,10 +1,11 @@
 import { styled, View } from 'tamagui';
-import { ENTER_STYLE, ENTER_STYLE_KEY } from '@/core/constants/styles';
 
 export const FadeInContainer = styled(View, {
-  animation: 'medium',
-  animateOnly: ENTER_STYLE_KEY,
-  enterStyle: ENTER_STYLE,
+  animation: 'lazy',
+  animateOnly: ['opacity'],
+  enterStyle: {
+    opacity: 0,
+  },
 
   variants: {
     isVisible: {

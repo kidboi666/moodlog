@@ -1,22 +1,31 @@
-import React from 'react';
-import { useRouter } from 'expo-router';
+import React, { memo } from 'react';
+import { Link } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';
-import { Mood } from '@/types/mood.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 
 interface Props {
-  mood?: Mood;
+  moodType?: MoodType;
+  moodLevel?: MoodLevel;
 }
 
-export const NextButton = ({ mood }: Props) => {
-  const router = useRouter();
+export const NextButton = memo(({ moodType, moodLevel }: Props) => {
+  const isMoodSelected = !!moodType && moodLevel;
   return (
     <S.ViewContainer>
-      <S.NextButton
-        disabled={!mood}
-        onPress={() => router.push('/write/journal_write')}
-        icon={ArrowRight}
-      />
+      {isMoodSelected ? (
+        <Link
+          href={{
+            pathname: '/write/journal_write',
+            params: { type: moodType, level: moodLevel },
+          }}
+          asChild
+        >
+          <S.NextButton icon={ArrowRight} />
+        </Link>
+      ) : (
+        <S.NextButton icon={ArrowRight} disabled />
+      )}
     </S.ViewContainer>
   );
-};
+});

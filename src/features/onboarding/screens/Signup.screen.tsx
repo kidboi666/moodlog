@@ -9,10 +9,11 @@ import * as S from './Signup.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useApp } from '@/core/store/contexts/app.context';
+import { useEffect } from 'react';
 
 export const SignupScreen = () => {
   const { goToPrevStep, currentStep } = useStepProgress();
-  const { draftUserName, registerUser } = useUser();
+  const { draftUserName, registerUser, isLoading } = useUser();
   const { isInitialApp } = useApp();
   const { t } = useTranslation();
   const router = useRouter();
@@ -26,10 +27,13 @@ export const SignupScreen = () => {
 
   const handleSubmit = (userName: string) => {
     registerUser(userName);
+  };
+
+  useEffect(() => {
     if (isInitialApp) {
       router.replace('/');
     }
-  };
+  });
 
   return (
     <Container edges={['bottom']}>
@@ -48,7 +52,7 @@ export const SignupScreen = () => {
                 • {t('onboarding.signup.benefits.backup')}
               </S.BenefitText>
               <S.BenefitText>
-                • {t('onboarding.signup.benefits.statistics')}
+                • {t('onboarding.signup.benefits.stats')}
               </S.BenefitText>
             </S.BenefitsBox>
           </S.BenefitsContainer>
@@ -59,7 +63,10 @@ export const SignupScreen = () => {
             <S.PrevButton onPress={handlePrevStep} icon={ArrowLeft}>
               {t('common.button.prev')}
             </S.PrevButton>
-            <S.ConfirmButton onPress={() => handleSubmit(draftUserName)}>
+            <S.ConfirmButton
+              disabled={isLoading}
+              onPress={() => handleSubmit(draftUserName)}
+            >
               {t('common.button.confirm')}
             </S.ConfirmButton>
           </S.ButtonContainer>
