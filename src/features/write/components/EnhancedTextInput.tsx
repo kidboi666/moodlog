@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { ScrollView } from 'tamagui';
 import { Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +7,7 @@ import * as S from './EnhancedTextInput.styled';
 
 interface Props {
   imageUri?: Nullable<string>;
-  contentValue?: string;
+  contentValue: string;
   onContentChange: (content: string) => void;
   autoFocus?: boolean;
 }
@@ -24,9 +19,7 @@ export interface EnhancedTextInputRef {
 export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
   ({ contentValue, onContentChange, imageUri }, ref) => {
     const { t } = useTranslation();
-    const [localContent, setLocalContent] = useState(contentValue || '');
     const [selection, setSelection] = useState({ start: 0, end: 0 });
-    const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const getCurrentTime = () => {
       const now = new Date();
@@ -39,23 +32,12 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
       const currentTime = getCurrentTime();
 
       const newContent =
-        localContent.slice(0, selection.start) +
+        contentValue.slice(0, selection.start) +
         currentTime +
-        localContent.slice(selection.end);
-      handleTextChange(newContent);
+        contentValue.slice(selection.end);
       const newPosition = selection.start + currentTime.length;
       setSelection({ start: newPosition, end: newPosition });
       onContentChange(newContent);
-    };
-
-    const handleTextChange = (text: string) => {
-      setLocalContent(text);
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-      debounceTimeout.current = setTimeout(() => {
-        onContentChange(localContent);
-      }, 300);
     };
 
     useImperativeHandle(ref, () => ({
@@ -70,8 +52,8 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
           )}
 
           <S.TextArea
-            value={localContent}
-            onChangeText={handleTextChange}
+            value={contentValue}
+            onChangeText={onContentChange}
             onSelectionChange={event =>
               setSelection(event.nativeEvent.selection)
             }

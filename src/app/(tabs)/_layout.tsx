@@ -17,7 +17,7 @@ export default function TabsLayout() {
         <TabTrigger name="write" href="/write" />
         <TabTrigger name="statistics" href="/statistics" />
         <TabTrigger name="settings" href="/settings" />
-        <TabTrigger name="journal" href="/journal" />
+        <TabTrigger name="journal" href="/journal/[id]" />
       </TabList>
       <BottomModal>
         <DevContainer />

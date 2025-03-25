@@ -1,4 +1,4 @@
-import { Separator as TamaguiSeparator, styled, XGroup } from 'tamagui';
+import { Button, Separator as TamaguiSeparator, styled, XGroup } from 'tamagui';
 
 export const XGroupContainer = styled(XGroup, {
   position: 'absolute',
@@ -8,4 +8,14 @@ export const XGroupContainer = styled(XGroup, {
 
 export const Separator = styled(TamaguiSeparator, {
   vertical: true,
+});
+
+export const SubmitButton = styled(Button, {
+  variants: {
+    isDisabled: {
+      true: {
+        opacity: 0.2,
+      },
+    },
+  } as const,
 });
