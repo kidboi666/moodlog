@@ -5,13 +5,15 @@ import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';
 
 import { MoodType } from '@/types/mood.types';
-import { useStatistics } from '@/features/statistics/hooks/useMoodStats';
+import { ScoreBoard } from '@/types/statistic.types';
 
-export const ExpandedContent = () => {
-  const { moodStats } = useStatistics();
+interface Props {
+  scoreBoard: ScoreBoard;
+}
+
+export const ExpandedContent = ({ scoreBoard }: Props) => {
   const { t } = useTranslation();
 
-  const { scoreBoard } = moodStats;
   let moodTotalScore = 0;
 
   Object.values(scoreBoard).forEach(scoreCount => {

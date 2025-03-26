@@ -76,6 +76,10 @@
   },
   "statistics": {
     "title": "Statistic",
+    "timeRange": {
+      "yearly": "Yearly",
+      "monthly": "Monthly"
+    },
     "totalCount": {
       "title": "Total Record",
       "description": "Journals written so far",

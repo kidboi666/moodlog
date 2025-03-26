@@ -49,7 +49,9 @@ export const MoodAverage = ({
     );
   });
 
-  const {} = stats || {};
+  const {
+    moodStats: { signatureMood, scoreBoard },
+  } = stats || {};
   const hasSignatureMood = signatureMood ? signatureMood?.count > 0 : false;
 
   return (
@@ -65,7 +67,7 @@ export const MoodAverage = ({
       {...animatedStyle}
     >
       {isExpanded ? (
-        <ExpandedContent />
+        <ExpandedContent scoreBoard={scoreBoard} />
       ) : (
         <CollapsedContent
           hasSignatureMood={hasSignatureMood}

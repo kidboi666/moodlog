@@ -76,6 +76,10 @@
   },
   "statistics": {
     "title": "통계",
+    "timeRange": {
+      "yearly": "연간",
+      "monthly":"월간"
+    },
     "totalCount": {
       "title": "전체 기록",
       "description": "지금까지 작성한 일기 갯수",
