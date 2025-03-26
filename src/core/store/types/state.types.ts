@@ -1,4 +1,4 @@
-import { ErrorStatus, LoadingStatus } from '@/types/common.types';
+import { ErrorStatus, LoadingStatus } from '@/types/utill.types';
 
 export type StatusState = LoadingStatus & ErrorStatus;
 

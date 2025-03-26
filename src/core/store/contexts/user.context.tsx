@@ -7,7 +7,7 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { NewUserInfo } from '@/types/user.types';
 import { useApp } from '@/core/store/contexts/app.context';
 import { userReducer } from '@/core/store/reducers/user.reducer';

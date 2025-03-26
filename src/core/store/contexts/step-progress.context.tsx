@@ -6,7 +6,7 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { stepProgressReducer } from '@/core/store/reducers/step-progress.reducer';
 import { StepProgressStore } from '@/core/store/types/step-progress.types';
 

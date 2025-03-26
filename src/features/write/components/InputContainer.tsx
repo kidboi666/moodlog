@@ -14,7 +14,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useToastController } from '@tamagui/toast';
 import { useTranslation } from 'react-i18next';
 import { Mood } from '@/types/mood.types';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 
 const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
   ? `${FileSystem.documentDirectory}journal_images/`

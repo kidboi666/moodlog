@@ -1,8 +1,9 @@
 import { Group } from 'tamagui';
 import * as S from '@/features/statistics/components/TimeRangeZone.styled';
+import { TimeRange } from '@/types/statistic.types';
 
 interface Props {
-  timeRange: 'weekly' | 'monthly';
+  timeRange: TimeRange;
   onWeekly: () => void;
   onMonthly: () => void;
 }
@@ -13,7 +14,7 @@ export const TimeRangeZone = ({ timeRange, onWeekly, onMonthly }: Props) => {
       <Group.Item>
         <S.TimeRangeButton
           onPress={onWeekly}
-          isSelected={timeRange === 'weekly'}
+          isSelected={timeRange === TimeRange.YEARLY}
         >
           주간
         </S.TimeRangeButton>
@@ -22,7 +23,7 @@ export const TimeRangeZone = ({ timeRange, onWeekly, onMonthly }: Props) => {
       <Group.Item>
         <S.TimeRangeButton
           onPress={onMonthly}
-          isSelected={timeRange === 'monthly'}
+          isSelected={timeRange === TimeRange.MONTHLY}
         >
           월간
         </S.TimeRangeButton>

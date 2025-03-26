@@ -4,7 +4,7 @@ import {
   MoodStats,
   SelectedMonthStats,
 } from '@/types/statistic.types';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 
 export type StatisticsState = {
   journalStats: JournalStats;

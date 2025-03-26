@@ -1,6 +1,6 @@
 import { moodTheme } from '@/core/constants/themes';
 import { memo, useMemo } from 'react';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import * as S from './Grass.styled';
 import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
 

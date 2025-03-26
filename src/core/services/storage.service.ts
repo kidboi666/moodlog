@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '@/core/constants/storage';
-import { ValueOf } from '@/types/common.types';
+import { ValueOf } from '@/types/utill.types';
 
 export class StorageService {
   static async load(key: ValueOf<typeof STORAGE_KEY>) {

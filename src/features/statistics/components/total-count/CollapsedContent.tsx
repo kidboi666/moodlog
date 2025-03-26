@@ -3,13 +3,12 @@ import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import * as S from './CollapsedContent.styled';
 import { memo } from 'react';
-import { JournalStats } from '@/types/statistic.types';
 
 interface Props {
-  journalStats: JournalStats;
+  totalCount: number;
 }
 
-export const CollapsedContent = memo(({ journalStats }: Props) => {
+export const CollapsedContent = memo(({ totalCount }: Props) => {
   const { t } = useTranslation();
   return (
     <S.ViewContainer>
@@ -19,7 +18,7 @@ export const CollapsedContent = memo(({ journalStats }: Props) => {
       </S.YStackContainer>
       <XStack>
         <S.StackContainer>
-          <H2>{journalStats.totalCount}</H2>
+          <H2>{totalCount}</H2>
           <S.CountText>{t('common.units.count')}</S.CountText>
         </S.StackContainer>
         <S.MinimizeButton icon={Maximize2} />

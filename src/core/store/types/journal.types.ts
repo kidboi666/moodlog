@@ -5,16 +5,18 @@ import { Mood, MoodType } from '@/types/mood.types';
 /**
  * Types
  */
-export type ByMonth = Record<ISOMonthString, string[]>;
-export type ByDate = Record<ISODateString, string[]>;
-export type ByMood = Record<MoodType, string[]>;
+export type YearIndexes = Record<number, string[]>;
+export type MonthIndexes = Record<ISOMonthString, string[]>;
+export type DateIndexes = Record<ISODateString, string[]>;
+export type MoodIndexes = Record<MoodType, string[]>;
 export type SelectedJournals = Journal[] | ISODateString | null;
 export type SelectedJournal = Journal | null;
 
 export type JournalIndexes = {
-  byMonth: ByMonth;
-  byDate: ByDate;
-  byMood: ByMood;
+  byYear: YearIndexes;
+  byMonth: MonthIndexes;
+  byDate: DateIndexes;
+  byMood: MoodIndexes;
 };
 
 export type JournalStore = {
@@ -41,6 +43,7 @@ export type JournalAction =
  */
 export type JournalDataContextType = {
   journals: Journals;
+  indexes: JournalIndexes;
   selectedJournal: SelectedJournal;
   selectedJournals: SelectedJournals;
 };

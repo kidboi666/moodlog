@@ -1,4 +1,4 @@
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { ISODateString, ISOMonthString } from '@/types/date.types';
 
 export type DateAction =

@@ -7,7 +7,7 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { journalReducer } from '@/core/store/reducers/journal.reducer';
 import { JournalService } from '@/core/services/journal.service';
@@ -26,6 +26,7 @@ import { Draft } from '@/types/journal.types';
 const initialIndexes: JournalIndexes = {
   byMonth: {},
   byDate: {},
+  byYear: {},
   byMood: {
     happy: [],
     sad: [],
@@ -146,6 +147,7 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
         const safeStore = {
           journals: newStore.journals || {},
           indexes: {
+            byYear: newStore.indexes?.byYear || {},
             byMonth: newStore.indexes?.byMonth || {},
             byDate: newStore.indexes?.byDate || {},
             byMood: newStore.indexes?.byMood || {
@@ -172,10 +174,16 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
   const journalDataValue = useMemo(
     () => ({
       journals: state.store.journals,
+      indexes: state.store.indexes,
       selectedJournals: state.selectedJournals,
       selectedJournal: state.selectedJournal,
     }),
-    [state.store.journals, state.selectedJournals, state.selectedJournal],
+    [
+      state.store.journals,
+      state.store.indexes,
+      state.selectedJournals,
+      state.selectedJournal,
+    ],
   );
 
   const journalActionValue = useMemo(

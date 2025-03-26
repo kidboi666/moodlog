@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { Theme as TamaguiTheme } from 'tamagui';
 import { useColorScheme } from 'react-native';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { Theme } from '@/types/app.types';
 import { themeReducer } from '@/core/store/reducers/theme.reducer';
 import { ThemeState, ThemeStore } from '../types/theme.types';

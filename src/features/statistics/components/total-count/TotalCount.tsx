@@ -2,22 +2,15 @@ import { ExpandedContent } from '@/features/statistics/components/total-count/Ex
 import { CollapsedContent } from '@/features/statistics/components/total-count/CollapsedContent';
 import * as S from './TotalCount.styled';
 
-import {
-  ExpansionState,
-  ExpressiveMonthStats,
-  JournalStats,
-} from '@/types/statistic.types';
+import { ExpansionState, TimeRange } from '@/types/statistic.types';
 import { useControllableState, useEvent } from 'tamagui';
 import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
-
-interface Props {
-  journalStats: JournalStats;
-  expressiveMonthStats: ExpressiveMonthStats;
-  daysSinceSignup: number;
-}
+import { useUser } from '@/core/store/contexts/user.context';
+import { useJournalStats } from '@/features/statistics/hooks/useJournalStats';
+import { ISOMonthString } from '@/types/date.types';
 
 const heights = {
   expanded: {
@@ -28,11 +21,20 @@ const heights = {
   },
 } as const;
 
+interface Props {
+  timeRange: TimeRange;
+  selectedYear: number;
+  selectedMonth: ISOMonthString;
+}
+
 export const TotalCount = ({
-  journalStats,
-  daysSinceSignup,
-  expressiveMonthStats,
+  timeRange,
+  selectedYear,
+  selectedMonth,
 }: Props) => {
+  const { stats } = useJournalStats(timeRange, selectedYear, selectedMonth);
+  const { userInfo } = useUser();
+  const { daysSinceSignup } = userInfo ?? null;
   const [expansionState, setExpansionState] =
     useControllableState<ExpansionState>({
       strategy: 'most-recent-wins',
@@ -48,20 +50,20 @@ export const TotalCount = ({
     );
   });
 
-  const { totalCount, totalFrequency, totalActiveDay } = journalStats;
+  const { expressiveMonth, totalCount, frequency, activeDay } = stats || {};
 
   return (
     <S.CardContainer onPress={handleIsExpandedChange} {...animatedStyle}>
       {expansionState === ExpansionState.EXPANDED ? (
         <ExpandedContent
-          expressiveMonthStats={expressiveMonthStats}
+          expressiveMonth={expressiveMonth}
           totalCount={totalCount}
           daysSinceSignup={daysSinceSignup}
-          totalFrequency={totalFrequency}
-          totalActiveDay={totalActiveDay}
+          frequency={frequency}
+          activeDay={activeDay}
         />
       ) : (
-        <CollapsedContent journalStats={journalStats} />
+        <CollapsedContent totalCount={totalCount} />
       )}
     </S.CardContainer>
   );

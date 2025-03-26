@@ -3,7 +3,7 @@ import { moodTheme } from '@/core/constants/themes';
 import * as S from './JournalCard.styled';
 import { ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { Mood } from '@/types/mood.types';
 import { CardPosition } from '@/types/journal.types';
 

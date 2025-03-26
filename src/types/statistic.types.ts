@@ -43,3 +43,8 @@ export enum ExpansionState {
   COLLAPSED = 'collapsed',
   EXPANDED = 'expanded',
 }
+
+export enum TimeRange {
+  YEARLY = 'yearly',
+  MONTHLY = 'monthly',
+}

@@ -1,5 +1,5 @@
 import { ISODateString } from '@/types/date.types';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { Mood } from '@/types/mood.types';
 
 export type Journal = {

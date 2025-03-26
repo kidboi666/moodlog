@@ -1,19 +1,16 @@
-import { Nullable } from '@/types/common.types';
 import { CollapsedContent } from '@/features/statistics/components/mood-average/CollapsedContent';
 import { ExpandedContent } from '@/features/statistics/components/mood-average/ExpandedContent';
 import * as S from './MoodAverage.styled';
-import { MoodLevel, MoodType, SignatureMood } from '@/types/mood.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 import { useControllableState, useEvent } from 'tamagui';
 import {
   RECORD_CARD_EXPANDED_HEIGHT,
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
-import { ExpansionState } from '@/types/statistic.types';
+import { ExpansionState, TimeRange } from '@/types/statistic.types';
 import { moodTheme } from '@/core/constants/themes';
-
-interface Props {
-  signatureMood: Nullable<SignatureMood>;
-}
+import { useMoodStats } from '@/features/statistics/hooks/useMoodStats';
+import { ISOMonthString } from '@/types/date.types';
 
 const heights = {
   expanded: {
@@ -24,7 +21,18 @@ const heights = {
   },
 } as const;
 
-export const MoodAverage = ({ signatureMood }: Props) => {
+interface Props {
+  timeRange: TimeRange;
+  selectedYear: number;
+  selectedMonth: ISOMonthString;
+}
+
+export const MoodAverage = ({
+  timeRange,
+  selectedYear,
+  selectedMonth,
+}: Props) => {
+  const { stats } = useMoodStats(timeRange, selectedYear, selectedMonth);
   const [expansionState, setExpansionState] =
     useControllableState<ExpansionState>({
       strategy: 'most-recent-wins',
@@ -41,6 +49,7 @@ export const MoodAverage = ({ signatureMood }: Props) => {
     );
   });
 
+  const {} = stats || {};
   const hasSignatureMood = signatureMood ? signatureMood?.count > 0 : false;
 
   return (

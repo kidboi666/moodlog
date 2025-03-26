@@ -7,23 +7,22 @@ import { TimeRangeZone } from '@/features/statistics/components/TimeRangeZone';
 import * as S from './Statistics.styled';
 import { TotalCount } from '@/features/statistics/components/total-count/TotalCount';
 import { MoodAverage } from '@/features/statistics/components/mood-average/MoodAverage';
-import { useUser } from '@/core/store/contexts/user.context';
-import { useStatistics } from '@/core/hooks/useStatistics';
+import { TimeRange } from '@/types/statistic.types';
+import { useCalendar } from '@/core/hooks/useCalendar';
+import { getISOMonthString } from '@/core/utils/common';
 
 export const StatisticsScreen = () => {
-  const [timeRange, setTimeRange] = useState<'weekly' | 'monthly'>('weekly');
+  const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.YEARLY);
+  const { selectedYear, selectedMonth, currentYear, currentMonth } =
+    useCalendar();
   const { t } = useTranslation();
-  const { journalStats, moodStats, expressiveMonthStats } = useStatistics();
-  const { userInfo } = useUser();
-  const { signatureMood } = moodStats ?? null;
-  const { daysSinceSignup } = userInfo ?? null;
 
   const switchToMonthly = useCallback(() => {
-    setTimeRange('monthly');
+    setTimeRange(TimeRange.MONTHLY);
   }, []);
 
   const switchToWeekly = useCallback(() => {
-    setTimeRange('weekly');
+    setTimeRange(TimeRange.YEARLY);
   }, []);
 
   return (
@@ -41,11 +40,19 @@ export const StatisticsScreen = () => {
           <S.YStackContainer>
             <S.XStackContainer>
               <TotalCount
-                expressiveMonthStats={expressiveMonthStats}
-                daysSinceSignup={daysSinceSignup}
-                journalStats={journalStats}
+                timeRange={timeRange}
+                selectedYear={selectedYear}
+                selectedMonth={
+                  selectedMonth || getISOMonthString(currentYear, currentMonth)
+                }
               />
-              <MoodAverage signatureMood={signatureMood} />
+              <MoodAverage
+                timeRange={timeRange}
+                selectedYear={selectedYear}
+                selectedMonth={
+                  selectedMonth || getISOMonthString(currentYear, currentMonth)
+                }
+              />
             </S.XStackContainer>
           </S.YStackContainer>
         </FadeIn>

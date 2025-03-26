@@ -42,9 +42,10 @@ export const getDateInISODateString = (date: ISODateString) => {
 
 export const getISOMonthString = (year: number, month: number | MonthKey) => {
   if (typeof month === 'number') {
-    return `${year}-${(month + 1).toString().padStart(2, '0')}` as ISOMonthString;
+    return `${year}-${month.toString().padStart(2, '0')}` as ISOMonthString;
   }
-  return `${year}-${(Object.keys(MONTHS).indexOf(month) + 1)
+  return `${year}-${Object.keys(MONTHS)
+    .indexOf(month)
     .toString()
     .padStart(2, '0')}` as ISOMonthString;
 };
@@ -78,4 +79,25 @@ export const toSingle = <T>(value: T | T[]): T => {
 
 export const getMonthFromDate = (date: ISODateString): ISOMonthString => {
   return date.substring(0, 7) as ISOMonthString;
+};
+
+export const getYearFromDate = (date: ISODateString): number => {
+  return parseInt(date.substring(0, 3));
+};
+
+export const castArray = <T>(value: Record<string, T>): T[] => {
+  return Object.values(value);
+};
+
+export const extractKeys = (obj: Record<string, any>): string[] => {
+  return Object.keys(obj);
+};
+
+export const getDaysBetweenDates = (startDate: string, endDate: string) => {
+  const start: Date = new Date(startDate);
+  const end: Date = new Date(endDate);
+
+  const diffTime: number = Math.abs(end.getTime() - start.getTime());
+
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 };

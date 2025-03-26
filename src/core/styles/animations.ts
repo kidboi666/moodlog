@@ -11,10 +11,9 @@ export const EXIT_STYLE = ENTER_STYLE;
 
 export const PRESS_STYLE = {
   bg: '$gray10',
-  scale: 0.92,
 } as const;
 
-export const PRESS_STYLE_KEY = ['backgroundColor', 'transform'];
+export const PRESS_STYLE_KEY = ['backgroundColor'];
 
 export const FALL_STYLE = {
   y: -Dimensions.get('window').height,

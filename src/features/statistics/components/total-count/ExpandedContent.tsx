@@ -8,20 +8,20 @@ import { memo } from 'react';
 import { ExpressiveMonthStats } from '@/types/statistic.types';
 
 interface Props {
-  totalFrequency: number;
-  totalActiveDay: string;
+  frequency: number;
+  activeDay: string;
   totalCount: number;
   daysSinceSignup: number;
-  expressiveMonthStats: ExpressiveMonthStats;
+  expressiveMonth: ExpressiveMonthStats;
 }
 
 export const ExpandedContent = memo(
   ({
-    totalFrequency,
-    totalActiveDay,
+    frequency,
+    activeDay,
     totalCount,
     daysSinceSignup,
-    expressiveMonthStats,
+    expressiveMonth,
   }: Props) => {
     const { t } = useTranslation();
     if (!totalCount) {
@@ -45,10 +45,10 @@ export const ExpandedContent = memo(
             {t('statistics.totalCount.frequency.title')}
           </S.FrequencyTitle>
           <S.FrequencyDescription>
-            {totalFrequency === 0
+            {frequency === 0
               ? t('statistics.totalCount.frequency.everyDay')
               : t('statistics.totalCount.frequency.description', {
-                  date: totalFrequency,
+                  date: frequency,
                 })}
           </S.FrequencyDescription>
         </S.FrequencyBox>
@@ -58,7 +58,7 @@ export const ExpandedContent = memo(
           </S.MostDayTitle>
           <S.MostDayDescription>
             {t('statistics.totalCount.mostDay.description', {
-              day: t(`calendar.days.${totalActiveDay}`),
+              day: t(`calendar.days.${activeDay}`),
             })}
           </S.MostDayDescription>
         </S.MostDayBox>
@@ -69,9 +69,9 @@ export const ExpandedContent = memo(
           <S.ExpressiveMonthDescription>
             {t('statistics.totalCount.expressiveMonth.description', {
               month: t(
-                `calendar.months.${getMonthStringWithoutYear(expressiveMonthStats.month)}`,
+                `calendar.months.${getMonthStringWithoutYear(expressiveMonth.month)}`,
               ),
-              count: expressiveMonthStats.count,
+              count: expressiveMonth.count,
             })}
           </S.ExpressiveMonthDescription>
         </S.ExpressiveMonthBox>

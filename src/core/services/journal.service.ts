@@ -7,6 +7,7 @@ import {
   getISODateString,
   getISOMonthString,
   getMonthFromDate,
+  getYearFromDate,
 } from '@/core/utils/common';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { JournalIndexes, JournalStore } from '@/core/store/types/journal.types';
@@ -37,8 +38,10 @@ export class JournalService extends StorageService {
       throw new Error('not content or mood');
     }
     try {
-      const localDate = CalendarUtils.getCalendarDateString(new Date());
+      const now = new Date();
+      const localDate = CalendarUtils.getCalendarDateString(now);
       const monthString = getMonthFromDate(localDate);
+      const year = now.getFullYear();
       const moodType = draft.mood.type;
 
       const newJournal = {
@@ -57,6 +60,10 @@ export class JournalService extends StorageService {
         },
         indexes: {
           ...store.indexes,
+          byYear: {
+            ...store.indexes.byYear,
+            [year]: [...(store.indexes.byYear[year] || []), newJournal.id],
+          },
           byMonth: {
             ...store.indexes.byMonth,
             [monthString]: [
@@ -100,6 +107,7 @@ export class JournalService extends StorageService {
       }
       const date = journal.localDate;
       const month = getMonthFromDate(date);
+      const year = getYearFromDate(journal.localDate);
       const mood = journal.mood.type;
 
       const newStore = {
@@ -112,12 +120,19 @@ export class JournalService extends StorageService {
       newStore.indexes.byDate[date] = (
         newStore.indexes.byDate[date] || []
       ).filter(id => id !== journalId);
+
       newStore.indexes.byMonth[month] = (
         newStore.indexes.byMonth[month] || []
       ).filter(id => id !== journalId);
+
       newStore.indexes.byMood[mood] = (
         newStore.indexes.byMood[mood] || []
       ).filter(id => id !== journalId);
+
+      newStore.indexes.byYear[year] = (
+        newStore.indexes.byYear[year] || []
+      ).filter(id => id !== journalId);
+
       await this.saveJournalStore(newStore);
       return newStore;
     } catch (err) {

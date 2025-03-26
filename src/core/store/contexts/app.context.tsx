@@ -7,7 +7,7 @@ import {
   useReducer,
 } from 'react';
 import * as Localization from 'expo-localization';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import { APP_VERSION } from '@/core/constants/common';
 import { ISODateString } from '@/types/date.types';
 import { Languages, TimeFormat, ViewFontSize } from '@/types/app.types';

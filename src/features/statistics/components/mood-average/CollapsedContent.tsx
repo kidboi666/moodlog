@@ -1,7 +1,7 @@
 import { XStack, YStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { Nullable } from '@/types/common.types';
+import { Nullable } from '@/types/utill.types';
 import * as S from './CollapsedContent.styled';
 import { SignatureMood } from '@/types/mood.types';
 
