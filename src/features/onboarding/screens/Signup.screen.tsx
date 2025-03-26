@@ -1,8 +1,8 @@
-import { H1 } from 'tamagui';
+import { H1, Spinner } from 'tamagui';
 import { Container } from '@/core/components/Container.styleable';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { useRouter } from 'expo-router';
-import { ArrowLeft } from '@tamagui/lucide-icons';
+import { ArrowLeft, Check } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { PARAGRAPH_DELAY } from '@/core/constants/time';
 import * as S from './Signup.styled';
@@ -65,6 +65,7 @@ export const SignupScreen = () => {
             </S.PrevButton>
             <S.ConfirmButton
               disabled={isLoading}
+              icon={isLoading ? () => <Spinner /> : Check}
               onPress={() => handleSubmit(draftUserName)}
             >
               {t('common.button.confirm')}

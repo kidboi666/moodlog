@@ -12,7 +12,7 @@ import { NewUserInfo } from '@/types/user.types';
 import { useApp } from '@/core/store/contexts/app.context';
 import { userReducer } from '@/core/store/reducers/user.reducer';
 import { UserInfoContextType, UserState } from '@/core/store/types/user.types';
-import { UserService } from '@/core/store/services/user.service';
+import { UserService } from '@/core/services/user.service';
 import { StatusState } from '../types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';
 

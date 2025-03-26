@@ -5,7 +5,7 @@ import * as S from './ExpandedContent.styled';
 import { useTranslation } from 'react-i18next';
 
 import { MoodType } from '@/types/mood.types';
-import { useStatistics } from '@/core/store/contexts/statistics.context';
+import { useStatistics } from '@/core/hooks/useStatistics';
 
 export const ExpandedContent = () => {
   const { moodStats } = useStatistics();

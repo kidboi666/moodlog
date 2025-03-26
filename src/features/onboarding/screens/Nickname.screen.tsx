@@ -52,7 +52,6 @@ export const NicknameScreen = () => {
           </S.PrevButton>
           <S.NextButton
             disabled={!draftUserName}
-            isDisabled={!draftUserName}
             onPress={handleNextStep}
             iconAfter={ArrowRight}
           >

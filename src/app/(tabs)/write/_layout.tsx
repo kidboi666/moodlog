@@ -6,6 +6,7 @@ export default function WriteLayout() {
 
   return (
     <Stack
+      initialRouteName="index"
       screenOptions={{
         headerShown: false,
         contentStyle: {

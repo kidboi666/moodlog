@@ -31,7 +31,7 @@ export const HorizontalCalendar = () => {
 
   const handleCalendarDateChange = useCallback(
     (date: ISODateString) => onSelectedDateChange(date, selectJournals),
-    [],
+    [onSelectedDateChange, selectJournals],
   );
 
   const dates: Record<ISODateString, number> = useMemo(() => {

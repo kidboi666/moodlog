@@ -7,8 +7,8 @@ import { TimeRangeZone } from '@/features/statistics/components/TimeRangeZone';
 import * as S from './Statistics.styled';
 import { TotalCount } from '@/features/statistics/components/total-count/TotalCount';
 import { MoodAverage } from '@/features/statistics/components/mood-average/MoodAverage';
-import { useStatistics } from '@/core/store/contexts/statistics.context';
 import { useUser } from '@/core/store/contexts/user.context';
+import { useStatistics } from '@/core/hooks/useStatistics';
 
 export const StatisticsScreen = () => {
   const [timeRange, setTimeRange] = useState<'weekly' | 'monthly'>('weekly');
@@ -20,11 +20,11 @@ export const StatisticsScreen = () => {
 
   const switchToMonthly = useCallback(() => {
     setTimeRange('monthly');
-  }, [setTimeRange]);
+  }, []);
 
   const switchToWeekly = useCallback(() => {
     setTimeRange('weekly');
-  }, [setTimeRange]);
+  }, []);
 
   return (
     <ScrollView>

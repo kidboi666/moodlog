@@ -35,6 +35,15 @@ export const ButtonContainer = styled(XStack, {
 const ButtonBase = styled(Button, {
   size: '$5',
   scaleIcon: 1.5,
+  animation: 'quick',
+
+  variants: {
+    disabled: {
+      true: {
+        opacity: 0.2,
+      },
+    },
+  },
 });
 
 export const PrevButton = styled(ButtonBase);

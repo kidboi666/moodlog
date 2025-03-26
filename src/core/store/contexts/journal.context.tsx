@@ -10,7 +10,7 @@ import {
 import { Nullable } from '@/types/common.types';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { journalReducer } from '@/core/store/reducers/journal.reducer';
-import { JournalService } from '@/core/store/services/journal.service';
+import { JournalService } from '@/core/services/journal.service';
 import {
   JournalActionContextType,
   JournalDataContextType,

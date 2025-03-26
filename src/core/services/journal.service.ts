@@ -1,6 +1,6 @@
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { Draft, Journal, Journals } from '@/types/journal.types';
-import { StorageService } from '@/core/store/services/storage.service';
+import { StorageService } from '@/core/services/storage.service';
 import { uuid } from 'expo-modules-core';
 import { CalendarUtils } from 'react-native-calendars';
 import {
@@ -33,7 +33,6 @@ export class JournalService extends StorageService {
     store: JournalStore,
     draft: Draft,
   ): Promise<JournalStore> {
-    console.log(draft);
     if (!draft.content || !draft.mood) {
       throw new Error('not content or mood');
     }

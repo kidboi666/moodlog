@@ -28,8 +28,8 @@ export const Description2 = styled(H3, {
 
 export const NextButton = styled(Button, {
   mt: '$8',
-  themeInverse: true,
   self: 'flex-end',
   size: '$5',
   scaleIcon: 1.5,
+  animation: 'quick',
 });

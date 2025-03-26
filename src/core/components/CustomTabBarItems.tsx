@@ -1,4 +1,4 @@
-// TabItems.tsx
+// CustomTabBarItems.tsx
 import React, { memo } from 'react';
 import { TabTrigger } from 'expo-router/ui';
 import {
@@ -8,7 +8,7 @@ import {
   Plus,
   Settings,
 } from '@tamagui/lucide-icons';
-import * as S from './TabItems.styled';
+import * as S from './CustomTabBarItems.styled';
 
 interface TabButtonProps {
   isTabActive: boolean;

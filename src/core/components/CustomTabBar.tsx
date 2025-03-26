@@ -14,7 +14,7 @@ import {
   SettingsTab,
   StatisticsTab,
   WriteTab,
-} from './TabItems';
+} from './CustomTabBarItems';
 import { TAB_BAR_TRANSLATE } from '@/core/styles/animations';
 
 export const CustomTabBar = memo(() => {

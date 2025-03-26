@@ -22,6 +22,15 @@ export const HomeScreen = () => {
   const { userInfo } = useUser();
   const isDev = __DEV__;
 
+  const handleDeleteJournal = useCallback(
+    async (id: string) => {
+      await removeJournal(id);
+
+      selectJournals(selectedDate);
+    },
+    [removeJournal, selectJournals, selectedDate],
+  );
+
   useFocusEffect(
     useCallback(() => {
       selectJournals(selectedDate);
@@ -66,7 +75,7 @@ export const HomeScreen = () => {
                     mood={mood}
                     imageUri={imageUri}
                     createdAt={createdAt}
-                    onDelete={removeJournal}
+                    onDelete={handleDeleteJournal}
                   />
                 </FadeIn>
               </Fragment>

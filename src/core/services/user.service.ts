@@ -1,4 +1,4 @@
-import { StorageService } from '@/core/store/services/storage.service';
+import { StorageService } from '@/core/services/storage.service';
 import { uuid } from 'expo-modules-core';
 import { STORAGE_KEY } from '@/core/constants/storage';
 import { ISODateString } from '@/types/date.types';

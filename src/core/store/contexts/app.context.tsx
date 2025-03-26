@@ -18,7 +18,7 @@ import {
   AppSettingsContextType,
   AppState,
 } from '@/core/store/types/app.types';
-import { AppService } from '@/core/store/services/app.service';
+import { AppService } from '@/core/services/app.service';
 import { CalendarUtils } from 'react-native-calendars';
 import { StatusState } from '@/core/store/types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';

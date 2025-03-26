@@ -19,7 +19,7 @@ export default function OnboardingLayout() {
           gestureEnabled: false,
         }}
       >
-        <Stack.Screen name="welcome" />
+        <Stack.Screen name="index" />
         <Stack.Screen name="nickname" />
         <Stack.Screen name="signup" />
       </Stack>

@@ -1,32 +1,34 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
-import { Nullable } from '@/types/common.types';
+import { useCallback, useState } from 'react';
 import { MONTHS } from '@/core/constants/date';
 import { getDayInISODateString } from '@/core/utils/common';
 import { ISOMonthString } from '@/types/date.types';
 import { ScoreBoard } from '@/types/statistic.types';
 import { Journal } from '@/types/journal.types';
 import { MoodLevel, SignatureMood } from '@/types/mood.types';
-import { statisticsReducer } from '@/core/store/reducers/statistics.reducer';
-import {
-  StatisticsState,
-  StatisticsStore,
-} from '@/core/store/types/statistics.types';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { useDate } from '@/core/store/contexts/date.context';
 
 const initialJournalStats = {
   totalCount: 0,
   totalFrequency: 0,
   totalActiveDay: '',
   monthlyCounts: {},
+};
+
+const initialMonthlyStats = {
+  count: 0,
+  frequency: 0,
+  activeDay: '',
+  signatureMood: {
+    type: '',
+    count: 0,
+    score: 0,
+  },
+};
+
+const initialWeeklyStats = {
+  count: 0,
+  frequency: 0,
+  activeDay: '',
 };
 
 const initialMoodStats = {
@@ -55,61 +57,79 @@ const initialMoodStats = {
   },
 };
 
-const initialState: StatisticsState = {
-  journalStats: initialJournalStats,
-  moodStats: initialMoodStats,
-  selectedMonthStats: null,
-  expressiveMonthStats: {
-    month: '0000-00',
+export function useStatistics() {
+  const { journals: journalsObj, isLoading } = useJournal();
+
+  const [journalStats, setJournalStats] = useState(initialJournalStats);
+  const [moodStats, setMoodStats] = useState(initialMoodStats);
+  const [monthStats, setMonthStats] = useState(initialMonthlyStats);
+  const [weeklyStats, setWeeklyStats] = useState(initialWeeklyStats);
+  const [expressiveMonthStats, setExpressiveMonthStats] = useState({
+    month: '0000-00' as ISOMonthString,
     count: 0,
-  },
-};
+  });
 
-export const StatisticsContext = createContext<Nullable<StatisticsStore>>(null);
+  const journals = useCallback(() => {
+    return Object.values(journalsObj || {});
+  }, [journalsObj]);
 
-export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
-  const { journals, monthlyJournals } = useJournal();
-  const { selectedYear, selectedMonth } = useDate();
-  const [state, dispatch] = useReducer(statisticsReducer, initialState);
+  const monthlyJournals = useCallback(
+    (selectedMonth: ISOMonthString) => {
+      if (!selectedMonth) return [];
+
+      return journals().filter(
+        journal =>
+          journal.localDate && journal.localDate.startsWith(selectedMonth),
+      );
+    },
+    [journals],
+  );
 
   /**
    * 작성한 모든 일기의 갯수 가져오기
    */
   const getTotalCount = useCallback(() => {
-    return Array.from(journals).length;
+    return journals().length;
   }, [journals]);
 
   /**
    * 각 달마다 작성한 일기의 갯수 가져오기
    */
-  const getMonthlyCounts = useCallback(() => {
-    return Object.fromEntries(
-      Array.from({ length: Object.keys(MONTHS).length }, (_, i) => {
-        const date =
-          `${selectedYear}-${(i + 1).toString().padStart(2, '0')}` as ISOMonthString;
-        return [
-          date,
-          journals.filter(journal => journal.localDate.startsWith(date)).length,
-        ];
-      }),
-    );
-  }, [journals, selectedYear]);
+  const getMonthlyCounts = useCallback(
+    (selectedYear: number) => {
+      return Object.fromEntries(
+        Array.from({ length: Object.keys(MONTHS).length }, (_, i) => {
+          const date =
+            `${selectedYear}-${(i + 1).toString().padStart(2, '0')}` as ISOMonthString;
+          return [
+            date,
+            journals().filter(journal => journal.localDate.startsWith(date))
+              .length,
+          ];
+        }),
+      );
+    },
+    [journals],
+  );
 
   /**
    * 가장 많은 일기를 작성한 달과 갯수 가져오기
    */
-  const getExpressiveMonth = useCallback(() => {
-    const monthlyCounts = getMonthlyCounts();
-    return Object.entries(monthlyCounts).reduce(
-      (highest, [month, count]) => {
-        if (count > highest.count) {
-          return { month, count };
-        }
-        return highest;
-      },
-      { month: '', count: 0 },
-    );
-  }, [getMonthlyCounts]);
+  const getExpressiveMonth = useCallback(
+    (selectedYear: number) => {
+      const monthlyCounts = getMonthlyCounts(selectedYear);
+      return Object.entries(monthlyCounts).reduce(
+        (highest, [month, count]) => {
+          if (count > highest.count) {
+            return { month, count };
+          }
+          return highest;
+        },
+        { month: '', count: 0 },
+      );
+    },
+    [getMonthlyCounts],
+  );
 
   /**
    * 감정 평균 구하기
@@ -125,7 +145,9 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     };
 
     moods.forEach(mood => {
-      switch (mood?.level) {
+      if (!mood || !mood.type) return;
+
+      switch (mood.level) {
         case MoodLevel.ZERO: {
           scoreBoard[mood.type] = {
             count: scoreBoard[mood.type].count + 1,
@@ -226,128 +248,103 @@ export const StatisticsContextProvider = ({ children }: PropsWithChildren) => {
     );
   }, []);
 
-  const getJournalStats = useCallback(() => {
-    const totalCount = getTotalCount();
-    const monthlyCounts = getMonthlyCounts();
-    const totalFrequency = getJournalFrequency(journals);
-    const totalActiveDay = getMostActiveDay(journals);
+  const calculateJournalStats = useCallback(
+    (selectedYear: number) => {
+      const allJournals = journals();
+      const totalCount = getTotalCount();
+      const monthlyCounts = getMonthlyCounts(selectedYear);
+      const totalFrequency = getJournalFrequency(allJournals);
+      const totalActiveDay = getMostActiveDay(allJournals);
 
-    dispatch({
-      type: 'SET_JOURNAL_STATS',
-      payload: {
+      setJournalStats({
         totalFrequency,
         totalActiveDay,
         totalCount,
         monthlyCounts,
-      },
-    });
-  }, [
-    getTotalCount,
-    getMonthlyCounts,
-    getJournalFrequency,
-    getMostActiveDay,
-    journals,
-  ]);
-
-  const getMonthlyStats = useCallback(() => {
-    if (!selectedMonth) {
-      dispatch({
-        type: 'SET_SELECTED_MONTH_STATS',
-        payload: null,
       });
-      return;
-    }
-
-    const currentFrequency = getJournalFrequency(monthlyJournals);
-    const currentActiveDay = getMostActiveDay(monthlyJournals);
-    const scoreBoard = getTotalMoodAverage(monthlyJournals);
-    const signatureMood = getSignatureMood(scoreBoard);
-
-    dispatch({
-      type: 'SET_SELECTED_MONTH_STATS',
-      payload: {
-        month: selectedMonth,
-        count: monthlyJournals.length,
-        frequency: currentFrequency,
-        activeDay: currentActiveDay,
-        signatureMood: signatureMood,
-      },
-    });
-  }, [
-    getJournalFrequency,
-    getMostActiveDay,
-    getTotalMoodAverage,
-    getSignatureMood,
-    monthlyJournals,
-    selectedMonth,
-  ]);
-
-  const getExpressiveMonthStats = useCallback(() => {
-    const expressiveMonth = getExpressiveMonth();
-
-    dispatch({
-      type: 'SET_EXPRESSIVE_MONTH_STATS',
-      payload: {
-        month: expressiveMonth.month as ISOMonthString,
-        count: expressiveMonth.count,
-      },
-    });
-  }, [getExpressiveMonth]);
-
-  const getMoodStats = useCallback(() => {
-    const scoreBoard = getTotalMoodAverage(journals);
-    const signatureMood = getSignatureMood(scoreBoard);
-
-    dispatch({
-      type: 'SET_MOOD_STATS',
-      payload: {
-        scoreBoard,
-        signatureMood: signatureMood,
-      },
-    });
-  }, [getTotalMoodAverage, getSignatureMood, journals]);
-
-  useEffect(() => {
-    if (selectedYear) {
-      getJournalStats();
-      getMoodStats();
-      getExpressiveMonthStats();
-    }
-  }, [selectedYear, getJournalStats, getMoodStats, getExpressiveMonthStats]);
-
-  useEffect(() => {
-    getMonthlyStats();
-  }, [selectedMonth, getMonthlyStats]);
-
-  // Context 값
-  const contextValue = useMemo(
-    () => ({
-      journalStats: state.journalStats,
-      moodStats: state.moodStats,
-      selectedMonthStats: state.selectedMonthStats,
-      expressiveMonthStats: state.expressiveMonthStats,
-    }),
+    },
     [
-      state.journalStats,
-      state.moodStats,
-      state.selectedMonthStats,
-      state.expressiveMonthStats,
+      getTotalCount,
+      getMonthlyCounts,
+      getJournalFrequency,
+      getMostActiveDay,
+      journals,
     ],
   );
 
-  return (
-    <StatisticsContext.Provider value={contextValue}>
-      {children}
-    </StatisticsContext.Provider>
-  );
-};
+  const calculateMonthlyStats = useCallback(
+    (selectedMonth: ISOMonthString) => {
+      if (!selectedMonth) {
+        setMonthStats(initialMonthlyStats);
+        return;
+      }
 
-export const useStatistics = () => {
-  const context = useContext(StatisticsContext);
-  if (!context) {
-    throw new Error(
-      'useStatistics must be used within a StatisticsContextProvider',
-    );
-  }
-  return context;
-};
+      const currentMonthJournals = monthlyJournals(selectedMonth);
+      const currentFrequency = getJournalFrequency(currentMonthJournals);
+      const currentActiveDay = getMostActiveDay(currentMonthJournals);
+      const scoreBoard = getTotalMoodAverage(currentMonthJournals);
+      const signatureMood = getSignatureMood(scoreBoard);
+
+      setMonthStats({
+        count: currentMonthJournals.length,
+        frequency: currentFrequency,
+        activeDay: currentActiveDay,
+        signatureMood: signatureMood,
+      });
+    },
+    [
+      getJournalFrequency,
+      getMostActiveDay,
+      getTotalMoodAverage,
+      getSignatureMood,
+      monthlyJournals,
+    ],
+  );
+
+  const calculateExpressiveMonthStats = useCallback(
+    (selectedYear: number) => {
+      const expressiveMonth = getExpressiveMonth(selectedYear);
+
+      setExpressiveMonthStats({
+        month: expressiveMonth.month as ISOMonthString,
+        count: expressiveMonth.count,
+      });
+    },
+    [getExpressiveMonth],
+  );
+
+  const calculateMoodStats = useCallback(() => {
+    const allJournals = journals();
+    const scoreBoard = getTotalMoodAverage(allJournals);
+    const signatureMood = getSignatureMood(scoreBoard);
+
+    setMoodStats({
+      scoreBoard,
+      signatureMood: signatureMood,
+    });
+  }, [getTotalMoodAverage, getSignatureMood, journals]);
+
+  const initStats = useCallback(
+    (selectedYear: number) => {
+      calculateJournalStats(selectedYear);
+      calculateMoodStats();
+      calculateExpressiveMonthStats(selectedYear);
+    },
+    [calculateJournalStats, calculateMoodStats, calculateExpressiveMonthStats],
+  );
+
+  return {
+    journalStats,
+    moodStats,
+    monthStats,
+    expressiveMonthStats,
+    getJournals: journals,
+    getMonthlyJournals: monthlyJournals,
+    calculateJournalStats,
+    calculateMonthlyStats,
+    calculateMoodStats,
+    calculateExpressiveMonthStats,
+    initStats,
+    isLoading,
+  };
+}
