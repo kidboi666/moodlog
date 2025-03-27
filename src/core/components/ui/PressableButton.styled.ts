@@ -9,7 +9,7 @@ import {
 export const PressableButton = styled(Button, {
   scaleIcon: 1.5,
   elevate: true,
-  bg: '$background',
+  bg: '$backgroundHover',
   animation: 'quick',
   enterStyle: MOUNT_STYLE,
   pressStyle: PRESS_STYLE,

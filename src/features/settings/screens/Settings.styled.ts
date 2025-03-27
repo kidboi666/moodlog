@@ -5,4 +5,6 @@ export const Container = styled(HOSContainer, {
   gap: '$4',
 });
 
-export const ItemContainer = styled(YStack);
+export const ItemContainer = styled(YStack, {
+  gap: '$4',
+});

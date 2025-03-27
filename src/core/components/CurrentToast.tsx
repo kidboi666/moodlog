@@ -19,7 +19,9 @@ export const CurrentToast = () => {
       <S.ToastContent>
         <S.ToastTitle>{currentToast.title}</S.ToastTitle>
         {!!currentToast.message && (
-          <Toast.Description>{currentToast.message}</Toast.Description>
+          <Toast.Description>
+            <S.ToastDescription>{currentToast.message}</S.ToastDescription>
+          </Toast.Description>
         )}
       </S.ToastContent>
     </S.ToastContainer>

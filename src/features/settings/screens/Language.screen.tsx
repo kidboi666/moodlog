@@ -1,5 +1,5 @@
 import { Container } from '@/core/components/Container.styleable';
-import { RadioGroup, Separator } from 'tamagui';
+import { RadioGroup } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
 
@@ -23,6 +23,7 @@ export const LanguageScreen = () => {
         value={language}
         onValueChange={handleValueChange}
         name="theme"
+        gap="$4"
       >
         {/* English */}
         <RadioGroupItem
@@ -30,7 +31,6 @@ export const LanguageScreen = () => {
           label="English"
           onValueChange={handleValueChange}
         />
-        <Separator />
 
         {/* 한국어 */}
         <RadioGroupItem

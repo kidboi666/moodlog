@@ -57,7 +57,7 @@ export const JournalCard = ({
     );
   });
 
-  const handlePress = useEvent(() => {
+  const handlePress = () => {
     if (cardPosition === CardPosition.LEFT) {
       handleSwipeRight();
     } else {
@@ -66,7 +66,7 @@ export const JournalCard = ({
         params: { id },
       });
     }
-  });
+  };
 
   return (
     <>

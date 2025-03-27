@@ -1,4 +1,4 @@
-import { H1, ScrollView, Separator } from 'tamagui';
+import { H1, ScrollView } from 'tamagui';
 import { Clock, Globe, Moon } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { NavigationSettingItem } from '@/features/settings/components/NavigationSettingItem';
@@ -11,8 +11,8 @@ export const SettingsScreen = () => {
   const router = useRouter();
 
   const handleRouteChange = useCallback(
-    (href: Href) => {
-      router.push(href);
+    (route: Href) => {
+      router.push(route);
     },
     [router],
   );
@@ -29,7 +29,6 @@ export const SettingsScreen = () => {
             href="/settings/theme"
             onRouteChange={handleRouteChange}
           />
-          <Separator />
 
           {/* Language Setting */}
           <NavigationSettingItem
@@ -38,7 +37,6 @@ export const SettingsScreen = () => {
             onRouteChange={handleRouteChange}
             href="/settings/language"
           />
-          <Separator />
 
           {/* TimeFormat Setting */}
           <NavigationSettingItem

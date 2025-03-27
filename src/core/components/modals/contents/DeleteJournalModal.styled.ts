@@ -23,8 +23,10 @@ export const ConfirmButton = styled(PressableButton, {
   bg: '$red9',
   color: 'white',
   fontWeight: '800',
+  elevate: false,
 });
 
 export const CancelButton = styled(PressableButton, {
   fontWeight: '800',
+  elevate: false,
 });

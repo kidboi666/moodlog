@@ -8,9 +8,11 @@ import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
+import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 
 export const EntriesScreen = () => {
   const { selectedJournals, removeJournal } = useJournal();
+  const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
   const { t } = useTranslation();
 
   return (
@@ -28,12 +30,18 @@ export const EntriesScreen = () => {
               return (
                 <Fragment key={id}>
                   <JournalCard
-                    id={id}
-                    content={content}
-                    imageUri={imageUri}
-                    createdAt={createdAt}
-                    mood={mood}
-                    onDelete={removeJournal}
+                    {...{
+                      id,
+                      content,
+                      imageUri,
+                      createdAt,
+                      mood,
+                      onDelete: removeJournal,
+                      isOpen,
+                      setIsOpen,
+                      openSheet,
+                      closeSheet,
+                    }}
                   />
                 </Fragment>
               );

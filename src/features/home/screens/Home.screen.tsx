@@ -2,7 +2,10 @@ import { useTranslation } from 'react-i18next';
 import React, { Fragment, useCallback } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
+import {
+  ANIMATION_DELAY_MS,
+  ANIMATION_DELAY_SECONDS,
+} from '@/core/constants/time';
 import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
 import { JournalCard } from '@/features/journal/components/JournalCard';
@@ -64,7 +67,7 @@ export const HomeScreen = () => {
             return (
               <Fragment key={journal.id}>
                 {index > 0 && <S.Separator />}
-                <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
+                <FadeIn delay={ANIMATION_DELAY_MS[0]}>
                   <JournalCard
                     {...{
                       id,

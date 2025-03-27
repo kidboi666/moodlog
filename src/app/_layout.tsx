@@ -113,13 +113,13 @@ const RootLayoutNav = () => {
         value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}
       >
         <StatusBar resolvedTheme={resolvedTheme} />
+        <AppInitializer />
         <Stack screenOptions={screenOptions}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="+not-found" />
         </Stack>
         <CurrentToast />
-        <AppInitializer />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

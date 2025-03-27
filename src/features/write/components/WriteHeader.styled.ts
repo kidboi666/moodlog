@@ -4,4 +4,7 @@ import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 export const HeaderContainer = styled(HOSHeaderContainer);
 
-export const BackButton = styled(PressableButton);
+export const BackButton = styled(PressableButton, {
+  elevate: false,
+  bg: '$backgroundTransparent',
+});

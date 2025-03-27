@@ -6,12 +6,12 @@ export const RadioGroupContainerButton = styled(PressableButton, {
   elevate: false,
   width: '100%',
   justify: 'flex-start',
-  bg: '$backgroundTransparent',
+  bg: '$background',
   size: '$5',
 });
 
 export const RadioItemLabel = styled(Text, {
-  fontSize: '$6',
+  fontSize: '$5',
   flex: 1,
 });
 

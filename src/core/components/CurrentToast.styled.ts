@@ -33,3 +33,7 @@ export const ToastContent = styled(YStack, {
 export const ToastTitle = styled(Toast.Title, {
   fontWeight: '800',
 });
+
+export const ToastDescription = styled(Toast.Description, {
+  color: '$color',
+});

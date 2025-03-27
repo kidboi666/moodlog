@@ -3,7 +3,9 @@ import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 const TabButton = styled(PressableButton, {
   color: '$gray9',
+  bg: '$backgroundTransparent',
   elevate: false,
+
   variants: {
     isTabActive: {
       true: {
@@ -20,7 +22,6 @@ export const CalendarButton = styled(TabButton);
 
 export const WriteButton = styled(TabButton, {
   themeInverse: true,
-  elevate: true,
 });
 
 export const WriteInnerBox = styled(View);

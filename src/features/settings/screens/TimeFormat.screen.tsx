@@ -1,6 +1,6 @@
 import { Container } from '@/core/components/Container.styleable';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
-import { RadioGroup, Separator } from 'tamagui';
+import { RadioGroup } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { useTranslation } from 'react-i18next';
 
@@ -20,20 +20,18 @@ export const TimeFormatScreen = () => {
   );
 
   return (
-    <Container>
-      <SettingHeader />
-
+    <Container Header={<SettingHeader />}>
       <RadioGroup
         value={timeFormat}
         onValueChange={handleValueChange}
         name="theme"
+        gap="$4"
       >
         <RadioGroupItem
           value={TimeFormat.HOUR_12}
           label={t(`settings.timeFormat.12`)}
           onValueChange={handleValueChange}
         />
-        <Separator />
         <RadioGroupItem
           value={TimeFormat.HOUR_24}
           label={t(`settings.timeFormat.24`)}

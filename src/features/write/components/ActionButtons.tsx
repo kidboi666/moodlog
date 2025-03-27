@@ -2,7 +2,7 @@ import { Check, ImagePlus, Timer } from '@tamagui/lucide-icons';
 import React from 'react';
 import { Nullable } from '@/types/utill.types';
 import * as S from './ActionButtons.styled';
-import { Button, Form, Spinner, XGroup } from 'tamagui';
+import { Form, Spinner, XGroup } from 'tamagui';
 
 interface Props {
   onImageUriChange: () => Promise<Nullable<void>>;
@@ -20,19 +20,18 @@ export const ActionButtons = ({
   content,
 }: Props) => {
   const isDisabled = isSubmitted || isSubmitting || !content;
-  console.log('isDisabled', isDisabled);
   return (
     <S.XGroupContainer>
       <XGroup.Item>
-        <Button onPress={onImageUriChange} icon={ImagePlus}>
+        <S.ActionButton onPress={onImageUriChange} icon={ImagePlus}>
           사진 추가
-        </Button>
+        </S.ActionButton>
       </XGroup.Item>
       <S.Separator />
       <XGroup.Item>
-        <Button onPress={onTimeStamp} icon={Timer}>
+        <S.ActionButton onPress={onTimeStamp} icon={Timer}>
           타임 스탬프
-        </Button>
+        </S.ActionButton>
       </XGroup.Item>
       <S.Separator />
       <XGroup.Item>
@@ -40,7 +39,6 @@ export const ActionButtons = ({
           <S.SubmitButton
             icon={isSubmitting ? () => <Spinner /> : Check}
             disabled={isDisabled}
-            isDisabled={isDisabled}
           />
         </Form.Trigger>
       </XGroup.Item>
