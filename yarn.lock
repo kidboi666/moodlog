@@ -2087,40 +2087,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5":
-  version: 5.1.1
-  resolution: "@gorhom/bottom-sheet@npm:5.1.1"
-  dependencies:
-    "@gorhom/portal": "npm:1.0.14"
-    invariant: "npm:^2.2.4"
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=2.16.1"
-    react-native-reanimated: ">=3.16.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: 10/6da29c3927f6a0b6d2a459e2a1cae48ce7c0fce41663b46b0aba98490af15199e31248f83ca18753eeb439faf2c1dd957f26e4eacc9796b4962df44170b1a2d3
-  languageName: node
-  linkType: hard
-
-"@gorhom/portal@npm:1.0.14":
-  version: 1.0.14
-  resolution: "@gorhom/portal@npm:1.0.14"
-  dependencies:
-    nanoid: "npm:^3.3.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/e0fa06be88b850cccdc6a1417a86e5ac21d82e3bfd1cec7eb05eccf7f3b595babe305541f278fdcbde34f3a9db465097dca2c785445c28bafb83b744e235da0c
-  languageName: node
-  linkType: hard
-
 "@graphql-tools/executor@npm:^1.0.0":
   version: 1.3.12
   resolution: "@graphql-tools/executor@npm:1.3.12"
@@ -10920,7 +10886,6 @@ __metadata:
     "@babel/core": "npm:^7.24.6"
     "@expo/metro-config": "npm:~0.19.0"
     "@expo/metro-runtime": "npm:~4.0.1"
-    "@gorhom/bottom-sheet": "npm:^5"
     "@react-native-async-storage/async-storage": "npm:1.23.1"
     "@react-navigation/drawer": "npm:^7.1.1"
     "@react-navigation/native": "npm:^7.0.14"
@@ -11015,7 +10980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:3.3.8, nanoid@npm:^3.3.1, nanoid@npm:^3.3.7, nanoid@npm:^3.3.8":
+"nanoid@npm:3.3.8, nanoid@npm:^3.3.7, nanoid@npm:^3.3.8":
   version: 3.3.8
   resolution: "nanoid@npm:3.3.8"
   bin:
