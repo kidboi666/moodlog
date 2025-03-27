@@ -3,13 +3,12 @@ import { ScoreBoard, TimeRange } from '@/types/statistic.types';
 import { Journal, Journals } from '@/types/journal.types';
 import { MoodLevel, SignatureMood } from '@/types/mood.types';
 import {
-  castArray,
-  extractKeys,
-  getDayInISODateString,
+  getDayFromISODate,
   getDaysBetweenDates,
   getISOMonthString,
-} from '@/core/utils/common';
+} from '@/core/utils/date';
 import { JournalIndexes, MonthIndexes } from '@/core/store/types/journal.types';
+import { castArray, extractKeys } from '@/core/utils/common';
 
 export class StatisticsService {
   /**
@@ -170,7 +169,7 @@ export class StatisticsService {
     const castJournals = castArray(journals);
 
     const days = castJournals.map(journal =>
-      getDayInISODateString(journal.localDate),
+      getDayFromISODate(journal.localDate),
     );
     const frequency: Record<string, number> = {};
 
@@ -203,7 +202,7 @@ export class StatisticsService {
     const scoreBoard = this.calculateMoodScoreBoard(yearlyJournals);
 
     return {
-      totalCount: journals.length,
+      totalCount: yearlyJournals.length,
       frequency: this.getJournalFrequency(indexes, timeRange, selectedYear),
       activeDay: this.getMostActiveDay(journals),
       moodStats: {
@@ -233,7 +232,7 @@ export class StatisticsService {
     return {
       totalCount: monthlyJournals.length,
       frequency: this.getJournalFrequency(indexes, timeRange, selectedMonth),
-      activeDay: this.getMostActiveDay(monthlyJournals),
+      activeDay: this.getMostActiveDay(journals),
       moodStats: {
         scoreBoard,
         signatureMood: this.getSignatureMood(scoreBoard),
@@ -242,17 +241,6 @@ export class StatisticsService {
         month: '0000-00' as ISOMonthString,
         count: 0,
       },
-    };
-  }
-
-  /**
-   * 감정 통계 계산
-   */
-  static getMonthlyMoodStats(journals: Journal[], month: ISOMonthString) {
-    const scoreBoard = this.calculateMoodScoreBoard(journals);
-    return {
-      scoreBoard,
-      signatureMood: this.getSignatureMood(scoreBoard),
     };
   }
 }

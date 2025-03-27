@@ -11,7 +11,7 @@ import { Direction } from 'react-native-calendars/src/types';
 import { CustomDayComponent } from '@/features/calendar/components/CustomDayComponent';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
 import { CalendarCustomHeader } from '@/features/calendar/components/CalendarCustomHeader';
-import { getISOMonthString } from '@/core/utils/common';
+import { getISOMonthString } from '@/core/utils/date';
 import { ArrowButton } from '@/features/calendar/components/ArrowButton';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 

@@ -1,11 +1,7 @@
 import { ScrollView } from 'tamagui';
 import { GardenTitleHeader } from '@/features/entries/components/GardenTitleHeader';
 import { GardenDayUnits } from '@/features/entries/components/GardenDayUnits';
-import {
-  getFirstDateDay,
-  getLastDate,
-  getWeekLength,
-} from '@/core/utils/common';
+import { getFirstDateDay, getLastDate, getWeekLength } from '@/core/utils/date';
 import { useCallback, useMemo } from 'react';
 import { MONTHS } from '@/core/constants/date';
 import { MonthItem } from '@/features/entries/components/MonthItem';

@@ -6,9 +6,8 @@ import { CalendarUtils } from 'react-native-calendars';
 import {
   getISODateString,
   getISOMonthString,
-  getMonthFromDate,
-  getYearFromDate,
-} from '@/core/utils/common';
+  getYearFromISODate,
+} from '@/core/utils/date';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { JournalIndexes, JournalStore } from '@/core/store/types/journal.types';
 
@@ -40,7 +39,7 @@ export class JournalService extends StorageService {
     try {
       const now = new Date();
       const localDate = CalendarUtils.getCalendarDateString(now);
-      const monthString = getMonthFromDate(localDate);
+      const monthString = getISOMonthString(localDate);
       const year = now.getFullYear();
       const moodType = draft.mood.type;
 
@@ -106,8 +105,8 @@ export class JournalService extends StorageService {
         return { journals: store.journals, indexes: store.indexes };
       }
       const date = journal.localDate;
-      const month = getMonthFromDate(date);
-      const year = getYearFromDate(journal.localDate);
+      const month = getISOMonthString(date);
+      const year = getYearFromISODate(journal.localDate);
       const mood = journal.mood.type;
 
       const newStore = {

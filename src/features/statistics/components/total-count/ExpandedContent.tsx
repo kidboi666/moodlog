@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Minimize2 } from '@tamagui/lucide-icons';
 import { EmptyContent } from '@/features/statistics/components/EmptyContent';
-import { getMonthStringWithoutYear } from '@/core/utils/common';
+import { getMonthKey } from '@/core/utils/date';
 import * as S from './ExpandedContent.styled';
 import { memo } from 'react';
 
@@ -68,9 +68,7 @@ export const ExpandedContent = memo(
           </S.ExpressiveMonthTitle>
           <S.ExpressiveMonthDescription>
             {t('statistics.totalCount.expressiveMonth.description', {
-              month: t(
-                `calendar.months.${getMonthStringWithoutYear(expressiveMonth.month)}`,
-              ),
+              month: t(`calendar.months.${getMonthKey(expressiveMonth.month)}`),
               count: expressiveMonth.count,
             })}
           </S.ExpressiveMonthDescription>

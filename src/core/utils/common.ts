@@ -1,6 +1,27 @@
-import { MONTHS, WEEK_DAY } from '@/core/constants/date';
-import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
+/**
+ * 객체의 밸류들을 배열로 반환
+ */
+export const castArray = <T>(value: Record<string, T>): T[] => {
+  return Object.values(value);
+};
 
+/**
+ * 객체의 키를 배열로 반환
+ */
+export const extractKeys = (obj: Record<string, any>): string[] => {
+  return Object.keys(obj);
+};
+
+/**
+ * 배열 또는 단일 값을 받아 항상 단일 값으로 반환
+ */
+export const toSingle = <T>(value: T | T[]): T => {
+  return Array.isArray(value) ? value[0] : value;
+};
+
+/**
+ * 문자열 앞의 0을 제거하고 숫자로 변환
+ */
 export const removeLeadingZero = (str: string) => {
   str = String(str);
 
@@ -9,95 +30,4 @@ export const removeLeadingZero = (str: string) => {
   }
 
   return Number(str);
-};
-export const getMonthString = (month: number) => {
-  return Object.keys(MONTHS)[month];
-};
-
-export const getISODateString = (
-  year: number,
-  month: number | string,
-  date: number,
-) => {
-  let intMonth: number;
-  if (typeof month === 'string') {
-    intMonth = Object.keys(MONTHS).findIndex(key => key === month);
-  } else {
-    intMonth = month;
-  }
-  return `${year}-${intMonth.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}` as ISODateString;
-};
-
-export const getDayInISODateString = (date: ISODateString) => {
-  return Object.keys(WEEK_DAY)[new Date(date).getDay()];
-};
-
-export const getDayNumberInISODateString = (date: ISODateString) => {
-  return new Date(date).getDay();
-};
-
-export const getDateInISODateString = (date: ISODateString) => {
-  return removeLeadingZero(date.split('-')[2]);
-};
-
-export const getISOMonthString = (year: number, month: number | MonthKey) => {
-  if (typeof month === 'number') {
-    return `${year}-${month.toString().padStart(2, '0')}` as ISOMonthString;
-  }
-  return `${year}-${Object.keys(MONTHS)
-    .indexOf(month)
-    .toString()
-    .padStart(2, '0')}` as ISOMonthString;
-};
-
-export const getLastDate = (year: number, month: number | string) => {
-  if (typeof month === 'number') {
-    return new Date(year, month + 1, 0).getDate();
-  }
-  return new Date(year, Object.keys(MONTHS).indexOf(month) + 1, 0).getDate();
-};
-
-export const getFirstDateDay = (year: number, month: string) => {
-  return new Date(year, Object.keys(MONTHS).indexOf(month), 1).getDay();
-};
-
-export const getWeekLength = (year: number, month: any) => {
-  const lastDate = getLastDate(year, month);
-  const firstDateDay = getFirstDateDay(year, month);
-  return Math.ceil((lastDate + firstDateDay) / 7);
-};
-
-export const getMonthStringWithoutYear = (str: string) => {
-  return Object.keys(MONTHS)[
-    Number(removeLeadingZero(str.split('-')[1])) - 1
-  ] as MonthKey;
-};
-
-export const toSingle = <T>(value: T | T[]): T => {
-  return Array.isArray(value) ? value[0] : value;
-};
-
-export const getMonthFromDate = (date: ISODateString): ISOMonthString => {
-  return date.substring(0, 7) as ISOMonthString;
-};
-
-export const getYearFromDate = (date: ISODateString): number => {
-  return parseInt(date.substring(0, 3));
-};
-
-export const castArray = <T>(value: Record<string, T>): T[] => {
-  return Object.values(value);
-};
-
-export const extractKeys = (obj: Record<string, any>): string[] => {
-  return Object.keys(obj);
-};
-
-export const getDaysBetweenDates = (startDate: string, endDate: string) => {
-  const start: Date = new Date(startDate);
-  const end: Date = new Date(endDate);
-
-  const diffTime: number = Math.abs(end.getTime() - start.getTime());
-
-  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 };

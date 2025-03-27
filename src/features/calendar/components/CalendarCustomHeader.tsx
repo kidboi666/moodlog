@@ -1,5 +1,5 @@
 import { H2 } from 'tamagui';
-import { getMonthString } from '@/core/utils/common';
+import { getMonthKey } from '@/core/utils/date';
 import { useTranslation } from 'react-i18next';
 import { memo, useMemo } from 'react';
 
@@ -9,7 +9,7 @@ interface Props {
 
 export const CalendarCustomHeader = memo(({ date }: Props) => {
   const month = useMemo(() => {
-    return getMonthString(new Date(date).getMonth());
+    return getMonthKey(new Date(date).getMonth());
   }, [date]);
   const { t } = useTranslation();
 

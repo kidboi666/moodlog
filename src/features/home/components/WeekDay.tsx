@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { HorizontalCalendar } from '@/features/home/components/HorizontalCalendar';
 import { useTranslation } from 'react-i18next';
-import { getMonthString } from '@/core/utils/common';
+import { getMonthKey } from '@/core/utils/date';
 import * as S from './WeekDay.styled';
 
 export const WeekDay = memo(() => {
@@ -13,7 +13,7 @@ export const WeekDay = memo(() => {
         <S.InnerGradientBox>
           <S.CurrentMonthBox>
             <S.CurrentMonthText>
-              {t(`calendar.months.${getMonthString(new Date().getMonth())}`)}.
+              {t(`calendar.months.${getMonthKey(new Date().getMonth())}`)}.
             </S.CurrentMonthText>
           </S.CurrentMonthBox>
           <HorizontalCalendar />

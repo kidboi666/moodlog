@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { getMonthStringWithoutYear } from '@/core/utils/common';
+import { getMonthKey } from '@/core/utils/date';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
 
@@ -21,9 +21,7 @@ export const ExpandedContent = ({ selectedMonthStats }: Props) => {
     signatureMood,
   } = selectedMonthStats;
 
-  const month = t(
-    `calendar.months.${getMonthStringWithoutYear(ISOMonthString)}`,
-  );
+  const month = t(`calendar.months.${getMonthKey(ISOMonthString)}`);
 
   return (
     <S.MonthlyStatsContainer>

@@ -2,12 +2,12 @@ import { ScrollView } from 'tamagui';
 import React, { useEffect } from 'react';
 import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
-import { toSingle } from '@/core/utils/common';
 import * as S from './Journal.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useApp } from '@/core/store/contexts/app.context';
 import { useLocalSearchParams } from 'expo-router';
 import { JournalHeader } from '@/features/journal/components/JournalHeader';
+import { toSingle } from '@/core/utils/common';
 
 export const JournalScreen = () => {
   const { id } = useLocalSearchParams();

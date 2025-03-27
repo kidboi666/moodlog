@@ -4,12 +4,12 @@ import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
 import { DateCountDot } from '@/features/home/components/DateCountDot';
 import { useTranslation } from 'react-i18next';
 import {
-  getDateInISODateString,
-  getDayInISODateString,
-  getDayNumberInISODateString,
+  getDateFromISODate,
+  getDayFromISODate,
+  getDayIndexFromISODate,
   getISODateString,
   getLastDate,
-} from '@/core/utils/common';
+} from '@/core/utils/date';
 import * as S from './HorizontalCalendar.styled';
 import { ISODateString } from '@/types/date.types';
 import { useJournal } from '@/core/store/contexts/journal.context';
@@ -53,8 +53,8 @@ export const HorizontalCalendar = () => {
     let timeout: NodeJS.Timeout;
 
     if (selectedDate) {
-      const selectedIndex = getDateInISODateString(selectedDate);
-      const day = getDayNumberInISODateString(selectedDate) || 7;
+      const selectedIndex = getDateFromISODate(selectedDate);
+      const day = getDayIndexFromISODate(selectedDate) || 7;
       timeout = setTimeout(() => {
         if (selectedIndex !== -1 && scrollViewRef.current) {
           scrollViewRef.current.scrollTo({
@@ -91,7 +91,7 @@ export const HorizontalCalendar = () => {
                 <S.DateWrapper>
                   <S.DateTextWrapper>
                     <S.DayText isSelected={isSelected(isoDate)}>
-                      {t(`calendar.days.${getDayInISODateString(isoDate)}`)}
+                      {t(`calendar.days.${getDayFromISODate(isoDate)}`)}
                     </S.DayText>
                     <S.DateText
                       futureDateColor={
@@ -102,7 +102,7 @@ export const HorizontalCalendar = () => {
                             : '$gray6'
                       }
                     >
-                      {getDateInISODateString(isoDate)}
+                      {getDateFromISODate(isoDate)}
                     </S.DateText>
                   </S.DateTextWrapper>
                   <DateCountDot

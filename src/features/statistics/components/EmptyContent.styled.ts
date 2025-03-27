@@ -5,7 +5,6 @@ export const ViewContainer = styled(View, {
   justify: 'space-between',
   animation: 'quick',
   animateOnly: ['opacity'],
-  p: '$4',
   enterStyle: { opacity: 0 },
   exitStyle: { opacity: 0 },
 });
