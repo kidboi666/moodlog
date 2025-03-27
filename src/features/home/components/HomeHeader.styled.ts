@@ -1,15 +1,7 @@
-import { Button, styled, View } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
+import { styled, View } from 'tamagui';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
-export const DevMenuButton = styled(Button, {
-  unstyled: true,
-  p: '$2',
-  scaleIcon: 1.5,
-  rounded: '$2',
-  animation: 'quick',
-  animateOnly: PRESS_STYLE_KEY,
-  pressStyle: PRESS_STYLE,
-});
+export const DevMenuButton = styled(PressableButton);
 
 export const RestBox = styled(View, {
   flex: 1,

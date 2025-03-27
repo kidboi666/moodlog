@@ -1,16 +1,8 @@
-import {
-  Button,
-  Card,
-  Image,
-  Paragraph,
-  styled,
-  View,
-  XStack,
-  YStack,
-} from 'tamagui';
+import { Card, Image, Paragraph, styled, View, XStack, YStack } from 'tamagui';
 import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 export const Container = styled(View, {
   animation: 'quick',
@@ -97,10 +89,7 @@ export const ImageCoverGradient = styled(LinearGradient, {
   pointerEvents: 'none',
 });
 
-export const RightChevronButton = styled(Button, {
-  unstyled: true,
-  p: '$4',
-});
+export const RightChevronButton = styled(PressableButton, {});
 
 export const ActionBox = styled(XStack, {
   r: 0,
@@ -116,8 +105,7 @@ export const ActionBox = styled(XStack, {
   z: -1,
 });
 
-export const DeleteButton = styled(Button, {
-  size: '$3',
+export const DeleteButton = styled(PressableButton, {
   circular: true,
   chromeless: true,
   scaleIcon: 1.5,
@@ -128,5 +116,4 @@ export const DeleteButton = styled(Button, {
   shadowOpacity: 0.2,
   shadowRadius: 1.5,
   elevation: 2,
-  pressStyle: { bg: '$red11' },
 });

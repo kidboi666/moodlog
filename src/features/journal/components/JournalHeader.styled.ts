@@ -1,10 +1,10 @@
-import { Button, styled, XStack, YStack } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
+import { styled, XStack, YStack } from 'tamagui';
 import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 import { CONTAINER_SPACING } from '@/core/constants/size';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { RenderDay } from '@/core/components/RenderDay.styleable';
 import { RenderDate } from '@/core/components/RenderDate.styleable';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 export const HeaderContainer = styled(HOSHeaderContainer, {
   items: 'center',
@@ -37,16 +37,6 @@ export const DayWithTimeBox = styled(XStack, {
   gap: '$2',
 });
 
-export const BackButton = styled(Button, {
-  scaleIcon: 1.5,
-  animation: 'medium',
-  pressStyle: PRESS_STYLE,
-  animateOnly: PRESS_STYLE_KEY,
-});
+export const BackButton = styled(PressableButton);
 
-export const DeleteButton = styled(Button, {
-  scaleIcon: 1.5,
-  animation: 'medium',
-  pressStyle: PRESS_STYLE,
-  animateOnly: PRESS_STYLE_KEY,
-});
+export const DeleteButton = styled(PressableButton);

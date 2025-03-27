@@ -10,6 +10,7 @@ export const PRESS_STYLE = {
   bg: '$backgroundFocus',
   borderColor: '$borderColorPress',
   color: '$colorPress',
+  scale: 0.92,
 } as const;
 
 export const FALL_STYLE = {

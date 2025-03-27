@@ -1,10 +1,6 @@
 import { Button, H3, H5, styled, YStack } from 'tamagui';
-import {
-  MOUNT_STYLE,
-  MOUNT_STYLE_KEY,
-  PRESS_STYLE,
-  PRESS_STYLE_KEY,
-} from '@/styles/animations';
+import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 export const TodayContainer = styled(YStack, {
   justify: 'center',
@@ -14,6 +10,9 @@ export const TodayContainer = styled(YStack, {
   px: '$9',
   rounded: '$8',
   bg: '$gray4',
+  animation: 'medium',
+  enterStyle: MOUNT_STYLE,
+  animateOnly: MOUNT_STYLE_KEY,
 });
 
 export const TodayTitle = styled(H3, {
@@ -21,12 +20,8 @@ export const TodayTitle = styled(H3, {
   color: '$gray12',
 });
 
-export const WriteButton = styled(Button, {
-  scaleIcon: 1.5,
+export const WriteButton = styled(PressableButton, {
   themeInverse: true,
-  animation: 'medium',
-  pressStyle: PRESS_STYLE,
-  animateOnly: PRESS_STYLE_KEY,
 });
 
 export const PastDaysContainer = styled(Button, {
@@ -35,7 +30,7 @@ export const PastDaysContainer = styled(Button, {
   justify: 'center',
   items: 'center',
   gap: '$3',
-  animation: 'quick',
+  animation: 'medium',
   enterStyle: MOUNT_STYLE,
   animateOnly: MOUNT_STYLE_KEY,
 });
