@@ -7,12 +7,14 @@ export const CurrentToast = () => {
   const { currentTheme } = useAppTheme();
 
   if (!currentToast || currentToast.isHandledNatively) return null;
+
   return (
     <S.ToastContainer
       key={currentToast.id}
       duration={currentToast.duration}
       viewportName={currentToast.viewportName}
       theme={currentTheme === 'dark' ? 'light' : 'dark'}
+      presetColor={currentToast.preset}
     >
       <S.ToastContent>
         <S.ToastTitle>{currentToast.title}</S.ToastTitle>

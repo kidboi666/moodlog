@@ -3,7 +3,6 @@ import React, { Fragment, useCallback } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
-import { HomeHeader } from '@/features/home/components/HomeHeader';
 import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
 import { JournalCard } from '@/features/journal/components/JournalCard';
@@ -14,13 +13,14 @@ import { useUser } from '@/core/store/contexts/user.context';
 import { WeekDay } from '@/features/home/components/WeekDay';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { useFocusEffect } from 'expo-router';
+import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 
 export const HomeScreen = () => {
   const { selectedJournals, removeJournal, selectJournals } = useJournal();
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
   const { userInfo } = useUser();
-  const isDev = __DEV__;
+  const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
 
   const handleDeleteJournal = useCallback(
     async (id: string) => {
@@ -39,11 +39,7 @@ export const HomeScreen = () => {
 
   return (
     <ScrollView overScrollMode="always">
-      <Container
-        edges={isDev ? ['bottom'] : ['top', 'bottom']}
-        Header={isDev ? <HomeHeader /> : undefined}
-        padded
-      >
+      <Container edges={['top', 'bottom']} padded>
         <S.ContentHeaderContainer>
           <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
             <S.WelcomeEmojiBox>
@@ -68,14 +64,20 @@ export const HomeScreen = () => {
             return (
               <Fragment key={journal.id}>
                 {index > 0 && <S.Separator />}
-                <FadeIn delay={100 * (index + 1)}>
+                <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
                   <JournalCard
-                    id={id}
-                    content={content}
-                    mood={mood}
-                    imageUri={imageUri}
-                    createdAt={createdAt}
-                    onDelete={handleDeleteJournal}
+                    {...{
+                      id,
+                      content,
+                      mood,
+                      imageUri,
+                      createdAt,
+                      onDelete: handleDeleteJournal,
+                      isOpen,
+                      setIsOpen,
+                      openSheet,
+                      closeSheet,
+                    }}
                   />
                 </FadeIn>
               </Fragment>

@@ -1,20 +1,19 @@
-import React, { memo } from 'react';
-import { BottomModal } from '@/core/components/modals/BottomModal';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 import { useRouter } from 'expo-router';
-import { useBottomModal } from '@/core/hooks/useBottomModal';
 import * as S from './JournalHeader.styled';
 import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
 import { Journal } from '@/types/journal.types';
+import { BottomSheet } from '@/core/components/modals/BottomSheet';
+import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 
 interface Props {
   journal: Journal;
   onDelete: (journalId: string) => void;
 }
 
-export const JournalHeader = memo(({ journal, onDelete }: Props) => {
+export const JournalHeader = ({ journal, onDelete }: Props) => {
   const router = useRouter();
-  const { modalRef, openModal } = useBottomModal();
+  const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
 
   return (
     <>
@@ -28,11 +27,16 @@ export const JournalHeader = memo(({ journal, onDelete }: Props) => {
           </S.DayWithTimeBox>
         </S.DateContainer>
 
-        <S.DeleteButton icon={Trash2} onPress={openModal} />
+        <S.DeleteButton icon={Trash2} onPress={openSheet} />
       </S.HeaderContainer>
-      <BottomModal ref={modalRef}>
-        <DeleteJournalModal journalId={journal.id} onDelete={onDelete} />
-      </BottomModal>
+
+      <BottomSheet {...{ isOpen, setIsOpen }}>
+        <DeleteJournalModal
+          journalId={journal.id}
+          onDelete={onDelete}
+          closeSheet={closeSheet}
+        />
+      </BottomSheet>
     </>
   );
-});
+};

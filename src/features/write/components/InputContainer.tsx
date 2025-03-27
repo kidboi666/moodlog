@@ -111,6 +111,7 @@ export const InputContainer = ({
       await addJournal(newDraft);
       toast.show(t('notifications.success.journal.title'), {
         message: t('notifications.success.journal.message'),
+        preset: 'success',
       });
       onIsSubmittedChange(true);
     } catch (err) {

@@ -21,7 +21,11 @@ export const EmptyJournal = memo(({ isToday }: Props) => {
     </S.TodayContainer>
   ) : (
     <S.PastDaysContainer
-      onPress={() => toast.show(t('notifications.warning.journal.title'))}
+      onPress={() =>
+        toast.show(t('notifications.warning.journal.title'), {
+          preset: 'error',
+        })
+      }
     >
       <NotebookPen size="$1" color="$gray10" />
       <S.PastDaysTitle>{t('common.fallback.empty.title')}</S.PastDaysTitle>

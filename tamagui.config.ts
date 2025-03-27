@@ -81,3 +81,10 @@ export type Conf = typeof config;
 declare module 'tamagui' {
   interface TamaguiCustomConfig extends Conf {}
 }
+
+declare module '@tamagui/toast' {
+  interface CustomData {
+    preset: 'error' | 'notice' | 'success';
+    isUrgent?: boolean;
+  }
+}

@@ -1,5 +1,10 @@
 import { Card, Image, Paragraph, styled, View, XStack, YStack } from 'tamagui';
-import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import {
+  MOUNT_STYLE,
+  MOUNT_STYLE_KEY,
+  PRESS_STYLE,
+  PRESS_STYLE_KEY,
+} from '@/styles/animations';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
 import { PressableButton } from '@/core/components/ui/PressableButton.styled';
@@ -11,15 +16,26 @@ export const Container = styled(View, {
 
 export const CardContainer = styled(Card, {
   group: true,
-  animation: 'quick',
-  pressStyle: {
-    bg: '$gray8',
-  },
+  animation: 'medium',
+  pressStyle: PRESS_STYLE,
+  animateOnly: PRESS_STYLE_KEY,
   flex: 1,
   position: 'relative',
   width: '100%',
-  bg: '$gray4',
+  bg: '$backgroundHover',
   rounded: '$8',
+
+  variants: {
+    cardPosition: {
+      left: {
+        x: -80,
+        bg: '$background',
+      },
+      right: {
+        x: 0,
+      },
+    },
+  } as const,
 });
 
 export const CardHeader = styled(Card.Header, {
@@ -89,7 +105,7 @@ export const ImageCoverGradient = styled(LinearGradient, {
   pointerEvents: 'none',
 });
 
-export const RightChevronButton = styled(PressableButton, {});
+export const RightChevronButton = styled(PressableButton);
 
 export const ActionBox = styled(XStack, {
   r: 0,

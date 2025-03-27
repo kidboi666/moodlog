@@ -1,5 +1,5 @@
-import { Button, H3, Paragraph, styled, YStack } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
+import { H3, Paragraph, styled, YStack } from 'tamagui';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 export const ModalContainer = styled(YStack, {
   gap: '$4',
@@ -19,17 +19,12 @@ export const ModalContentYStack = styled(YStack, {
   mt: '$2',
 });
 
-export const ConfirmButton = styled(Button, {
-  animation: 'quick',
+export const ConfirmButton = styled(PressableButton, {
   bg: '$red9',
   color: 'white',
   fontWeight: '800',
-  pressStyle: PRESS_STYLE,
 });
 
-export const CancelButton = styled(Button, {
-  animation: 'quick',
-  animateOnly: PRESS_STYLE_KEY,
+export const CancelButton = styled(PressableButton, {
   fontWeight: '800',
-  pressStyle: PRESS_STYLE,
 });
