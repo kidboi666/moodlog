@@ -4,7 +4,7 @@ import { JournalCard } from '@/features/journal/components/JournalCard';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import { GardenSection } from '@/features/entries/components/GardenSection';
-import { CARD_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
@@ -17,7 +17,7 @@ export const EntriesScreen = () => {
     <ScrollView>
       <S.Container edges={['top']} padded>
         <S.Title>{t('entries.title')}</S.Title>
-        <FadeIn delay={CARD_DELAY.FIRST}>
+        <FadeIn delay={ANIMATION_DELAY_MS[0]}>
           <GardenSection />
         </FadeIn>
 

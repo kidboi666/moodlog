@@ -14,10 +14,6 @@ export const TodayContainer = styled(YStack, {
   px: '$9',
   rounded: '$8',
   bg: '$gray4',
-
-  animation: 'quick',
-  animateOnly: ENTER_STYLE_KEY,
-  enterStyle: ENTER_STYLE,
 });
 
 export const TodayTitle = styled(H3, {

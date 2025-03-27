@@ -1,6 +1,6 @@
 import { H1, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { CARD_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import { TimeRangeZone } from '@/features/statistics/components/TimeRangeZone';
@@ -36,7 +36,7 @@ export const StatisticsScreen = () => {
             onMonthly={switchToMonthly}
           />
         </S.OrderBox>
-        <FadeIn delay={CARD_DELAY.FIRST}>
+        <FadeIn delay={ANIMATION_DELAY_MS[0]}>
           <S.YStackContainer>
             <S.XStackContainer>
               <TotalCount

@@ -4,7 +4,7 @@ import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { useRouter } from 'expo-router';
 import { ArrowLeft, Check } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { PARAGRAPH_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import * as S from './Signup.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 import { useUser } from '@/core/store/contexts/user.context';
@@ -38,10 +38,10 @@ export const SignupScreen = () => {
   return (
     <Container edges={['bottom']}>
       <S.YStackContainer>
-        <FadeIn delay={PARAGRAPH_DELAY.FIRST}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
           <H1>{t('onboarding.signup.title')}</H1>
         </FadeIn>
-        <FadeIn delay={PARAGRAPH_DELAY.SECOND}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
           <S.BenefitsContainer>
             <S.BenefitTitle>{t('onboarding.signup.ota')}</S.BenefitTitle>
             <S.BenefitsBox>
@@ -58,7 +58,7 @@ export const SignupScreen = () => {
           </S.BenefitsContainer>
         </FadeIn>
         <S.RestBox />
-        <FadeIn delay={PARAGRAPH_DELAY.FOURTH}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[2]}>
           <S.ButtonContainer>
             <S.PrevButton onPress={handlePrevStep} icon={ArrowLeft}>
               {t('common.button.prev')}

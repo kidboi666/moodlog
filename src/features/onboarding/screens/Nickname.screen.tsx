@@ -4,7 +4,7 @@ import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { router } from 'expo-router';
 import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { PARAGRAPH_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import * as S from './Nickname.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 import { useUser } from '@/core/store/contexts/user.context';
@@ -31,13 +31,13 @@ export const NicknameScreen = () => {
   return (
     <Container edges={['bottom']}>
       <S.YStackContainer>
-        <FadeIn delay={PARAGRAPH_DELAY.FIRST}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
           <S.Title>{t('onboarding.nickname.title')}</S.Title>
         </FadeIn>
-        <FadeIn delay={PARAGRAPH_DELAY.SECOND}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
           <S.Description>{t('onboarding.nickname.description')}</S.Description>
         </FadeIn>
-        <FadeIn delay={PARAGRAPH_DELAY.THIRD}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[2]}>
           <Input
             value={draftUserName}
             onChangeText={onDraftUserNameChange}
@@ -45,7 +45,7 @@ export const NicknameScreen = () => {
           />
         </FadeIn>
       </S.YStackContainer>
-      <FadeIn delay={PARAGRAPH_DELAY.THIRD}>
+      <FadeIn delay={ANIMATION_DELAY_SECONDS[3]}>
         <S.ButtonContainer>
           <S.PrevButton icon={ArrowLeft} onPress={handlePrevStep}>
             {t('common.button.prev')}

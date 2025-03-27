@@ -2,13 +2,14 @@ import { useFadeIn } from '@/core/hooks/useFadeIn';
 import { ViewProps } from 'tamagui';
 import * as S from './FadeIn.styled';
 import { memo } from 'react';
+import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 
 interface Props extends ViewProps {
   delay?: number;
 }
 
 const StyledFadeIn = S.FadeInContainer.styleable<Props>(
-  ({ delay = 1000, children, ...props }, ref) => {
+  ({ delay = ANIMATION_DELAY_MS[0], children, ...props }, ref) => {
     const { isVisible, item } = useFadeIn({ delay, item: children });
 
     return (

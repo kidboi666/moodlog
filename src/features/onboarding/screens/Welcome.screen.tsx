@@ -5,7 +5,7 @@ import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import { useTranslation } from 'react-i18next';
-import { PARAGRAPH_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import * as S from './Welcome.styled';
 import { useStepProgress } from '@/core/store/contexts/step-progress.context';
 import React from 'react';
@@ -25,13 +25,13 @@ export const WelcomeScreen = () => {
     <Container edges={['bottom']}>
       <S.WelcomeContainer>
         <S.WelcomeContent>
-          <FadeIn delay={PARAGRAPH_DELAY.FIRST}>
+          <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
             <S.TitleBox>
               <H1>{t('onboarding.welcome.title')}</H1>
               <ShakeEmoji emoji="👋" />
             </S.TitleBox>
           </FadeIn>
-          <FadeIn delay={PARAGRAPH_DELAY.SECOND}>
+          <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
             <S.DescriptionBox>
               <S.Description1>
                 {t('onboarding.welcome.description')}
@@ -42,11 +42,11 @@ export const WelcomeScreen = () => {
             </S.DescriptionBox>
           </FadeIn>
         </S.WelcomeContent>
-        <FadeIn delay={PARAGRAPH_DELAY.THIRD}>
+        <FadeIn delay={ANIMATION_DELAY_SECONDS[2]}>
           <H2>{t('onboarding.welcome.go')}</H2>
         </FadeIn>
       </S.WelcomeContainer>
-      <FadeIn delay={PARAGRAPH_DELAY.FOURTH}>
+      <FadeIn delay={ANIMATION_DELAY_SECONDS[3]}>
         <S.NextButton iconAfter={ArrowRight} onPress={handleClickNextButton}>
           {t('common.button.next')}
         </S.NextButton>

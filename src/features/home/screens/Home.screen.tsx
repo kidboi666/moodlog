@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { Fragment, useCallback } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
-import { PARAGRAPH_DELAY } from '@/core/constants/time';
+import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import { HomeHeader } from '@/features/home/components/HomeHeader';
 import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
@@ -45,7 +45,7 @@ export const HomeScreen = () => {
         padded
       >
         <S.ContentHeaderContainer>
-          <FadeIn delay={PARAGRAPH_DELAY.FIRST}>
+          <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
             <S.WelcomeEmojiBox>
               <S.WelcomeTitleText>
                 {t('common.greeting.hello')}
@@ -56,7 +56,7 @@ export const HomeScreen = () => {
               {t('common.greeting.welcome', { name: userInfo?.userName })}
             </H3>
           </FadeIn>
-          <FadeIn delay={PARAGRAPH_DELAY.SECOND}>
+          <FadeIn delay={ANIMATION_DELAY_SECONDS[1]}>
             <S.HowAreYouText>{t('common.greeting.howAreYou')}</S.HowAreYouText>
           </FadeIn>
           <WeekDay />
@@ -82,7 +82,9 @@ export const HomeScreen = () => {
             );
           })
         ) : (
-          <EmptyJournal isToday={isToday(selectedJournals)} />
+          <FadeIn>
+            <EmptyJournal isToday={isToday(selectedJournals)} />
+          </FadeIn>
         )}
       </Container>
     </ScrollView>
