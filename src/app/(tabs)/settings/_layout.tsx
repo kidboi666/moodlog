@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'tamagui';
 
-export default function SettingsLayout() {
+export default function Layout() {
   const theme = useTheme();
 
   return (

@@ -5,7 +5,7 @@ import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
 import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
 
-export default function TabsLayout() {
+export default function Layout() {
   return (
     <Tabs>
       <TabSlot />
