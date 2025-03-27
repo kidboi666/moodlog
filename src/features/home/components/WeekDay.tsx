@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { HorizontalCalendar } from '@/features/home/components/HorizontalCalendar';
 import { useTranslation } from 'react-i18next';
 import { getMonthKey } from '@/utils/date';
 import * as S from './WeekDay.styled';
 
-export const WeekDay = memo(() => {
+export const WeekDay = () => {
   const { t } = useTranslation();
 
   return (
@@ -21,4 +21,4 @@ export const WeekDay = memo(() => {
       </S.OuterGradientBox>
     </S.WeekDayContainer>
   );
-});
+};

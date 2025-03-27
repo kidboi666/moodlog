@@ -1,15 +1,15 @@
-import { Button, styled } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
+import { styled, Text } from 'tamagui';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
-export const SettingsNavigationButton = styled(Button, {
-  unstyled: true,
-  animation: 'medium',
-  animateOnly: PRESS_STYLE_KEY,
-  flexDirection: 'row',
-  scaleIcon: 1.5,
-  rounded: '$4',
-  gap: '$2',
+export const SettingsNavigationButton = styled(PressableButton, {
+  elevate: false,
+  justify: 'flex-start',
+  bg: '$backgroundTransparent',
+  size: '$5',
   fontSize: '$6',
-  pressStyle: PRESS_STYLE,
-  p: '$5',
+});
+
+export const ItemLabel = styled(Text, {
+  fontSize: '$6',
+  flex: 1,
 });

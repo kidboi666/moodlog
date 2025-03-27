@@ -9,12 +9,10 @@ interface Props {
 export const RadioGroupItem = ({ value, label, onValueChange }: Props) => {
   return (
     <S.RadioGroupContainerButton onPress={() => onValueChange(value)}>
-      <S.ContentContainer>
-        <S.RadioItemLabel>{label}</S.RadioItemLabel>
-        <S.StyledRadioGroupItem value={value} id={value}>
-          <S.StyledRadioGroupIndicator />
-        </S.StyledRadioGroupItem>
-      </S.ContentContainer>
+      <S.RadioItemLabel>{label}</S.RadioItemLabel>
+      <S.StyledRadioGroupItem value={value} id={value}>
+        <S.StyledRadioGroupIndicator />
+      </S.StyledRadioGroupItem>
     </S.RadioGroupContainerButton>
   );
 };

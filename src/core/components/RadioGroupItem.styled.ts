@@ -1,25 +1,23 @@
-import { Button, RadioGroup, styled, Text, XStack } from 'tamagui';
-import { PRESS_STYLE } from '@/styles/animations';
+import { RadioGroup, styled, Text } from 'tamagui';
+import { PressableButton } from '@/core/components/ui/PressableButton.styled';
+import { MOUNT_STYLE } from '@/styles/animations';
 
-export const RadioGroupContainerButton = styled(Button, {
-  unstyled: true,
-  animation: 'quick',
-  rounded: '$4',
-  pressStyle: PRESS_STYLE,
-});
-
-export const ContentContainer = styled(XStack, {
-  items: 'center',
+export const RadioGroupContainerButton = styled(PressableButton, {
+  elevate: false,
   width: '100%',
-  gap: '$4',
-  p: '$5',
-  justify: 'space-between',
+  justify: 'flex-start',
+  bg: '$backgroundTransparent',
+  size: '$5',
 });
 
 export const RadioItemLabel = styled(Text, {
   fontSize: '$6',
+  flex: 1,
 });
 
-export const StyledRadioGroupItem = styled(RadioGroup.Item, {});
+export const StyledRadioGroupItem = styled(RadioGroup.Item);
 
-export const StyledRadioGroupIndicator = styled(RadioGroup.Indicator, {});
+export const StyledRadioGroupIndicator = styled(RadioGroup.Indicator, {
+  animation: 'medium',
+  enterStyle: MOUNT_STYLE,
+});

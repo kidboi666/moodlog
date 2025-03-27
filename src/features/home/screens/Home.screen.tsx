@@ -6,12 +6,12 @@ import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import { HomeHeader } from '@/features/home/components/HomeHeader';
 import { Container } from '@/core/components/Container.styleable';
 import { ShakeEmoji } from '@/core/components/ShakeEmoji';
-import { WeekDay } from '@/features/home/components/WeekDay';
 import { JournalCard } from '@/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import * as S from './Home.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
+import { WeekDay } from '@/features/home/components/WeekDay';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { useFocusEffect } from 'expo-router';
 

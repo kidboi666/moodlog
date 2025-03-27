@@ -3,12 +3,28 @@ import { DevContainer } from '@/core/components/DevContainer';
 import { ContainerFog } from '@/core/components/ContainerFog';
 import React from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
-import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
+import {
+  defaultTabsSlotRender,
+  TabList,
+  Tabs,
+  TabSlot,
+  TabTrigger,
+} from 'expo-router/ui';
+import { TabsDescriptor } from 'expo-router/build/ui/TabContext';
+import { TabsSlotRenderOptions } from 'expo-router/build/ui/TabSlot';
+
+const renderScreen = (desc: TabsDescriptor, opt: TabsSlotRenderOptions) => {
+  const Content = defaultTabsSlotRender(desc, opt);
+
+  if (!Content || !opt.isFocused) return null;
+
+  return <>{Content}</>;
+};
 
 export default function Layout() {
   return (
     <Tabs>
-      <TabSlot />
+      <TabSlot renderFn={renderScreen} />
       <ContainerFog />
       <CustomTabBar />
       <TabList style={{ display: 'none' }}>

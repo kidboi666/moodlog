@@ -13,8 +13,11 @@ export const PRESS_STYLE = {
   scale: 0.92,
 } as const;
 
+const WINDOW_HEIGHT = Dimensions.get('window').height;
+
 export const FALL_STYLE = {
-  y: -Dimensions.get('window').height,
+  y: -WINDOW_HEIGHT,
+  opacity: 0,
 } as const;
 
 export const MOUNT_STYLE_KEY = extractKeysFromAnimationObj(MOUNT_STYLE);
