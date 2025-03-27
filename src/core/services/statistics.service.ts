@@ -192,7 +192,7 @@ export class StatisticsService {
     timeRange: TimeRange,
     selectedYear: number,
   ) {
-    const yearIds = indexes.byYear[selectedYear];
+    const yearIds = indexes.byYear[selectedYear] || [];
     const yearlyJournals = yearIds.map(id => journals[id]);
 
     const expressiveMonth = this.getExpressiveMonth(

@@ -1,27 +1,22 @@
-import React, { useCallback } from 'react';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-import { useJournal } from '@/core/store/contexts/journal.context';
 
 interface Props {
   journalId: string;
+  onDelete: (journalId: string) => void;
 }
 
-export const DeleteJournalModal = ({ journalId }: Props) => {
+export const DeleteJournalModal = ({ journalId, onDelete }: Props) => {
   const { dismissAll } = useBottomSheetModal();
-  const { removeJournal } = useJournal();
   const { t } = useTranslation();
 
-  const handleConfirmPress = useCallback(
-    (journalId: string) => {
-      removeJournal(journalId);
-      router.back();
-      dismissAll();
-    },
-    [removeJournal, router, dismissAll],
-  );
+  const handleConfirmPress = (journalId: string) => {
+    onDelete(journalId);
+    router.back();
+    dismissAll();
+  };
 
   return (
     <S.ModalContainer>

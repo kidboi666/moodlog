@@ -14,6 +14,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { useFocusEffect } from 'expo-router';
+import { PressableButton } from '@/core/components/ui/PressableButton';
 
 export const HomeScreen = () => {
   const { selectedJournals, removeJournal, selectJournals } = useJournal();
@@ -86,6 +87,7 @@ export const HomeScreen = () => {
             <EmptyJournal isToday={isToday(selectedJournals)} />
           </FadeIn>
         )}
+        <PressableButton animated />
       </Container>
     </ScrollView>
   );

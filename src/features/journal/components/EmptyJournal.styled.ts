@@ -1,6 +1,6 @@
 import { Button, H3, H5, styled, YStack } from 'tamagui';
 import {
-  ENTER_STYLE,
+  MOUNT_STYLE,
   MOUNT_STYLE_KEY,
   PRESS_STYLE,
   PRESS_STYLE_KEY,
@@ -22,15 +22,11 @@ export const TodayTitle = styled(H3, {
 });
 
 export const WriteButton = styled(Button, {
-  unstyled: true,
-  p: '$4',
   scaleIcon: 1.5,
-  rounded: '$4',
-  bg: '$gray12',
-  color: '$gray1',
-  animation: 'quick',
-  animateOnly: PRESS_STYLE_KEY,
+  themeInverse: true,
+  animation: 'medium',
   pressStyle: PRESS_STYLE,
+  animateOnly: PRESS_STYLE_KEY,
 });
 
 export const PastDaysContainer = styled(Button, {
@@ -40,7 +36,7 @@ export const PastDaysContainer = styled(Button, {
   items: 'center',
   gap: '$3',
   animation: 'quick',
-  enterStyle: ENTER_STYLE,
+  enterStyle: MOUNT_STYLE,
   animateOnly: MOUNT_STYLE_KEY,
 });
 

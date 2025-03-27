@@ -8,7 +8,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ENTER_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 
 export const ViewContainer = styled(HOSContainer, {
   pl: 0,
@@ -47,7 +47,7 @@ export const MoodTextBox = styled(XStack, {
   justify: 'center',
   animation: 'bouncy',
   animateOnly: MOUNT_STYLE_KEY,
-  enterStyle: ENTER_STYLE,
+  enterStyle: MOUNT_STYLE,
 });
 
 export const MoodLevelText = styled(H3, {
@@ -63,7 +63,7 @@ export const ImageBox = styled(XStack, {
   elevation: '$2',
   mx: 'auto',
   rounded: '$8',
-  enterStyle: ENTER_STYLE,
+  enterStyle: MOUNT_STYLE,
 });
 
 export const Image = styled(TamaguiImage, {

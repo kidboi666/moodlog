@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as S from './SelectedMoodContainer.styled';
 import { MoodLevel, MoodType } from '@/types/mood.types';
@@ -8,19 +8,17 @@ interface Props {
   moodLevel?: MoodLevel;
 }
 
-export const SelectedMoodContainer = memo(({ moodType, moodLevel }: Props) => {
+export const SelectedMoodContainer = ({ moodType, moodLevel }: Props) => {
   const { t } = useTranslation();
+  const levelText = moodLevel ? t(`moods.levels.${moodLevel}`) : '??';
+  const typeText = moodType ? t(`moods.types.${moodType}`) : '??';
 
   return (
     <S.ViewContainer>
       <S.XStackContainer>
-        <S.MoodLevelText>
-          {moodType ? t(`moods.levels.${moodLevel}`) : '??'}
-        </S.MoodLevelText>
-        <S.MoodTypeText>
-          {moodType ? t(`moods.types.${moodType}`) : '??'}
-        </S.MoodTypeText>
+        <S.MoodLevelText>{levelText}</S.MoodLevelText>
+        <S.MoodTypeText>{typeText}</S.MoodTypeText>
       </S.XStackContainer>
     </S.ViewContainer>
   );
-});
+};

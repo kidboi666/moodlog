@@ -1,4 +1,5 @@
 import { Button, styled, Text, View, XStack, YStack } from 'tamagui';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 
 export const XStackContainer = styled(XStack, {
   justify: 'space-between',
@@ -14,8 +15,10 @@ export const MoodLevelContainer = styled(YStack, {
 });
 
 export const MoodLevelButton = styled(Button, {
-  animation: 'quick',
   size: '$5',
+  animation: 'medium',
+  pressStyle: PRESS_STYLE,
+  animateOnly: PRESS_STYLE_KEY,
 
   variants: {
     moodColor: {

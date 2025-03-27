@@ -12,20 +12,16 @@ interface Props {
 export const NextButton = memo(({ moodType, moodLevel }: Props) => {
   const isMoodSelected = !!moodType && moodLevel;
   return (
-    <S.ViewContainer>
-      {isMoodSelected ? (
-        <Link
-          href={{
-            pathname: '/write/journal_write',
-            params: { type: moodType, level: moodLevel },
-          }}
-          asChild
-        >
-          <S.NextButton icon={ArrowRight} />
-        </Link>
-      ) : (
-        <S.NextButton icon={ArrowRight} disabled />
-      )}
-    </S.ViewContainer>
+    <S.AnimatedContainer>
+      <Link
+        href={{
+          pathname: '/write/journal_write',
+          params: { type: moodType, level: moodLevel },
+        }}
+        asChild
+      >
+        <S.NextButton icon={ArrowRight} disabled={!isMoodSelected} />
+      </Link>
+    </S.AnimatedContainer>
   );
 });

@@ -12,7 +12,7 @@ import { toSingle } from '@/utils/common';
 export const JournalScreen = () => {
   const { id } = useLocalSearchParams();
   const journalId = toSingle(id);
-  const { selectedJournal, selectJournal } = useJournal();
+  const { selectedJournal, selectJournal, removeJournal } = useJournal();
 
   const { fontSize } = useApp();
   const { t } = useTranslation();
@@ -25,7 +25,12 @@ export const JournalScreen = () => {
 
   return (
     <ScrollView overScrollMode="always">
-      <S.ViewContainer edges={['bottom']} Header={<JournalHeader />}>
+      <S.ViewContainer
+        edges={['bottom']}
+        Header={
+          <JournalHeader journal={selectedJournal} onDelete={removeJournal} />
+        }
+      >
         <S.XStackContainer>
           <S.MoodBar
             moodColor={

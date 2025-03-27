@@ -6,7 +6,7 @@ export const MoodBar = styled(View, {
   borderTopLeftRadius: '$4',
   borderBottomLeftRadius: '$4',
   animation: 'medium',
-  animateOnly: ['opacity'],
+  animateOnly: ['backgroundColor', 'opacity'],
   enterStyle: { opacity: 0 },
   exitStyle: { opacity: 0 },
 

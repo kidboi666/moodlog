@@ -1,5 +1,5 @@
 import { Button, styled, XStack, YStack } from 'tamagui';
-import { ENTER_STYLE, PRESS_STYLE } from '@/styles/animations';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 import { CONTAINER_SPACING } from '@/core/constants/size';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
@@ -38,21 +38,15 @@ export const DayWithTimeBox = styled(XStack, {
 });
 
 export const BackButton = styled(Button, {
-  unstyled: true,
-  animation: 'quick',
-  rounded: '$4',
-  p: '$3',
   scaleIcon: 1.5,
-  enterStyle: ENTER_STYLE,
+  animation: 'medium',
   pressStyle: PRESS_STYLE,
+  animateOnly: PRESS_STYLE_KEY,
 });
 
 export const DeleteButton = styled(Button, {
-  unstyled: true,
-  animation: 'quick',
   scaleIcon: 1.5,
-  rounded: '$4',
-  p: '$3',
-  enterStyle: ENTER_STYLE,
+  animation: 'medium',
   pressStyle: PRESS_STYLE,
+  animateOnly: PRESS_STYLE_KEY,
 });

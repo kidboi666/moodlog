@@ -14,7 +14,7 @@ interface Props {
 export const MoodTypeBox = memo(({ type, mood, onMoodChange }: Props) => {
   const { t } = useTranslation();
   return (
-    <S.MoodTypeContainer key={type}>
+    <S.MoodTypeContainer>
       <S.MoodLevelContainer>
         {Object.values(MoodLevel).map(level => (
           <MoodLevelButton

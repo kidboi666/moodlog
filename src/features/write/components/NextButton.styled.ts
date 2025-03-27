@@ -1,19 +1,26 @@
 import { Button, styled, View } from 'tamagui';
-import { ENTER_STYLE, PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 
-export const ViewContainer = styled(View, {
+export const AnimatedContainer = styled(View, {
   items: 'center',
 });
 
 export const NextButton = styled(Button, {
-  unstyled: true,
   p: '$4',
   bg: '$gray12',
   color: '$gray1',
   rounded: '$4',
-  animation: 'quick',
+  scaleIcon: 1.5,
+  animation: 'lazy',
   animateOnly: PRESS_STYLE_KEY,
   pressStyle: PRESS_STYLE,
-  enterStyle: ENTER_STYLE,
-  scaleIcon: 1.5,
+  opacity: 1,
+
+  variants: {
+    disabled: {
+      true: {
+        opacity: 0.4,
+      },
+    },
+  } as const,
 });

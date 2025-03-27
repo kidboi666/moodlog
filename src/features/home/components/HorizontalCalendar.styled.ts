@@ -1,11 +1,11 @@
 import { Button, styled, Text, View, XStack, YStack } from 'tamagui';
-import { ENTER_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 import { CALENDAR_SCROLL_SIZE } from '@/core/constants/size';
 
 export const CalendarContainer = styled(XStack, {
   animation: 'quick',
   animateOnly: MOUNT_STYLE_KEY,
-  enterStyle: ENTER_STYLE,
+  enterStyle: MOUNT_STYLE,
   flex: 1,
   justify: 'center',
   rounded: '$4',

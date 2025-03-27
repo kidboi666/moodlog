@@ -5,31 +5,33 @@ import { useRouter } from 'expo-router';
 import { useBottomModal } from '@/core/hooks/useBottomModal';
 import * as S from './JournalHeader.styled';
 import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
-import { useJournal } from '@/core/store/contexts/journal.context';
+import { Journal } from '@/types/journal.types';
 
-export const JournalHeader = memo(() => {
+interface Props {
+  journal: Journal;
+  onDelete: (journalId: string) => void;
+}
+
+export const JournalHeader = memo(({ journal, onDelete }: Props) => {
   const router = useRouter();
-  const { selectedJournal } = useJournal();
   const { modalRef, openModal } = useBottomModal();
-
-  if (!selectedJournal) return null;
 
   return (
     <>
       <S.HeaderContainer>
         <S.BackButton icon={ArrowLeft} onPress={() => router.back()} />
         <S.DateContainer>
-          <S.DateText localDate={selectedJournal.localDate} />
+          <S.DateText localDate={journal.localDate} />
           <S.DayWithTimeBox>
-            <S.DayText createdAt={selectedJournal.createdAt} />
-            <S.TimeText createdAt={selectedJournal.createdAt} />
+            <S.DayText createdAt={journal.createdAt} />
+            <S.TimeText createdAt={journal.createdAt} />
           </S.DayWithTimeBox>
         </S.DateContainer>
 
         <S.DeleteButton icon={Trash2} onPress={openModal} />
       </S.HeaderContainer>
       <BottomModal ref={modalRef}>
-        <DeleteJournalModal journalId={selectedJournal.id} />
+        <DeleteJournalModal journalId={journal.id} onDelete={onDelete} />
       </BottomModal>
     </>
   );

@@ -8,13 +8,13 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ENTER_STYLE, EXIT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const Container = styled(View, {
   animation: 'quick',
-  enterStyle: ENTER_STYLE,
+  enterStyle: MOUNT_STYLE,
 });
 
 export const CardContainer = styled(Card, {
@@ -106,8 +106,8 @@ export const ActionBox = styled(XStack, {
   r: 0,
   position: 'absolute',
   animation: 'medium',
-  enterStyle: ENTER_STYLE,
-  exitStyle: EXIT_STYLE,
+  enterStyle: MOUNT_STYLE,
+  exitStyle: MOUNT_STYLE,
   animateOnly: MOUNT_STYLE_KEY,
   height: '100%',
   items: 'center',
