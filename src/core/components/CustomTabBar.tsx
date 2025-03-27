@@ -15,7 +15,6 @@ import {
   StatisticsTab,
   WriteTab,
 } from './CustomTabBarItems';
-import { TAB_BAR_TRANSLATE } from '@/core/styles/animations';
 
 export const CustomTabBar = memo(() => {
   const theme = useTheme();
@@ -25,11 +24,6 @@ export const CustomTabBar = memo(() => {
     strategy: 'most-recent-wins',
     defaultProp: ShowTabBar.SHOW,
   });
-
-  const animatedTabBar = useMemo(
-    () => TAB_BAR_TRANSLATE[tabBarState],
-    [tabBarState],
-  );
 
   useEffect(() => {
     setShouldHideTabBar(
@@ -63,7 +57,7 @@ export const CustomTabBar = memo(() => {
     <S.TabBarContainer
       height={TAB_BAR_HEIGHT + insets.bottom}
       pb={insets.bottom}
-      {...animatedTabBar}
+      showTabBar={tabBarState}
     >
       <S.Container>
         <HomeTab isTabActive={isHomeActive} />

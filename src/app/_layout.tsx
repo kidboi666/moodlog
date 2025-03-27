@@ -15,10 +15,10 @@ import {
 } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ErrorBoundaryProps, Stack } from 'expo-router';
-import '../lib/i18n';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
 import { AppInitializer } from '@/core/components/AppInitializer';
+import '@/lib/i18n/index.js';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.

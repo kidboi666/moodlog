@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { H2, H3, Text, XStack } from 'tamagui';
 import { Maximize2 } from '@tamagui/lucide-icons';
-import { getMonthKey } from '@/core/utils/date';
+import { getMonthKey } from '@/utils/date';
 import * as S from './CollapsedContent.styled';
 
 import { SelectedMonthStats } from '@/types/statistic.types';

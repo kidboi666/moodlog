@@ -9,7 +9,7 @@ import { TotalCount } from '@/features/statistics/components/total-count/TotalCo
 import { MoodAverage } from '@/features/statistics/components/mood-average/MoodAverage';
 import { TimeRange } from '@/types/statistic.types';
 import { useCalendar } from '@/core/hooks/useCalendar';
-import { getISOMonthString } from '@/core/utils/date';
+import { getISOMonthString } from '@/utils/date';
 
 export const StatisticsScreen = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.YEARLY);

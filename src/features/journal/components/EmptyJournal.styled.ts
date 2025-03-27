@@ -1,10 +1,10 @@
 import { Button, H3, H5, styled, YStack } from 'tamagui';
 import {
   ENTER_STYLE,
-  ENTER_STYLE_KEY,
+  MOUNT_STYLE_KEY,
   PRESS_STYLE,
   PRESS_STYLE_KEY,
-} from '@/core/styles/animations';
+} from '@/styles/animations';
 
 export const TodayContainer = styled(YStack, {
   justify: 'center',
@@ -41,7 +41,7 @@ export const PastDaysContainer = styled(Button, {
   gap: '$3',
   animation: 'quick',
   enterStyle: ENTER_STYLE,
-  animateOnly: ENTER_STYLE_KEY,
+  animateOnly: MOUNT_STYLE_KEY,
 });
 
 export const PastDaysTitle = styled(H3, {

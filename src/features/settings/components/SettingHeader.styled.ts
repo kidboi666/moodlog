@@ -1,5 +1,5 @@
 import { Button, styled, View } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/styles/animations';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 
 export const BackButton = styled(Button, {
   unstyled: true,

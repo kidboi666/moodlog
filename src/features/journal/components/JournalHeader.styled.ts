@@ -1,5 +1,5 @@
 import { Button, styled, XStack, YStack } from 'tamagui';
-import { ENTER_STYLE, PRESS_STYLE } from '@/core/styles/animations';
+import { ENTER_STYLE, PRESS_STYLE } from '@/styles/animations';
 import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 import { CONTAINER_SPACING } from '@/core/constants/size';
 import { RenderTime } from '@/core/components/RenderTime.styleable';

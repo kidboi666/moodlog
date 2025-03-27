@@ -9,7 +9,7 @@ import {
   getDayIndexFromISODate,
   getISODateString,
   getLastDate,
-} from '@/core/utils/date';
+} from '@/utils/date';
 import * as S from './HorizontalCalendar.styled';
 import { ISODateString } from '@/types/date.types';
 import { useJournal } from '@/core/store/contexts/journal.context';

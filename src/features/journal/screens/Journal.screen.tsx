@@ -7,7 +7,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useApp } from '@/core/store/contexts/app.context';
 import { useLocalSearchParams } from 'expo-router';
 import { JournalHeader } from '@/features/journal/components/JournalHeader';
-import { toSingle } from '@/core/utils/common';
+import { toSingle } from '@/utils/common';
 
 export const JournalScreen = () => {
   const { id } = useLocalSearchParams();

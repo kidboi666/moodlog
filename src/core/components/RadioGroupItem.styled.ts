@@ -1,5 +1,5 @@
 import { Button, RadioGroup, styled, Text, XStack } from 'tamagui';
-import { PRESS_STYLE } from '@/core/styles/animations';
+import { PRESS_STYLE } from '@/styles/animations';
 
 export const RadioGroupContainerButton = styled(Button, {
   unstyled: true,

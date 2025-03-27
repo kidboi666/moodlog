@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { getMonthKey } from '@/core/utils/date';
+import { getMonthKey } from '@/utils/date';
 import * as S from './ExpandedContent.styled';
 import { Minimize2 } from '@tamagui/lucide-icons';
 

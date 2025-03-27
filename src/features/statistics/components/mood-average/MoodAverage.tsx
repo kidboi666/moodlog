@@ -3,23 +3,10 @@ import { ExpandedContent } from '@/features/statistics/components/mood-average/E
 import * as S from './MoodAverage.styled';
 import { MoodLevel, MoodType } from '@/types/mood.types';
 import { useControllableState, useEvent } from 'tamagui';
-import {
-  RECORD_CARD_EXPANDED_HEIGHT,
-  RECORD_CARD_HEIGHT,
-} from '@/core/constants/size';
 import { ExpansionState, TimeRange } from '@/types/statistic.types';
 import { moodTheme } from '@/core/constants/themes';
 import { useMoodStats } from '@/features/statistics/hooks/useMoodStats';
 import { ISOMonthString } from '@/types/date.types';
-
-const heights = {
-  expanded: {
-    height: RECORD_CARD_EXPANDED_HEIGHT,
-  },
-  collapsed: {
-    height: RECORD_CARD_HEIGHT,
-  },
-} as const;
 
 interface Props {
   timeRange: TimeRange;
@@ -38,7 +25,6 @@ export const MoodAverage = ({
       strategy: 'most-recent-wins',
       defaultProp: ExpansionState.COLLAPSED,
     });
-  const animatedStyle = heights[expansionState];
   const isExpanded = expansionState === ExpansionState.EXPANDED;
 
   const handleIsExpandedChange = useEvent(() => {
@@ -53,27 +39,24 @@ export const MoodAverage = ({
     moodStats: { signatureMood, scoreBoard },
   } = stats || {};
   const hasSignatureMood = signatureMood ? signatureMood?.count > 0 : false;
+  const bgColor = isExpanded
+    ? '$gray4'
+    : hasSignatureMood
+      ? moodTheme[signatureMood?.type as MoodType][MoodLevel.FULL]
+      : '$gray4';
 
   return (
-    <S.CardContainer
-      moodColor={
-        isExpanded
-          ? '$gray4'
-          : hasSignatureMood
-            ? moodTheme[signatureMood?.type as MoodType][MoodLevel.FULL]
-            : '$gray4'
-      }
-      onPress={handleIsExpandedChange}
-      {...animatedStyle}
-    >
-      {isExpanded ? (
-        <ExpandedContent scoreBoard={scoreBoard} />
-      ) : (
-        <CollapsedContent
-          hasSignatureMood={hasSignatureMood}
-          signatureMood={signatureMood}
-        />
-      )}
+    <S.CardContainer moodColor={bgColor} onPress={handleIsExpandedChange}>
+      <S.AnimatedContent expanded={isExpanded}>
+        {isExpanded ? (
+          <ExpandedContent scoreBoard={scoreBoard} />
+        ) : (
+          <CollapsedContent
+            hasSignatureMood={hasSignatureMood}
+            signatureMood={signatureMood}
+          />
+        )}
+      </S.AnimatedContent>
     </S.CardContainer>
   );
 };

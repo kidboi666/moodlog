@@ -8,7 +8,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ENTER_STYLE, ENTER_STYLE_KEY } from '@/core/styles/animations';
+import { ENTER_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 
 export const ViewContainer = styled(HOSContainer, {
   pl: 0,
@@ -46,7 +46,7 @@ export const MoodTextBox = styled(XStack, {
   self: 'flex-start',
   justify: 'center',
   animation: 'bouncy',
-  animateOnly: ENTER_STYLE_KEY,
+  animateOnly: MOUNT_STYLE_KEY,
   enterStyle: ENTER_STYLE,
 });
 

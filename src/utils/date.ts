@@ -5,7 +5,7 @@ import {
   MonthKey,
   WeekDayValue,
 } from '@/types/date.types';
-import { removeLeadingZero } from '@/core/utils/common';
+import { removeLeadingZero } from '@/utils/common';
 
 /**
  * 월 숫자 또는 문자열을 입력받아 해당하는 월 문자열 키를 반환

@@ -1,5 +1,5 @@
 import { H2 } from 'tamagui';
-import { getMonthKey } from '@/core/utils/date';
+import { getMonthKey } from '@/utils/date';
 import { useTranslation } from 'react-i18next';
 import { memo, useMemo } from 'react';
 

@@ -1,5 +1,5 @@
 import { Button, styled } from 'tamagui';
-import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/core/styles/animations';
+import { PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 import { HeaderContainer as HOSHeaderContainer } from '@/core/components/HeaderContainer.styleable';
 
 export const HeaderContainer = styled(HOSHeaderContainer, {});

@@ -7,7 +7,7 @@ import {
   getISODateString,
   getISOMonthString,
   getYearFromISODate,
-} from '@/core/utils/date';
+} from '@/utils/date';
 import { ISODateString, ISOMonthString, MonthKey } from '@/types/date.types';
 import { JournalIndexes, JournalStore } from '@/core/store/types/journal.types';
 

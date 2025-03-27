@@ -1,9 +1,5 @@
 import { Button, styled, View } from 'tamagui';
-import {
-  ENTER_STYLE,
-  PRESS_STYLE,
-  PRESS_STYLE_KEY,
-} from '@/core/styles/animations';
+import { ENTER_STYLE, PRESS_STYLE, PRESS_STYLE_KEY } from '@/styles/animations';
 
 export const ViewContainer = styled(View, {
   items: 'center',

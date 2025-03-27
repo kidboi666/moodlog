@@ -6,9 +6,9 @@ import {
   getDayFromISODate,
   getDaysBetweenDates,
   getISOMonthString,
-} from '@/core/utils/date';
+} from '@/utils/date';
 import { JournalIndexes, MonthIndexes } from '@/core/store/types/journal.types';
-import { castArray, extractKeys } from '@/core/utils/common';
+import { castArray, extractKeys } from '@/utils/common';
 
 export class StatisticsService {
   /**

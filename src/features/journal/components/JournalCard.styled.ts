@@ -8,11 +8,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import {
-  ENTER_STYLE,
-  ENTER_STYLE_KEY,
-  EXIT_STYLE,
-} from '@/core/styles/animations';
+import { ENTER_STYLE, EXIT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 import { RenderTime } from '@/core/components/RenderTime.styleable';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
@@ -112,7 +108,7 @@ export const ActionBox = styled(XStack, {
   animation: 'medium',
   enterStyle: ENTER_STYLE,
   exitStyle: EXIT_STYLE,
-  animateOnly: ENTER_STYLE_KEY,
+  animateOnly: MOUNT_STYLE_KEY,
   height: '100%',
   items: 'center',
   justify: 'center',
