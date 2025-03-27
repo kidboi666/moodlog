@@ -62,3 +62,15 @@ export const extractKeysFromAnimationObj = (
 
   return resultKeys;
 };
+
+/**
+ * 카멜 케이스 문자열을 상수 케이스로 변환
+ * @param str
+ */
+export const camelToConstantCase = (str: string): string => {
+  const withUnderscores = str.replace(/([A-Z])/g, '_$1');
+
+  const upperCase = withUnderscores.toUpperCase();
+
+  return upperCase.startsWith('_') ? upperCase.substring(1) : upperCase;
+};

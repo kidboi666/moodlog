@@ -45,7 +45,8 @@ export type AppSettingsContextType = {
 };
 
 export type AppActionContextType = {
-  onLanguageChange: (language: any) => void;
-  onFontSizeChange: (fontSize: ViewFontSize) => void;
-  onTimeFormatChange: (timeFormat: TimeFormat) => void;
+  onSettingChange: <K extends keyof AppSettingsContextType>(
+    key: K,
+    value: AppSettingsContextType[K],
+  ) => void;
 };

@@ -15,14 +15,6 @@ import { getISOMonthString } from '@/utils/date';
 import { ArrowButton } from '@/features/calendar/components/ArrowButton';
 import { DateCounts, ISODateString, ISOMonthString } from '@/types/date.types';
 
-const LeftArrow = () => (
-  <Button unstyled p="$1" color="$gray10" icon={<ArrowLeft size="$1" />} />
-);
-
-const RightArrow = () => (
-  <Button unstyled p="$1" color="$gray10" icon={<ArrowRight size="$1" />} />
-);
-
 interface Props extends CalendarProps {
   dateCounts: DateCounts;
   onSelectedDateChange: (date: ISODateString) => void;
@@ -42,6 +34,14 @@ export const CalendarListBase = memo(
     selectedDate,
     ...props
   }: Props) => {
+    const LeftArrow = () => (
+      <Button unstyled p="$1" color="$gray10" icon={<ArrowLeft size="$1" />} />
+    );
+
+    const RightArrow = () => (
+      <Button unstyled p="$1" color="$gray10" icon={<ArrowRight size="$1" />} />
+    );
+
     const handleDayPress = useCallback(
       (date: DateData) => {
         onSelectedDateChange(date.dateString as ISODateString);

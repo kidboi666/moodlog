@@ -1,17 +1,21 @@
 import { Container } from '@/core/components/Container.styleable';
-import { RadioGroup, Separator, useEvent } from 'tamagui';
+import { RadioGroup, Separator } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/RadioGroupItem';
 import { SettingHeader } from '@/features/settings/components/SettingHeader';
 
 import { Languages } from '@/types/app.types';
 import { useApp } from '@/core/store/contexts/app.context';
+import { useCallback } from 'react';
 
 export const LanguageScreen = () => {
-  const { language, onLanguageChange } = useApp();
+  const { language, onSettingChange } = useApp();
 
-  const handleValueChange = useEvent((language: string) => {
-    onLanguageChange(language as Languages);
-  });
+  const handleValueChange = useCallback(
+    (language: string) => {
+      onSettingChange('language', language as Languages);
+    },
+    [onSettingChange],
+  );
 
   return (
     <Container Header={<SettingHeader />}>

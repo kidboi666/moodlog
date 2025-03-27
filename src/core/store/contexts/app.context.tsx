@@ -22,6 +22,7 @@ import { AppService } from '@/core/services/app.service';
 import { CalendarUtils } from 'react-native-calendars';
 import { StatusState } from '@/core/store/types/state.types';
 import { statusReducer } from '@/core/store/reducers/status.reducer';
+import { camelToConstantCase } from '@/utils/common';
 
 const DEFAULT_LANGUAGE = Localization.getLocales()[0].languageCode as Languages;
 
@@ -39,9 +40,9 @@ const initialState: AppState = {
 export const AppInfoContext = createContext<Nullable<AppInfoContextType>>(null);
 export const AppSettingsContext =
   createContext<Nullable<AppSettingsContextType>>(null);
-export const AppStatusContext = createContext<Nullable<StatusState>>(null);
 export const AppActionContext =
   createContext<Nullable<AppActionContextType>>(null);
+export const AppStatusContext = createContext<Nullable<StatusState>>(null);
 
 export const AppContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
@@ -50,39 +51,19 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
     error: null,
   });
 
-  const handleLanguageChange = useCallback(
-    async (language: Languages) => {
+  const handleSettingChange = useCallback(
+    async <K extends keyof AppSettingsContextType>(
+      key: K,
+      value: AppSettingsContextType[K],
+    ) => {
       try {
-        dispatch({ type: 'SET_LANGUAGE', payload: language });
-        await AppService.saveSetting(state.settings, 'language', language);
+        dispatch({
+          type: `SET_${camelToConstantCase(key)}` as any,
+          payload: value,
+        });
+        await AppService.saveSetting(state.settings, key, value);
       } catch (err) {
-        console.error('save settings failed : ', err);
-        setStatus({ type: 'SET_ERROR', payload: err });
-      }
-    },
-    [state.settings],
-  );
-
-  const handleFontSizeChange = useCallback(
-    async (fontSize: ViewFontSize) => {
-      try {
-        dispatch({ type: 'SET_FONT_SIZE', payload: fontSize });
-        await AppService.saveSetting(state.settings, 'fontSize', fontSize);
-      } catch (err) {
-        console.error('save settings failed : ', err);
-        setStatus({ type: 'SET_ERROR', payload: err });
-      }
-    },
-    [state.settings],
-  );
-
-  const handleTimeFormatChange = useCallback(
-    async (timeFormat: TimeFormat) => {
-      try {
-        dispatch({ type: 'SET_TIME_FORMAT', payload: timeFormat });
-        await AppService.saveSetting(state.settings, 'timeFormat', timeFormat);
-      } catch (err) {
-        console.error('save settings failed : ', err);
+        console.error(`Failed to save ${key} settings failed : `, err);
         setStatus({ type: 'SET_ERROR', payload: err });
       }
     },
@@ -168,11 +149,9 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
 
   const actionValue = useMemo(
     () => ({
-      onFontSizeChange: handleFontSizeChange,
-      onLanguageChange: handleLanguageChange,
-      onTimeFormatChange: handleTimeFormatChange,
+      onSettingChange: handleSettingChange,
     }),
-    [handleFontSizeChange, handleLanguageChange, handleTimeFormatChange],
+    [handleSettingChange],
   );
 
   const appStatusValue = useMemo(
@@ -201,9 +180,11 @@ export const useApp = () => {
   const appSettings = useContext(AppSettingsContext);
   const appAction = useContext(AppActionContext);
   const status = useContext(AppStatusContext);
+
   if (!appInfo || !appSettings || !status || !appAction) {
     throw new Error('useApp must be used within a AppContextProvider');
   }
+
   return {
     ...appInfo,
     ...appAction,
