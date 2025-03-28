@@ -13,4 +13,12 @@ export const PressableButton = styled(Button, {
   enterStyle: MOUNT_STYLE,
   pressStyle: PRESS_STYLE,
   animateOnly: [...PRESS_STYLE_KEY, ...MOUNT_STYLE_KEY],
+
+  variants: {
+    disabled: {
+      true: {
+        opacity: 0.5,
+      },
+    },
+  } as const,
 });
