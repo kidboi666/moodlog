@@ -3,21 +3,21 @@ import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { DELETE_JOURNAL_SNAP_POINTS } from '@/core/constants/size';
 
 interface Props {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const BottomSheet = ({
-  isOpen,
-  setIsOpen,
+  open,
+  setOpen,
   children,
 }: PropsWithChildren<Props>) => {
   return (
     <Sheet
-      forceRemoveScrollEnabled={isOpen}
+      forceRemoveScrollEnabled={open}
       modal
-      open={isOpen}
-      onOpenChange={setIsOpen}
+      open={open}
+      onOpenChange={setOpen}
       snapPoints={DELETE_JOURNAL_SNAP_POINTS}
       dismissOnSnapToBottom
       animation="bouncy"
