@@ -30,7 +30,13 @@ export const HorizontalCalendar = () => {
   } = useCalendar();
 
   const handleCalendarDateChange = useCallback(
-    (date: ISODateString) => onSelectedDateChange(date, selectJournals),
+    (date: ISODateString) => {
+      onSelectedDateChange(date);
+
+      setTimeout(() => {
+        selectJournals(date);
+      }, 0);
+    },
     [onSelectedDateChange, selectJournals],
   );
 

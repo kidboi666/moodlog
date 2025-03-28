@@ -16,35 +16,20 @@ export const useCalendar = () => {
     Number(todayString.split('-')[0]),
   );
 
-  const handleSelectedDateChange = useCallback(
-    (
-      date: ISODateString | null,
-      callback?: (date: ISODateString | null) => void,
-    ) => {
-      setSelectedDate(date);
-      callback?.(date);
-    },
-    [],
-  );
+  const handleSelectedDateChange = useCallback((date: ISODateString | null) => {
+    setSelectedDate(date);
+  }, []);
 
   const handleSelectedMonthChange = useCallback(
-    (
-      month: ISOMonthString | null,
-      callback?: (month: ISOMonthString | null) => void,
-    ) => {
+    (month: ISOMonthString | null) => {
       setSelectedMonth(month);
-      callback?.(month);
     },
     [],
   );
 
-  const handleSelectedYearChange = useCallback(
-    (year: number, callback?: (year: number) => void) => {
-      setSelectedYear(year);
-      callback?.(year);
-    },
-    [],
-  );
+  const handleSelectedYearChange = useCallback((year: number) => {
+    setSelectedYear(year);
+  }, []);
 
   return {
     now,
