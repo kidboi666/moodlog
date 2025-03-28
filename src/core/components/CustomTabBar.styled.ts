@@ -6,7 +6,7 @@ export const TabBarContainer = styled(XStack, {
   b: 0,
   l: 0,
   r: 0,
-  bg: '$background',
+  bg: '$gray4',
   elevation: 10,
   borderTopRightRadius: '$12',
   borderTopLeftRadius: '$12',

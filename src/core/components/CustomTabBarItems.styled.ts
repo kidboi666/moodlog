@@ -3,7 +3,7 @@ import { PressableButton } from '@/core/components/ui/PressableButton.styled';
 
 const TabButton = styled(PressableButton, {
   color: '$gray9',
-  bg: '$backgroundTransparent',
+  bg: '$gray4',
   elevate: false,
 
   variants: {
