@@ -14,7 +14,6 @@ import * as S from './Home.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
-import { useFocusEffect } from 'expo-router';
 import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 import { FullSpinner } from '@/core/components/FullSpinner';
 import { WeekDay } from '@/features/home/components/WeekDay';
@@ -39,12 +38,6 @@ export const HomeScreen = () => {
   if (isLoading) {
     return <FullSpinner />;
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      selectJournals(selectedDate);
-    }, [selectedDate, selectJournals]),
-  );
 
   return (
     <ScrollView overScrollMode="always">

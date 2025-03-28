@@ -91,36 +91,20 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const selectJournal = useCallback(
-    async (journalId: string) => {
-      try {
-        setStatus({ type: 'SET_IS_LOADING', payload: true });
-        const journal = JournalService.getJournalById(
-          state.store.journals,
-          journalId,
-        );
-        dispatch({ type: 'SET_SELECTED_JOURNAL', payload: journal });
-      } catch (err) {
-        console.error('Failed to select journal :', err);
-        setStatus({ type: 'SET_ERROR', payload: err });
-      } finally {
-        setStatus({ type: 'SET_IS_LOADING', payload: false });
-      }
+    (journalId: string) => {
+      const journal = JournalService.getJournalById(
+        state.store.journals,
+        journalId,
+      );
+      dispatch({ type: 'SET_SELECTED_JOURNAL', payload: journal });
     },
     [state.store],
   );
 
   const selectJournals = useCallback(
-    async (date: ISODateString | ISOMonthString | null) => {
-      try {
-        setStatus({ type: 'SET_IS_LOADING', payload: true });
-        const journals = JournalService.getJournals(state.store, date);
-        dispatch({ type: 'SET_SELECTED_JOURNALS', payload: journals });
-      } catch (err) {
-        console.error('Failed to select journals :', err);
-        setStatus({ type: 'SET_ERROR', payload: err });
-      } finally {
-        setStatus({ type: 'SET_IS_LOADING', payload: false });
-      }
+    (date: ISODateString | ISOMonthString | null) => {
+      const journals = JournalService.getJournals(state.store, date);
+      dispatch({ type: 'SET_SELECTED_JOURNALS', payload: journals });
     },
     [state.store],
   );
