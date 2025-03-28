@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-ㅋimport { memo, useState } from 'react';
+import { memo, useState } from 'react';
 import { Spinner } from 'tamagui';
 import { useToastController } from '@tamagui/toast';
 
