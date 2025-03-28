@@ -42,8 +42,9 @@ export default function Layout() {
 
   return (
     <Tabs>
-      <TabSlot renderFn={renderScreen} />
+      <TabSlot />
       <ContainerFog />
+      <CustomTabBar />
       <TabList style={{ display: 'none' }}>
         <TabTrigger name="home" href="/" />
         <TabTrigger name="entries" href="/entries" />
@@ -52,7 +53,6 @@ export default function Layout() {
         <TabTrigger name="settings" href="/settings" />
         <TabTrigger name="journal" href="/journal/[id]" />
       </TabList>
-      <CustomTabBar />
     </Tabs>
   );
 }

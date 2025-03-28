@@ -13,13 +13,15 @@ import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import * as S from './Home.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
-import { WeekDay } from '@/features/home/components/WeekDay';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { useFocusEffect } from 'expo-router';
 import { useBottomSheet } from '@/core/hooks/useBottomSheet';
+import { FullSpinner } from '@/core/components/FullSpinner';
+import { WeekDay } from '@/features/home/components/WeekDay';
 
 export const HomeScreen = () => {
-  const { selectedJournals, removeJournal, selectJournals } = useJournal();
+  const { selectedJournals, removeJournal, selectJournals, isLoading } =
+    useJournal();
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
   const { userInfo } = useUser();
@@ -33,6 +35,10 @@ export const HomeScreen = () => {
     },
     [removeJournal, selectJournals, selectedDate],
   );
+
+  if (isLoading) {
+    return <FullSpinner />;
+  }
 
   useFocusEffect(
     useCallback(() => {
