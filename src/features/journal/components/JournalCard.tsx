@@ -21,6 +21,7 @@ interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   openSheet: () => void;
   closeSheet: () => void;
+  onDeleteSuccess?: () => void;
 }
 
 export const JournalCard = ({
@@ -34,6 +35,7 @@ export const JournalCard = ({
   closeSheet,
   mood,
   onDelete,
+  onDeleteSuccess,
 }: Props) => {
   const router = useRouter();
   const [cardPosition, setCardPosition] = useControllableState<CardPosition>({
@@ -118,6 +120,7 @@ export const JournalCard = ({
           journalId={id}
           onDelete={onDelete}
           closeSheet={closeSheet}
+          onDeleteSuccess={onDeleteSuccess}
         />
       </BottomSheet>
     </>

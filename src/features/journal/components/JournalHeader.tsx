@@ -5,6 +5,7 @@ import { ArrowLeft, Trash2 } from '@tamagui/lucide-icons';
 import { Journal } from '@/types/journal.types';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { useBottomSheet } from '@/core/hooks/useBottomSheet';
+import { useCallback } from 'react';
 
 interface Props {
   journal: Journal;
@@ -15,10 +16,14 @@ export const JournalHeader = ({ journal, onDelete }: Props) => {
   const router = useRouter();
   const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
 
+  const handleGoBack = useCallback(() => {
+    router.back();
+  }, [router]);
+
   return (
     <>
       <S.HeaderContainer>
-        <S.BackButton icon={ArrowLeft} onPress={() => router.back()} />
+        <S.BackButton icon={ArrowLeft} onPress={handleGoBack} />
         <S.DateContainer>
           <S.DateText localDate={journal.localDate} />
           <S.DayWithTimeBox>
@@ -35,6 +40,7 @@ export const JournalHeader = ({ journal, onDelete }: Props) => {
           journalId={journal.id}
           onDelete={onDelete}
           closeSheet={closeSheet}
+          callback={handleGoBack}
         />
       </BottomSheet>
     </>

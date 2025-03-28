@@ -165,8 +165,14 @@ export class StatisticsService {
    * 가장 자주 일기를 작성한 요일 가져오기
    */
   static getMostActiveDay(journals: Journals): string {
-    if (!journals.length) return '';
-    const castJournals = castArray(journals);
+    const isArray = Array.isArray(journals);
+    if (
+      (isArray && journals.length === 0) ||
+      (!isArray && Object.keys(journals).length === 0)
+    ) {
+      return '';
+    }
+    const castJournals = isArray ? journals : castArray(journals);
 
     const days = castJournals.map(journal =>
       getDayFromISODate(journal.localDate),
@@ -193,7 +199,9 @@ export class StatisticsService {
     selectedYear: number,
   ) {
     const yearIds = indexes.byYear[selectedYear] || [];
-    const yearlyJournals = yearIds.map(id => journals[id]);
+    const yearlyJournals = yearIds
+      .map(id => journals[id])
+      .filter(journal => journal !== undefined);
 
     const expressiveMonth = this.getExpressiveMonth(
       indexes.byMonth,
@@ -226,7 +234,9 @@ export class StatisticsService {
     selectedMonth: ISOMonthString,
   ) {
     const monthIds = indexes.byMonth[selectedMonth] || [];
-    const monthlyJournals = monthIds.map(id => journals[id]);
+    const monthlyJournals = monthIds
+      .map(id => journals[id])
+      .filter(journal => journal !== undefined);
     const scoreBoard = this.calculateMoodScoreBoard(monthlyJournals);
 
     return {

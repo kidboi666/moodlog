@@ -1,22 +1,22 @@
-import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 interface Props {
   journalId: string;
   onDelete: (journalId: string) => void;
   closeSheet: () => void;
+  onDeleteSuccess?: () => void;
 }
 
 export const DeleteJournalModal = memo(
-  ({ journalId, onDelete, closeSheet }: Props) => {
+  ({ journalId, onDelete, closeSheet, onDeleteSuccess }: Props) => {
     const { t } = useTranslation();
 
-    const handleConfirmPress = (journalId: string) => {
+    const handleConfirmPress = useCallback(() => {
       onDelete(journalId);
-      router.back();
-    };
+      onDeleteSuccess?.();
+    }, [onDelete, onDeleteSuccess, journalId]);
 
     return (
       <S.ModalContainer>
@@ -25,7 +25,7 @@ export const DeleteJournalModal = memo(
           {t('modals.deleteJournal.description')}
         </S.ModalDescription>
         <S.ModalContentYStack>
-          <S.ConfirmButton onPress={() => handleConfirmPress(journalId)}>
+          <S.ConfirmButton onPress={handleConfirmPress}>
             {t('common.button.delete')}
           </S.ConfirmButton>
           <S.CancelButton onPress={closeSheet}>
