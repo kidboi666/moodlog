@@ -1,5 +1,5 @@
 import { useControllableState, useTheme } from 'tamagui';
-import { Href, usePathname, useRouter } from 'expo-router';
+import { usePathname } from 'expo-router';
 import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,7 +9,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import * as S from './CustomTabBar.styled';
 import { ShowTabBar } from '@/types/app.types';
 import {
-  CalendarTab,
+  EntriesTab,
   HomeTab,
   SettingsTab,
   StatisticsTab,
@@ -19,7 +19,6 @@ import {
 export const CustomTabBar = memo(() => {
   const theme = useTheme();
   const pathname = usePathname();
-  const router = useRouter();
   const insets = useSafeAreaInsets();
   const [tabBarState, setShouldHideTabBar] = useControllableState<ShowTabBar>({
     strategy: 'most-recent-wins',
@@ -49,10 +48,6 @@ export const CustomTabBar = memo(() => {
     [pathname],
   );
 
-  const handleRouteChange = useCallback((href: Href) => {
-    router.push(href);
-  }, []);
-
   const isHomeActive = useMemo(() => isActive('/'), [isActive]);
   const isCalendarActive = useMemo(() => isActive('/entries'), [isActive]);
   const isStatisticsActive = useMemo(() => isActive('/statistics'), [isActive]);
@@ -65,20 +60,11 @@ export const CustomTabBar = memo(() => {
       showTabBar={tabBarState}
     >
       <S.Container>
-        <HomeTab isTabActive={isHomeActive} onRouteChange={handleRouteChange} />
-        <CalendarTab
-          isTabActive={isCalendarActive}
-          onRouteChange={handleRouteChange}
-        />
-        <WriteTab onRouteChange={handleRouteChange} />
-        <StatisticsTab
-          isTabActive={isStatisticsActive}
-          onRouteChange={handleRouteChange}
-        />
-        <SettingsTab
-          isTabActive={isSettingsActive}
-          onRouteChange={handleRouteChange}
-        />
+        <HomeTab isTabActive={isHomeActive} />
+        <EntriesTab isTabActive={isCalendarActive} />
+        <WriteTab />
+        <StatisticsTab isTabActive={isStatisticsActive} />
+        <SettingsTab isTabActive={isSettingsActive} />
       </S.Container>
     </S.TabBarContainer>
   );
