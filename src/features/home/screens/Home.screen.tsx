@@ -14,39 +14,26 @@ import * as S from './Home.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
-import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 import { WeekDay } from '@/features/home/components/WeekDay';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 
 export const HomeScreen = () => {
-  const { selectedJournals, removeJournal, selectJournals } = useJournal();
+  const { selectedJournals, selectJournals } = useJournal();
   const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
   const { userInfo } = useUser();
-  const { open, setOpen, openSheet, closeSheet } = useBottomSheet();
+  const [open, setOpen] = useState(false);
 
-  const handleDeleteJournal = useCallback(
-    async (id: string) => {
-      await removeJournal(id);
-    },
-    [removeJournal],
-  );
-
-  const handleDeletePress = useCallback(
-    (id: string) => {
-      setJournalToDeleteId(id);
-      openSheet();
-    },
-    [openSheet],
-  );
+  const handleDeletePress = useCallback((id: string) => {
+    setJournalToDeleteId(id);
+    setOpen(true);
+  }, []);
 
   useEffect(() => {
-    if (!selectedJournals) {
-      selectJournals(selectedDate);
-    }
-  }, [selectJournals]);
+    selectJournals(selectedDate);
+  }, []);
 
   return (
     <>
@@ -102,11 +89,7 @@ export const HomeScreen = () => {
       </ScrollView>
 
       <BottomSheet {...{ open, setOpen }}>
-        <DeleteJournalModal
-          onDelete={handleDeleteJournal}
-          journalId={journalToDeleteId}
-          closeSheet={closeSheet}
-        />
+        <DeleteJournalModal journalId={journalToDeleteId} setOpen={setOpen} />
       </BottomSheet>
     </>
   );

@@ -8,30 +8,19 @@ import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
 import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 
 export const EntriesScreen = () => {
-  const { selectedJournals, removeJournal } = useJournal();
-  const { open, setOpen, openSheet, closeSheet } = useBottomSheet();
+  const { selectedJournals } = useJournal();
+  const [open, setOpen] = useState(false);
   const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const { t } = useTranslation();
 
-  const handleDeleteJournal = useCallback(
-    async (id: string) => {
-      await removeJournal(id);
-    },
-    [removeJournal],
-  );
-
-  const handleDeletePress = useCallback(
-    (id: string) => {
-      setJournalToDeleteId(id);
-      openSheet();
-    },
-    [openSheet],
-  );
+  const handleDeletePress = useCallback((id: string) => {
+    setJournalToDeleteId(id);
+    setOpen(true);
+  }, []);
 
   return (
     <>
@@ -69,11 +58,7 @@ export const EntriesScreen = () => {
       </ScrollView>
 
       <BottomSheet {...{ open, setOpen }}>
-        <DeleteJournalModal
-          onDelete={handleDeleteJournal}
-          journalId={journalToDeleteId}
-          closeSheet={closeSheet}
-        />
+        <DeleteJournalModal journalId={journalToDeleteId} setOpen={setOpen} />
       </BottomSheet>
     </>
   );

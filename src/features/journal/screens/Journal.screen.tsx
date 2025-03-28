@@ -1,5 +1,5 @@
 import { ScrollView } from 'tamagui';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { moodTheme } from '@/core/constants/themes';
 import { useTranslation } from 'react-i18next';
 import * as S from './Journal.styled';
@@ -8,7 +8,6 @@ import { useApp } from '@/core/store/contexts/app.context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { JournalHeader } from '@/features/journal/components/JournalHeader';
 import { toSingle } from '@/utils/common';
-import { useBottomSheet } from '@/core/hooks/useBottomSheet';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 
@@ -16,21 +15,13 @@ export const JournalScreen = () => {
   const { id } = useLocalSearchParams();
   const journalId = toSingle(id);
   const router = useRouter();
-  const { open, setOpen, openSheet, closeSheet } = useBottomSheet();
-  const { selectedJournal, selectJournal, removeJournal, isLoading } =
-    useJournal();
+  const [open, setOpen] = useState(false);
+  const { selectedJournal, selectJournal } = useJournal();
   const { fontSize } = useApp();
   const { t } = useTranslation();
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      await removeJournal(id);
-    },
-    [removeJournal],
-  );
-
   const goBack = useCallback(() => {
-    router.replace('/entries');
+    router.push('/entries');
   }, [router]);
 
   useEffect(() => {
@@ -47,7 +38,7 @@ export const JournalScreen = () => {
           Header={
             <JournalHeader
               journal={selectedJournal}
-              onDeletePress={openSheet}
+              onDeletePress={() => setOpen(true)}
               onBackPress={() => router.back()}
             />
           }
@@ -83,11 +74,9 @@ export const JournalScreen = () => {
 
       <BottomSheet {...{ open, setOpen }}>
         <DeleteJournalModal
-          onDelete={handleDelete}
           onDeleteSuccess={goBack}
           journalId={journalId}
-          closeSheet={closeSheet}
-          isLoading={isLoading}
+          setOpen={setOpen}
         />
       </BottomSheet>
     </>
