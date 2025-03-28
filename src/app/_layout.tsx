@@ -3,7 +3,7 @@ import { RootProvider } from '@/core/providers/RootProvider';
 import { useFonts } from 'expo-font';
 import React, { useEffect, useMemo } from 'react';
 import { StatusBar } from '@/core/components/StatusBar';
-import { Platform, Text, View } from 'react-native';
+import { Platform } from 'react-native';
 import { useTheme } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -13,16 +13,11 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { ErrorBoundaryProps, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
 import { AppInitializer } from '@/core/components/AppInitializer';
 import '@/lib/i18n/index.js';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
 
 const FONTS = {
   'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.ttf'),
@@ -33,23 +28,6 @@ const FONTS = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-export const ErrorBoundary = ({ error, retry }: ErrorBoundaryProps) => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'red',
-        padding: 24,
-      }}
-    >
-      <Text>{error.message}</Text>
-      <Text onPress={retry}>Try Again?</Text>
-    </View>
-  );
-};
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts(FONTS);
