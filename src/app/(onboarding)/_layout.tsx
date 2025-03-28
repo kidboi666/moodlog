@@ -9,6 +9,7 @@ export default function Layout() {
   return (
     <StepProgressContextProvider totalSteps={3}>
       <Stack
+        initialRouteName="welcome"
         screenOptions={{
           headerShown: true,
           header: () => <OnboardingHeader />,
@@ -19,7 +20,7 @@ export default function Layout() {
           gestureEnabled: false,
         }}
       >
-        <Stack.Screen name="index" />
+        <Stack.Screen name="welcome" />
         <Stack.Screen name="nickname" />
         <Stack.Screen name="signup" />
       </Stack>

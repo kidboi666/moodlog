@@ -1,5 +1,5 @@
 import { ContainerFog } from '@/core/components/ContainerFog';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CustomTabBar } from '@/core/components/CustomTabBar';
 import {
   defaultTabsSlotRender,
@@ -10,6 +10,9 @@ import {
 } from 'expo-router/ui';
 import { TabsDescriptor } from 'expo-router/build/ui/TabContext';
 import { TabsSlotRenderOptions } from 'expo-router/build/ui/TabSlot';
+import { useApp } from '@/core/store/contexts/app.context';
+import { Spinner, View } from 'tamagui';
+import { Redirect } from 'expo-router';
 
 const renderScreen = (desc: TabsDescriptor, opt: TabsSlotRenderOptions) => {
   const Content = defaultTabsSlotRender(desc, opt);
@@ -20,6 +23,23 @@ const renderScreen = (desc: TabsDescriptor, opt: TabsSlotRenderOptions) => {
 };
 
 export default function Layout() {
+  const { initAppData, isInitialApp, firstLaunchDate, isLoading } = useApp();
+
+  useEffect(() => {
+    initAppData();
+  }, [initAppData]);
+
+  if (isLoading || !isInitialApp) {
+    return (
+      <View flex={1} justify="center" items="center">
+        <Spinner />
+      </View>
+    );
+  }
+  if (!firstLaunchDate) {
+    return <Redirect href="/(onboarding)/welcome" />;
+  }
+
   return (
     <Tabs>
       <TabSlot renderFn={renderScreen} />

@@ -25,6 +25,7 @@ export const WelcomeScreen = () => {
     <Container edges={['bottom']}>
       <S.WelcomeContainer>
         <S.WelcomeContent>
+          <H1>뭘봐이새끼야</H1>
           <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
             <S.TitleBox>
               <H1>{t('onboarding.welcome.title')}</H1>

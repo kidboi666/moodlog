@@ -16,7 +16,6 @@ import {
 import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
-import { AppInitializer } from '@/core/components/AppInitializer';
 import '@/lib/i18n/index.js';
 
 const FONTS = {
@@ -91,7 +90,6 @@ const RootLayoutNav = () => {
         value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}
       >
         <StatusBar resolvedTheme={resolvedTheme} />
-        <AppInitializer />
         <Stack screenOptions={screenOptions}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="(onboarding)" />

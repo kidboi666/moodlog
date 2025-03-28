@@ -101,7 +101,7 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
       dispatch({
         type: 'INIT_APP',
         payload: {
-          isInitialApp: !!firstLaunchDate,
+          isInitialApp: true,
           firstLaunchDate: firstLaunchDate as ISODateString,
         },
       });
