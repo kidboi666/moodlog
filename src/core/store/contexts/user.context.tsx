@@ -126,7 +126,6 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     }),
     [
       state.userInfo,
-      state.userInfo.userName,
       registerUser,
       handleUserInfoChange,
       handleDraftUserNameChange,

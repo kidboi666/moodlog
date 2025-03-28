@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -64,12 +64,19 @@ export const JournalWriteScreen = () => {
         level: moodLevel,
       },
     }));
-  }, [moodType, moodLevel]);
+  }, []);
+
+  const contentContainerStyle = useMemo(
+    () => ({
+      backgroundColor: theme.red5.val,
+    }),
+    [theme.red5.val],
+  );
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      contentContainerStyle={{ backgroundColor: theme.red5.val }}
+      contentContainerStyle={contentContainerStyle}
       behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? -40 : 0}
     >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { MoodSelectTitle } from '@/features/write/components/MoodSelectTitle';
 import { PickerMood } from '@/features/write/components/PickerMood';
 import { NextButton } from '@/features/write/components/NextButton';
@@ -12,9 +12,9 @@ import { SelectedMoodContainer } from '@/features/write/components/SelectedMoodC
 export const MoodSelectScreen = () => {
   const [mood, setMood] = useState<Mood>();
 
-  const handleMoodChange = (type: MoodType, level: MoodLevel) => {
+  const handleMoodChange = useCallback((type: MoodType, level: MoodLevel) => {
     setMood({ type, level });
-  };
+  }, []);
 
   return (
     <S.ViewContainer edges={['bottom']} Header={<WriteHeader />}>

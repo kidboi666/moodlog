@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import * as S from './PickerMood.styled';
 import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
 import { MoodTypeBox } from '@/features/write/components/MoodTypeBox';
@@ -9,7 +9,7 @@ interface Props {
   onMoodChange: (type: MoodType, level: MoodLevel) => void;
 }
 
-export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
+export const PickerMood = ({ onMoodChange, mood }: Props) => {
   return (
     <View>
       <S.XStackContainer>
@@ -24,4 +24,4 @@ export const PickerMood = memo(({ onMoodChange, mood }: Props) => {
       </S.XStackContainer>
     </View>
   );
-});
+};

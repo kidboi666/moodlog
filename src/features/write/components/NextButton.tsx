@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { ArrowRight } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';
@@ -9,7 +9,7 @@ interface Props {
   moodLevel?: MoodLevel;
 }
 
-export const NextButton = memo(({ moodType, moodLevel }: Props) => {
+export const NextButton = ({ moodType, moodLevel }: Props) => {
   const router = useRouter();
   const isMoodSelected = !!moodType && moodLevel;
 
@@ -29,4 +29,4 @@ export const NextButton = memo(({ moodType, moodLevel }: Props) => {
       />
     </S.AnimatedContainer>
   );
-});
+};
