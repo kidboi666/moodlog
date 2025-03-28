@@ -1,22 +1,35 @@
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-import { memo, useCallback } from 'react';
+ㅋimport { memo, useState } from 'react';
+import { Spinner } from 'tamagui';
+import { useToastController } from '@tamagui/toast';
 
 interface Props {
   journalId: string;
-  onDelete: (journalId: string) => void;
-  closeSheet: () => void;
+  onDelete: (id: string) => Promise<void>;
   onDeleteSuccess?: () => void;
+  closeSheet: () => void;
 }
 
 export const DeleteJournalModal = memo(
-  ({ journalId, onDelete, closeSheet, onDeleteSuccess }: Props) => {
+  ({ journalId, onDelete, onDeleteSuccess, closeSheet }: Props) => {
+    const toast = useToastController();
+    const [isDeleting, setIsDeleting] = useState(false);
     const { t } = useTranslation();
 
-    const handleConfirmPress = useCallback(() => {
-      onDelete(journalId);
-      onDeleteSuccess?.();
-    }, [onDelete, onDeleteSuccess, journalId]);
+    const handleDelete = async () => {
+      try {
+        setIsDeleting(true);
+        await onDelete(journalId);
+        closeSheet();
+        toast.show(t('notifications.success.delete'), {
+          preset: 'notice',
+        });
+        onDeleteSuccess?.();
+      } finally {
+        setIsDeleting(false);
+      }
+    };
 
     return (
       <S.ModalContainer>
@@ -25,10 +38,14 @@ export const DeleteJournalModal = memo(
           {t('modals.deleteJournal.description')}
         </S.ModalDescription>
         <S.ModalContentYStack>
-          <S.ConfirmButton onPress={handleConfirmPress}>
+          <S.ConfirmButton
+            icon={isDeleting ? () => <Spinner /> : null}
+            disabled={isDeleting}
+            onPress={handleDelete}
+          >
             {t('common.button.delete')}
           </S.ConfirmButton>
-          <S.CancelButton onPress={closeSheet}>
+          <S.CancelButton onPress={closeSheet} disabled={isDeleting}>
             {t('common.button.cancel')}
           </S.CancelButton>
         </S.ModalContentYStack>

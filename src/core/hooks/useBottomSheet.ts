@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const useBottomSheet = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const openSheet = () => {
-    setIsOpen(true);
-  };
+  const openSheet = useCallback(() => {
+    setOpen(true);
+  }, []);
 
-  const closeSheet = () => {
-    setIsOpen(false);
-  };
+  const closeSheet = useCallback(() => {
+    setOpen(false);
+  }, []);
 
   return {
-    isOpen,
-    setIsOpen,
+    open,
+    setOpen,
     openSheet,
     closeSheet,
   };

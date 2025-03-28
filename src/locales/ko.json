@@ -55,7 +55,8 @@
       "journal": {
         "title": "일기가 저장되었습니다.",
         "message": "소중한 기록이 안전하게 보관되었어요."
-      }
+      },
+      "delete":  "일기가 삭제되었습니다."
     },
     "warning": {
       "journal": {

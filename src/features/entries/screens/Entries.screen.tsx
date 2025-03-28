@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { ScrollView } from 'tamagui';
 import { JournalCard } from '@/features/journal/components/JournalCard';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
@@ -9,55 +9,72 @@ import { useTranslation } from 'react-i18next';
 import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { useBottomSheet } from '@/core/hooks/useBottomSheet';
-import { useRouter } from 'expo-router';
+import { BottomSheet } from '@/core/components/modals/BottomSheet';
+import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 
 export const EntriesScreen = () => {
-  const router = useRouter();
   const { selectedJournals, removeJournal } = useJournal();
-  const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
+  const { open, setOpen, openSheet, closeSheet } = useBottomSheet();
+  const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const { t } = useTranslation();
 
-  const handleGoBack = useCallback(() => {
-    router.back();
-  }, [router]);
+  const handleDeleteJournal = useCallback(
+    async (id: string) => {
+      await removeJournal(id);
+    },
+    [removeJournal],
+  );
+
+  const handleDeletePress = useCallback(
+    (id: string) => {
+      setJournalToDeleteId(id);
+      openSheet();
+    },
+    [openSheet],
+  );
 
   return (
-    <ScrollView>
-      <S.Container edges={['top']} padded>
-        <S.Title>{t('entries.title')}</S.Title>
-        <FadeIn delay={ANIMATION_DELAY_MS[0]}>
-          <GardenSection />
-        </FadeIn>
+    <>
+      <ScrollView>
+        <S.Container edges={['top']} padded>
+          <S.Title>{t('entries.title')}</S.Title>
+          <FadeIn delay={ANIMATION_DELAY_MS[0]}>
+            <GardenSection />
+          </FadeIn>
 
-        <S.JournalBox>
-          {Array.isArray(selectedJournals) ? (
-            selectedJournals.map(journal => {
-              const { content, imageUri, id, createdAt, mood } = journal;
-              return (
-                <Fragment key={id}>
-                  <JournalCard
-                    {...{
-                      id,
-                      content,
-                      imageUri,
-                      createdAt,
-                      mood,
-                      onDelete: removeJournal,
-                      onDeleteSuccess: handleGoBack,
-                      isOpen,
-                      setIsOpen,
-                      openSheet,
-                      closeSheet,
-                    }}
-                  />
-                </Fragment>
-              );
-            })
-          ) : (
-            <EmptyJournal isToday={false} />
-          )}
-        </S.JournalBox>
-      </S.Container>
-    </ScrollView>
+          <S.JournalBox>
+            {Array.isArray(selectedJournals) ? (
+              selectedJournals.map(journal => {
+                const { content, imageUri, id, createdAt, mood } = journal;
+                return (
+                  <Fragment key={id}>
+                    <JournalCard
+                      {...{
+                        id,
+                        content,
+                        imageUri,
+                        createdAt,
+                        mood,
+                        onDeletePress: handleDeletePress,
+                      }}
+                    />
+                  </Fragment>
+                );
+              })
+            ) : (
+              <EmptyJournal isToday={false} />
+            )}
+          </S.JournalBox>
+        </S.Container>
+      </ScrollView>
+
+      <BottomSheet {...{ open, setOpen }}>
+        <DeleteJournalModal
+          onDelete={handleDeleteJournal}
+          journalId={journalToDeleteId}
+          closeSheet={closeSheet}
+        />
+      </BottomSheet>
+    </>
   );
 };

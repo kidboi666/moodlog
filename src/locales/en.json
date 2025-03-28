@@ -55,7 +55,8 @@
       "journal": {
         "title": "Journal saved.",
         "message": "Your precious record has been safely stored."
-      }
+      },
+      "delete": "Journal deleted."
     },
     "warning": {
       "journal": {

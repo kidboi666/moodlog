@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import {
@@ -21,22 +21,32 @@ import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJour
 
 export const HomeScreen = () => {
   const { selectedJournals, removeJournal, selectJournals } = useJournal();
-  const [selectedJournalId, setSelectedJournalId] = useState('');
+  const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
   const { userInfo } = useUser();
-  const { isOpen, setIsOpen, openSheet, closeSheet } = useBottomSheet();
+  const { open, setOpen, openSheet, closeSheet } = useBottomSheet();
 
-  const handleDeleteJournal = useCallback(async () => {
-    await removeJournal(selectedJournalId);
+  const handleDeleteJournal = useCallback(
+    async (id: string) => {
+      await removeJournal(id);
+    },
+    [removeJournal],
+  );
 
-    selectJournals(selectedDate);
-  }, [removeJournal, selectJournals, selectedDate]);
+  const handleDeletePress = useCallback(
+    (id: string) => {
+      setJournalToDeleteId(id);
+      openSheet();
+    },
+    [openSheet],
+  );
 
-  const handleDeletePress = useCallback((id: string) => {
-    setSelectedJournalId(id);
-    openSheet();
-  }, []);
+  useEffect(() => {
+    if (!selectedJournals) {
+      selectJournals(selectedDate);
+    }
+  }, [selectJournals]);
 
   return (
     <>
@@ -91,10 +101,10 @@ export const HomeScreen = () => {
         </Container>
       </ScrollView>
 
-      <BottomSheet {...{ isOpen, setIsOpen }}>
+      <BottomSheet {...{ open, setOpen }}>
         <DeleteJournalModal
-          journalId={selectedJournalId}
           onDelete={handleDeleteJournal}
+          journalId={journalToDeleteId}
           closeSheet={closeSheet}
         />
       </BottomSheet>
