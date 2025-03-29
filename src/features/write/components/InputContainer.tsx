@@ -21,9 +21,7 @@ const JOURNAL_IMAGES_DIR = FileSystem.documentDirectory
   : '';
 
 interface Props {
-  isSubmitting: boolean;
   isSubmitted: boolean;
-  onIsSubmittingChange: (bool: boolean) => void;
   onIsSubmittedChange: (bool: boolean) => void;
   onContentChange: (content: string) => void;
   onImageUriChange: (uri: string) => void;
@@ -33,9 +31,7 @@ interface Props {
 }
 
 export const InputContainer = ({
-  isSubmitting,
   isSubmitted,
-  onIsSubmittingChange,
   onIsSubmittedChange,
   onContentChange,
   onImageUriChange,
@@ -46,7 +42,7 @@ export const InputContainer = ({
   const inputRef = useRef<EnhancedTextInputRef>(null);
   const toast = useToastController();
   const { t } = useTranslation();
-  const { addJournal } = useJournal();
+  const { addJournal, isLoading } = useJournal();
 
   const saveImage = useCallback(async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -101,35 +97,18 @@ export const InputContainer = ({
   }, []);
 
   const handleSubmit = useCallback(async () => {
-    console.log('asdf');
-    if (isSubmitted || isSubmitting) return;
-    try {
-      onIsSubmittingChange(true);
-      const newDraft = {
-        content,
-        mood,
-        imageUri,
-      };
-      await addJournal(newDraft);
-      toast.show(t('notifications.success.journal.title'), {
-        message: t('notifications.success.journal.message'),
-        preset: 'success',
-      });
-      onIsSubmittedChange(true);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      onIsSubmittingChange(false);
-    }
-  }, [
-    content,
-    mood,
-    toast,
-    addJournal,
-    imageUri,
-    onIsSubmittedChange,
-    onIsSubmittingChange,
-  ]);
+    const newDraft = {
+      content,
+      mood,
+      imageUri,
+    };
+    await addJournal(newDraft);
+    toast.show(t('notifications.success.journal.title'), {
+      message: t('notifications.success.journal.message'),
+      preset: 'success',
+    });
+    onIsSubmittedChange(true);
+  }, [content, mood, toast, addJournal, imageUri, onIsSubmittedChange]);
 
   const handleTimeStamp = useCallback(() => {
     inputRef.current?.insertCurrentTime();
@@ -151,8 +130,8 @@ export const InputContainer = ({
         />
         <S.ButtonsViewBox>
           <ActionButtons
-            isSubmitting={isSubmitting}
             isSubmitted={isSubmitted}
+            isLoading={isLoading}
             onTimeStamp={handleTimeStamp}
             onImageUriChange={handleImageUriChange}
             content={content}

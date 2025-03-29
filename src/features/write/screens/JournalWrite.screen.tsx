@@ -23,16 +23,11 @@ export const JournalWriteScreen = () => {
   const params = useLocalSearchParams<{ type: MoodType; level: string }>();
   const router = useRouter();
   const theme = useTheme();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [draft, setDraft] = useState<Draft>(initialDraft);
 
   const moodType = params.type as MoodType;
   const moodLevel = params.level as MoodLevel;
-
-  const handleIsSubmittingChange = useCallback((bool: boolean) => {
-    setIsSubmitting(bool);
-  }, []);
 
   const handleIsSubmittedChange = useCallback((bool: boolean) => {
     setIsSubmitted(bool);
@@ -90,9 +85,7 @@ export const JournalWriteScreen = () => {
           }
         >
           <InputContainer
-            isSubmitting={isSubmitting}
             isSubmitted={isSubmitted}
-            onIsSubmittingChange={handleIsSubmittingChange}
             onIsSubmittedChange={handleIsSubmittedChange}
             onContentChange={handleContentChange}
             onImageUriChange={handleImageUriChange}

@@ -7,8 +7,8 @@ import { Form, Spinner, XGroup } from 'tamagui';
 interface Props {
   onImageUriChange: () => Promise<Nullable<void>>;
   onTimeStamp: () => void;
-  isSubmitting: boolean;
   isSubmitted: boolean;
+  isLoading: boolean;
   content: string;
 }
 
@@ -16,10 +16,10 @@ export const ActionButtons = ({
   onImageUriChange,
   onTimeStamp,
   isSubmitted,
-  isSubmitting,
+  isLoading,
   content,
 }: Props) => {
-  const isDisabled = isSubmitted || isSubmitting || !content;
+  const isDisabled = isSubmitted || isLoading || !content;
   return (
     <S.XGroupContainer>
       <XGroup.Item>
@@ -37,7 +37,7 @@ export const ActionButtons = ({
       <XGroup.Item>
         <Form.Trigger asChild>
           <S.SubmitButton
-            icon={isSubmitting ? () => <Spinner /> : Check}
+            icon={isLoading ? () => <Spinner /> : Check}
             disabled={isDisabled}
           />
         </Form.Trigger>
