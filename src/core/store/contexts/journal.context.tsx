@@ -216,13 +216,13 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <JournalDataContext.Provider value={journalDataValue}>
-      <JournalActionContext.Provider value={journalActionValue}>
+    <JournalActionContext.Provider value={journalActionValue}>
+      <JournalDataContext.Provider value={journalDataValue}>
         <JournalStatusContext.Provider value={journalStatusValue}>
           {children}
         </JournalStatusContext.Provider>
-      </JournalActionContext.Provider>
-    </JournalDataContext.Provider>
+      </JournalDataContext.Provider>
+    </JournalActionContext.Provider>
   );
 };
 

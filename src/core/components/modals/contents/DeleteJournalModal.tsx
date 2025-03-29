@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-import { useJournal } from '@/core/store/contexts/journal.context';
 import {
   Dispatch,
   memo,
@@ -14,21 +13,22 @@ import { Spinner } from 'tamagui';
 
 interface Props {
   journalId: string;
+  onDelete: (id: string) => Promise<void>;
+  isLoading: boolean;
   onDeleteSuccess?: () => void;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const DeleteJournalModal = memo(
-  ({ journalId, onDeleteSuccess, setOpen }: Props) => {
-    const { removeJournal, isLoading } = useJournal();
-    const [isSuccess, setIsSuccess] = useState(false);
+  ({ journalId, onDelete, isLoading, onDeleteSuccess, setOpen }: Props) => {
     const { t } = useTranslation();
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const handleDelete = useCallback(async () => {
-      await removeJournal(journalId);
+      await onDelete(journalId);
       setOpen(false);
       setIsSuccess(true);
-    }, [removeJournal, journalId]);
+    }, [onDelete, journalId]);
 
     useEffect(() => {
       if (isSuccess) {

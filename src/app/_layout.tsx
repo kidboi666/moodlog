@@ -7,7 +7,6 @@ import { Platform } from 'react-native';
 import { useTheme } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { CurrentToast } from '@/core/components/CurrentToast';
 import {
   DarkTheme,
   DefaultTheme,
@@ -95,7 +94,6 @@ const RootLayoutNav = () => {
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <CurrentToast />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

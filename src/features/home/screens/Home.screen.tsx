@@ -20,7 +20,8 @@ import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJour
 import { useToastController } from '@tamagui/toast';
 
 export const HomeScreen = () => {
-  const { selectedJournals, selectJournals } = useJournal();
+  const { selectedJournals, selectJournals, isLoading, removeJournal } =
+    useJournal();
   const toast = useToastController();
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
@@ -36,6 +37,10 @@ export const HomeScreen = () => {
   const handleDeletePress = useCallback((id: string) => {
     setJournalToDeleteId(id);
     setOpen(true);
+
+    return () => {
+      setOpen(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -103,6 +108,8 @@ export const HomeScreen = () => {
         <DeleteJournalModal
           journalId={journalToDeleteId}
           setOpen={setOpen}
+          isLoading={isLoading}
+          onDelete={removeJournal}
           onDeleteSuccess={handleDeleteSuccess}
         />
       </BottomSheet>

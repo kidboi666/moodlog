@@ -16,7 +16,8 @@ export const JournalScreen = () => {
   const journalId = toSingle(id);
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const { selectedJournal, selectJournal } = useJournal();
+  const { selectedJournal, selectJournal, isLoading, removeJournal } =
+    useJournal();
   const { fontSize } = useApp();
   const { t } = useTranslation();
 
@@ -74,9 +75,13 @@ export const JournalScreen = () => {
 
       <BottomSheet {...{ open, setOpen }}>
         <DeleteJournalModal
-          onDeleteSuccess={handleDeleteSuccess}
-          journalId={journalId}
-          setOpen={setOpen}
+          {...{
+            journalId,
+            setOpen,
+            isLoading,
+            onDelete: removeJournal,
+            onDeleteSuccess: handleDeleteSuccess,
+          }}
         />
       </BottomSheet>
     </>

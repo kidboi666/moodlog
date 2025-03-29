@@ -15,7 +15,7 @@ export const ToastContainer = styled(Toast, {
           case 'error':
             return { bg: '$red10' };
           case 'notice':
-            return {};
+            return { bg: '$color5' };
           case 'success':
             return { bg: '$green10' };
         }

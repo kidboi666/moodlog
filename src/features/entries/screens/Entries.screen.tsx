@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import { ScrollView } from 'tamagui';
 import { JournalCard } from '@/features/journal/components/JournalCard';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
@@ -6,14 +6,15 @@ import { EmptyJournal } from '@/features/journal/components/EmptyJournal';
 import { GardenSection } from '@/features/entries/components/GardenSection';
 import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { useTranslation } from 'react-i18next';
-import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 import { useCalendar } from '@/core/hooks/useCalendar';
+import * as S from './Entries.styled';
 
 export const EntriesScreen = () => {
-  const { selectedJournals, selectJournals } = useJournal();
+  const { selectedJournals, selectJournals, isLoading, removeJournal } =
+    useJournal();
   const { selectedMonth } = useCalendar();
   const [open, setOpen] = useState(false);
   const [journalToDeleteId, setJournalToDeleteId] = useState('');
@@ -67,6 +68,8 @@ export const EntriesScreen = () => {
         <DeleteJournalModal
           journalId={journalToDeleteId}
           setOpen={setOpen}
+          isLoading={isLoading}
+          onDelete={removeJournal}
           onDeleteSuccess={handleDeleteSuccess}
         />
       </BottomSheet>

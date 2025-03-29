@@ -12,14 +12,14 @@ export const RootProvider = ({
   const colorScheme = useColorScheme();
 
   return (
-    <ContextProvider>
-      <TamaguiBaseProvider colorScheme={colorScheme} {...rest}>
-        <ThemeContextProvider>
-          <TamaguiToastProvider>
-            <PortalProvider>{children}</PortalProvider>
-          </TamaguiToastProvider>
-        </ThemeContextProvider>
-      </TamaguiBaseProvider>
-    </ContextProvider>
+    <TamaguiBaseProvider colorScheme={colorScheme} {...rest}>
+      <ThemeContextProvider>
+        <TamaguiToastProvider>
+          <PortalProvider>
+            <ContextProvider>{children}</ContextProvider>
+          </PortalProvider>
+        </TamaguiToastProvider>
+      </ThemeContextProvider>
+    </TamaguiBaseProvider>
   );
 };
