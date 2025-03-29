@@ -43,7 +43,7 @@ export const JournalWriteScreen = () => {
 
   useEffect(() => {
     if (isSubmitted) {
-      router.push('/');
+      router.replace('/entries');
     }
 
     return () => {
