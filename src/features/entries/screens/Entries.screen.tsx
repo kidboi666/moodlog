@@ -15,7 +15,7 @@ import { BottomSheetType } from '@/core/store/types/bottom-sheet.types';
 export const EntriesScreen = () => {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =
     useJournal();
-  const { showBottomSheet } = useBottomSheet();
+  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
   const { selectedMonth } = useCalendar();
   const { t } = useTranslation();
 
@@ -24,6 +24,7 @@ export const EntriesScreen = () => {
       journalId: id,
       isLoading,
       onDelete: removeJournal,
+      hideBottomSheet,
       onSuccess: () => {
         selectJournals(selectedMonth);
       },

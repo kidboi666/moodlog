@@ -22,7 +22,7 @@ import * as S from './Home.styled';
 export const HomeScreen = () => {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =
     useJournal();
-  const { showBottomSheet } = useBottomSheet();
+  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
   const toast = useToastController();
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
@@ -34,6 +34,7 @@ export const HomeScreen = () => {
         journalId: id,
         isLoading,
         onDelete: removeJournal,
+        hideBottomSheet,
         onSuccess: () => {
           selectJournals(selectedDate);
           toast.show(t('notifications.success.delete'));

@@ -10,6 +10,7 @@ export type BottomSheetProps = {
     isLoading: boolean;
     onDelete: (id: string) => Promise<void>;
     onSuccess?: () => void;
+    hideBottomSheet: () => void;
   };
 };
 

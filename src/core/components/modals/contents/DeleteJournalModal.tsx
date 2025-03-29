@@ -12,21 +12,21 @@ export const DeleteJournalModal = memo(
     journalId,
     onDelete,
     isLoading,
-    onDeleteSuccess,
-    setOpen,
+    hideBottomSheet,
+    onSuccess,
   }: BottomSheetProps[BottomSheetType.DELETE_JOURNAL]) => {
     const { t } = useTranslation();
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleDelete = useCallback(async () => {
       await onDelete(journalId);
-      setOpen(false);
+      hideBottomSheet();
       setIsSuccess(true);
     }, [onDelete, journalId]);
 
     useEffect(() => {
       if (isSuccess) {
-        onDeleteSuccess?.();
+        onSuccess?.();
       }
 
       return () => {
@@ -53,7 +53,7 @@ export const DeleteJournalModal = memo(
           >
             {t('common.button.delete')}
           </S.ConfirmButton>
-          <S.CancelButton onPress={() => setOpen(false)} disabled={isDisabled}>
+          <S.CancelButton onPress={hideBottomSheet} disabled={isDisabled}>
             {t('common.button.cancel')}
           </S.CancelButton>
         </S.ModalContentYStack>
