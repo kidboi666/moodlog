@@ -4,13 +4,13 @@ import { ISODateString, ISOMonthString } from '@/types/date.types';
 
 export const useCalendar = () => {
   const now = new Date();
-  const todayString = CalendarUtils.getCalendarDateString(now);
+  const todayString: ISODateString = CalendarUtils.getCalendarDateString(now);
 
   const [selectedDate, setSelectedDate] = useState<ISODateString | null>(
     todayString,
   );
   const [selectedMonth, setSelectedMonth] = useState<ISOMonthString | null>(
-    todayString.split('-')[1],
+    todayString.substring(0, 7) as ISOMonthString,
   );
   const [selectedYear, setSelectedYear] = useState<number>(
     Number(todayString.split('-')[0]),

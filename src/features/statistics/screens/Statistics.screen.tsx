@@ -9,12 +9,11 @@ import { TotalCount } from '@/features/statistics/components/total-count/TotalCo
 import { MoodAverage } from '@/features/statistics/components/mood-average/MoodAverage';
 import { TimeRange } from '@/types/statistic.types';
 import { useCalendar } from '@/core/hooks/useCalendar';
-import { getISOMonthString } from '@/utils/date';
+import { ISOMonthString } from '@/types/date.types';
 
 export const StatisticsScreen = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.YEARLY);
-  const { selectedYear, selectedMonth, currentYear, currentMonth } =
-    useCalendar();
+  const { selectedYear, selectedMonth, todayString } = useCalendar();
   const { t } = useTranslation();
 
   const switchToMonthly = useCallback(() => {
@@ -24,6 +23,10 @@ export const StatisticsScreen = () => {
   const switchToWeekly = useCallback(() => {
     setTimeRange(TimeRange.YEARLY);
   }, []);
+
+  const monthString = selectedMonth
+    ? selectedMonth
+    : (todayString.substring(0, 7) as ISOMonthString);
 
   return (
     <ScrollView>
@@ -42,16 +45,12 @@ export const StatisticsScreen = () => {
               <TotalCount
                 timeRange={timeRange}
                 selectedYear={selectedYear}
-                selectedMonth={
-                  selectedMonth || getISOMonthString(currentYear, currentMonth)
-                }
+                selectedMonth={selectedMonth || monthString}
               />
               <MoodAverage
                 timeRange={timeRange}
                 selectedYear={selectedYear}
-                selectedMonth={
-                  selectedMonth || getISOMonthString(currentYear, currentMonth)
-                }
+                selectedMonth={selectedMonth || monthString}
               />
             </S.XStackContainer>
           </S.YStackContainer>
