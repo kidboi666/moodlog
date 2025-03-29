@@ -17,18 +17,21 @@ import { useCalendar } from '@/core/hooks/useCalendar';
 import { WeekDay } from '@/features/home/components/WeekDay';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
+import { useToastController } from '@tamagui/toast';
 
 export const HomeScreen = () => {
   const { selectedJournals, selectJournals } = useJournal();
-  const [journalToDeleteId, setJournalToDeleteId] = useState('');
+  const toast = useToastController();
   const { isToday, selectedDate } = useCalendar();
   const { t } = useTranslation();
   const { userInfo } = useUser();
+  const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const [open, setOpen] = useState(false);
 
   const handleDeleteSuccess = useCallback(() => {
     selectJournals(selectedDate);
-  }, [selectJournals, selectedDate]);
+    toast.show(t('notifications.success.delete'));
+  }, [selectJournals, selectedDate, toast]);
 
   const handleDeletePress = useCallback((id: string) => {
     setJournalToDeleteId(id);
@@ -37,7 +40,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     selectJournals(selectedDate);
-  }, []);
+  }, [selectJournals]);
 
   return (
     <>
@@ -69,7 +72,11 @@ export const HomeScreen = () => {
               return (
                 <Fragment key={journal.id}>
                   {index > 0 && <S.Separator />}
-                  <FadeIn delay={ANIMATION_DELAY_MS[0]}>
+                  <FadeIn
+                    delay={
+                      ANIMATION_DELAY_MS[index % ANIMATION_DELAY_SECONDS.length]
+                    }
+                  >
                     <JournalCard
                       {...{
                         id,

@@ -1,11 +1,10 @@
+import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 import { styled, View } from 'tamagui';
 
 export const FadeInContainer = styled(View, {
   animation: 'lazy',
-  animateOnly: ['opacity'],
-  enterStyle: {
-    opacity: 0,
-  },
+  animateOnly: MOUNT_STYLE_KEY,
+  enterStyle: MOUNT_STYLE,
 
   variants: {
     isVisible: {
