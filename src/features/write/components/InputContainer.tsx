@@ -101,6 +101,8 @@ export const InputContainer = ({
   }, []);
 
   const handleSubmit = useCallback(async () => {
+    console.log('asdf');
+    if (isSubmitted || isSubmitting) return;
     try {
       onIsSubmittingChange(true);
       const newDraft = {
@@ -119,7 +121,15 @@ export const InputContainer = ({
     } finally {
       onIsSubmittingChange(false);
     }
-  }, [content, mood, imageUri, onIsSubmittedChange, onIsSubmittingChange]);
+  }, [
+    content,
+    mood,
+    toast,
+    addJournal,
+    imageUri,
+    onIsSubmittedChange,
+    onIsSubmittingChange,
+  ]);
 
   const handleTimeStamp = useCallback(() => {
     inputRef.current?.insertCurrentTime();

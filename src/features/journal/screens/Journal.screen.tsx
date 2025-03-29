@@ -20,7 +20,7 @@ export const JournalScreen = () => {
   const { fontSize } = useApp();
   const { t } = useTranslation();
 
-  const goBack = useCallback(() => {
+  const handleDeleteSuccess = useCallback(() => {
     router.push('/entries');
   }, [router]);
 
@@ -74,7 +74,7 @@ export const JournalScreen = () => {
 
       <BottomSheet {...{ open, setOpen }}>
         <DeleteJournalModal
-          onDeleteSuccess={goBack}
+          onDeleteSuccess={handleDeleteSuccess}
           journalId={journalId}
           setOpen={setOpen}
         />

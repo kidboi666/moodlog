@@ -26,6 +26,10 @@ export const HomeScreen = () => {
   const { userInfo } = useUser();
   const [open, setOpen] = useState(false);
 
+  const handleDeleteSuccess = useCallback(() => {
+    selectJournals(selectedDate);
+  }, [selectJournals, selectedDate]);
+
   const handleDeletePress = useCallback((id: string) => {
     setJournalToDeleteId(id);
     setOpen(true);
@@ -89,7 +93,11 @@ export const HomeScreen = () => {
       </ScrollView>
 
       <BottomSheet {...{ open, setOpen }}>
-        <DeleteJournalModal journalId={journalToDeleteId} setOpen={setOpen} />
+        <DeleteJournalModal
+          journalId={journalToDeleteId}
+          setOpen={setOpen}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
       </BottomSheet>
     </>
   );

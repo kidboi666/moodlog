@@ -71,7 +71,7 @@ export const JournalContextProvider = ({ children }: PropsWithChildren) => {
         setStatus({ type: 'SET_IS_LOADING', payload: false });
       }
     },
-    [state.store.journals],
+    [state.store],
   );
 
   const removeJournal = useCallback(

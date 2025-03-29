@@ -10,12 +10,18 @@ import * as S from './Entries.styled';
 import { useJournal } from '@/core/store/contexts/journal.context';
 import { BottomSheet } from '@/core/components/modals/BottomSheet';
 import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
+import { useCalendar } from '@/core/hooks/useCalendar';
 
 export const EntriesScreen = () => {
-  const { selectedJournals } = useJournal();
+  const { selectedJournals, selectJournals } = useJournal();
+  const { selectedMonth } = useCalendar();
   const [open, setOpen] = useState(false);
   const [journalToDeleteId, setJournalToDeleteId] = useState('');
   const { t } = useTranslation();
+
+  const handleDeleteSuccess = useCallback(() => {
+    selectJournals(selectedMonth);
+  }, [selectJournals, selectedMonth]);
 
   const handleDeletePress = useCallback((id: string) => {
     setJournalToDeleteId(id);
@@ -58,7 +64,11 @@ export const EntriesScreen = () => {
       </ScrollView>
 
       <BottomSheet {...{ open, setOpen }}>
-        <DeleteJournalModal journalId={journalToDeleteId} setOpen={setOpen} />
+        <DeleteJournalModal
+          journalId={journalToDeleteId}
+          setOpen={setOpen}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
       </BottomSheet>
     </>
   );
