@@ -11,7 +11,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { useCalendar } from '@/core/hooks/useCalendar';
 
 export const GardenSection = () => {
-  const { getMoodForDate, onSelectedJournalsChange } = useJournal();
+  const { getMoodForDate, selectJournals } = useJournal();
   const {
     selectedYear,
     selectedMonth,
@@ -34,12 +34,13 @@ export const GardenSection = () => {
 
   const handleMonthChange = useCallback(
     (monthDate: ISOMonthString) => {
-      onSelectedMonthChange(
-        selectedMonth === monthDate ? null : monthDate,
-        onSelectedJournalsChange,
-      );
+      onSelectedMonthChange(selectedMonth === monthDate ? null : monthDate);
+
+      setTimeout(() => {
+        selectJournals(selectedMonth === monthDate ? null : monthDate);
+      }, 0);
     },
-    [selectedMonth, onSelectedMonthChange, onSelectedJournalsChange],
+    [selectedMonth, onSelectedMonthChange, selectJournals],
   );
 
   return (
