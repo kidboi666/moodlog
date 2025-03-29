@@ -10,7 +10,7 @@ import {
   RECORD_CARD_HEIGHT,
 } from '@/core/constants/size';
 
-export const useHeightAnimation = () => {
+export const useExpandAnimation = () => {
   const [expansionState, setExpansionState] = useState<ExpansionState>(
     ExpansionState.COLLAPSED,
   );

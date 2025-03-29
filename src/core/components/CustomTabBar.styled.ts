@@ -11,19 +11,6 @@ export const TabBarContainer = styled(XStack, {
   borderTopRightRadius: '$12',
   borderTopLeftRadius: '$12',
   width: '100%',
-  animation: 'lazy',
-  animateOnly: ['transform'],
-
-  variants: {
-    showTabBar: {
-      show: {
-        y: 0,
-      },
-      hide: {
-        y: 140,
-      },
-    },
-  } as const,
 });
 
 export const Container = styled(XStack, {

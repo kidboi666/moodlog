@@ -7,7 +7,7 @@ import { useUser } from '@/core/store/contexts/user.context';
 import { useJournalStats } from '@/features/statistics/hooks/useJournalStats';
 import { ISOMonthString } from '@/types/date.types';
 import Animated from 'react-native-reanimated';
-import { useHeightAnimation } from '@/features/statistics/hooks/useHeightAnimation';
+import { useExpandAnimation } from '@/core/hooks/useExpandAnimation';
 
 const AnimatedCardContainer = Animated.createAnimatedComponent(S.CardContainer);
 
@@ -25,7 +25,7 @@ export const TotalCount = ({
   const { stats } = useJournalStats(timeRange, selectedYear, selectedMonth);
   const { userInfo } = useUser();
   const { daysSinceSignup } = userInfo ?? null;
-  const { animatedStyle, expansionState, onPress } = useHeightAnimation();
+  const { animatedStyle, expansionState, onPress } = useExpandAnimation();
   const { expressiveMonth, totalCount, frequency, activeDay } = stats || {};
 
   return (

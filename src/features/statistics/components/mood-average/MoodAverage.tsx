@@ -7,7 +7,7 @@ import { moodTheme } from '@/core/constants/themes';
 import { useMoodStats } from '@/features/statistics/hooks/useMoodStats';
 import { ISOMonthString } from '@/types/date.types';
 import Animated from 'react-native-reanimated';
-import { useHeightAnimation } from '@/features/statistics/hooks/useHeightAnimation';
+import { useExpandAnimation } from '@/core/hooks/useExpandAnimation';
 
 const AnimatedCardContainer = Animated.createAnimatedComponent(S.CardContainer);
 
@@ -23,7 +23,7 @@ export const MoodAverage = ({
   selectedMonth,
 }: Props) => {
   const { stats } = useMoodStats(timeRange, selectedYear, selectedMonth);
-  const { expansionState, onPress, animatedStyle } = useHeightAnimation();
+  const { expansionState, onPress, animatedStyle } = useExpandAnimation();
   const {
     moodStats: { signatureMood, scoreBoard },
   } = stats || {};

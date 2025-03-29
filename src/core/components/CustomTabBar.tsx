@@ -1,4 +1,4 @@
-import { useControllableState, useTheme } from 'tamagui';
+import { useTheme } from 'tamagui';
 import { usePathname } from 'expo-router';
 import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
@@ -7,7 +7,6 @@ import { Platform } from 'react-native';
 import { HIDE_TAB_BAR_ROUTES } from '@/core/constants/routes';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as S from './CustomTabBar.styled';
-import { ShowTabBar } from '@/types/app.types';
 import {
   EntriesTab,
   HomeTab,
@@ -15,31 +14,34 @@ import {
   StatisticsTab,
   WriteTab,
 } from './CustomTabBarItems';
+import Animated from 'react-native-reanimated';
+import { Position } from '@/types/app.types';
+import { usePositionAnimation } from '@/core/hooks/usePositionAnimation';
+
+const AnimatedTabBar = Animated.createAnimatedComponent(S.TabBarContainer);
 
 export const CustomTabBar = memo(() => {
   const theme = useTheme();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
-  const [tabBarState, setShouldHideTabBar] = useControllableState<ShowTabBar>({
-    strategy: 'most-recent-wins',
-    defaultProp: ShowTabBar.SHOW,
+  const shouldShowTabBar = !HIDE_TAB_BAR_ROUTES.some(route =>
+    pathname.startsWith(route),
+  );
+  const { position, animatedStyle } = usePositionAnimation('vertical', {
+    condition: shouldShowTabBar,
+    initialPosition: Position.TOP,
+    nextPosition: Position.BOTTOM,
+    initialValue: 0,
+    nextValue: 140,
   });
-
-  useEffect(() => {
-    setShouldHideTabBar(
-      HIDE_TAB_BAR_ROUTES.some(route => pathname.startsWith(route))
-        ? ShowTabBar.HIDE
-        : ShowTabBar.SHOW,
-    );
-  }, [pathname, setShouldHideTabBar]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
       NavigationBar.setBackgroundColorAsync(
-        tabBarState ? theme.background.val : theme.gray4.val,
+        position ? theme.background.val : theme.gray4.val,
       );
     }
-  }, [tabBarState, theme]);
+  }, [position, theme]);
 
   const isActive = useCallback(
     (path: string) => {
@@ -54,10 +56,10 @@ export const CustomTabBar = memo(() => {
   const isSettingsActive = useMemo(() => isActive('/settings'), [isActive]);
 
   return (
-    <S.TabBarContainer
+    <AnimatedTabBar
       height={TAB_BAR_HEIGHT + insets.bottom}
       pb={insets.bottom}
-      showTabBar={tabBarState}
+      style={animatedStyle}
     >
       <S.Container>
         <HomeTab isTabActive={isHomeActive} />
@@ -66,6 +68,6 @@ export const CustomTabBar = memo(() => {
         <StatisticsTab isTabActive={isStatisticsActive} />
         <SettingsTab isTabActive={isSettingsActive} />
       </S.Container>
-    </S.TabBarContainer>
+    </AnimatedTabBar>
   );
 });
