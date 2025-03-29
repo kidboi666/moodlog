@@ -6,6 +6,6 @@ export const CardContainer = styled(YStack, {
   bg: '$gray4',
   rounded: '$8',
   p: '$4',
-  animation: 'bouncy',
+  animation: 'medium',
   pressStyle: PRESS_STYLE,
 });

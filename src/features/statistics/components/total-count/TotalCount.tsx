@@ -3,23 +3,13 @@ import { CollapsedContent } from '@/features/statistics/components/total-count/C
 import * as S from './TotalCount.styled';
 
 import { ExpansionState, TimeRange } from '@/types/statistic.types';
-import { useControllableState, useEvent } from 'tamagui';
-import {
-  RECORD_CARD_EXPANDED_HEIGHT,
-  RECORD_CARD_HEIGHT,
-} from '@/core/constants/size';
 import { useUser } from '@/core/store/contexts/user.context';
 import { useJournalStats } from '@/features/statistics/hooks/useJournalStats';
 import { ISOMonthString } from '@/types/date.types';
+import Animated from 'react-native-reanimated';
+import { useHeightAnimation } from '@/features/statistics/hooks/useHeightAnimation';
 
-const heights = {
-  expanded: {
-    height: RECORD_CARD_EXPANDED_HEIGHT,
-  },
-  collapsed: {
-    height: RECORD_CARD_HEIGHT,
-  },
-} as const;
+const AnimatedCardContainer = Animated.createAnimatedComponent(S.CardContainer);
 
 interface Props {
   timeRange: TimeRange;
@@ -35,25 +25,11 @@ export const TotalCount = ({
   const { stats } = useJournalStats(timeRange, selectedYear, selectedMonth);
   const { userInfo } = useUser();
   const { daysSinceSignup } = userInfo ?? null;
-  const [expansionState, setExpansionState] =
-    useControllableState<ExpansionState>({
-      strategy: 'most-recent-wins',
-      defaultProp: ExpansionState.COLLAPSED,
-    });
-  const animatedStyle = heights[expansionState];
-
-  const handleIsExpandedChange = useEvent(() => {
-    setExpansionState(prev =>
-      prev === ExpansionState.EXPANDED
-        ? ExpansionState.COLLAPSED
-        : ExpansionState.EXPANDED,
-    );
-  });
-
+  const { animatedStyle, expansionState, onPress } = useHeightAnimation();
   const { expressiveMonth, totalCount, frequency, activeDay } = stats || {};
 
   return (
-    <S.CardContainer onPress={handleIsExpandedChange} {...animatedStyle}>
+    <AnimatedCardContainer onPress={onPress} style={animatedStyle}>
       {expansionState === ExpansionState.EXPANDED ? (
         <ExpandedContent
           expressiveMonth={expressiveMonth}
@@ -65,6 +41,6 @@ export const TotalCount = ({
       ) : (
         <CollapsedContent totalCount={totalCount} />
       )}
-    </S.CardContainer>
+    </AnimatedCardContainer>
   );
 };
