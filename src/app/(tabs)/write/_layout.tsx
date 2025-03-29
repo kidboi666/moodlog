@@ -12,6 +12,7 @@ export default function Layout() {
         contentStyle: {
           backgroundColor: theme.background.val,
         },
+        animation: 'flip',
         gestureEnabled: true,
       }}
     >

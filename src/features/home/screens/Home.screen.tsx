@@ -22,11 +22,11 @@ import * as S from './Home.styled';
 export const HomeScreen = () => {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =
     useJournal();
-  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
-  const toast = useToastController();
   const { isToday, selectedDate } = useCalendar();
-  const { t } = useTranslation();
   const { userInfo } = useUser();
+  const toast = useToastController();
+  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const { t } = useTranslation();
 
   const handleDeletePress = useCallback(
     (id: string) => {
@@ -88,15 +88,13 @@ export const HomeScreen = () => {
                   }
                 >
                   <JournalCard
-                    {...{
-                      id,
-                      content,
-                      moodType: mood.type,
-                      moodLevel: mood.level,
-                      imageUri,
-                      createdAt,
-                      onDeletePress: handleDeletePress,
-                    }}
+                    id={id}
+                    content={content}
+                    moodType={mood.type}
+                    moodLevel={mood.level}
+                    imageUri={imageUri}
+                    createdAt={createdAt}
+                    onDeletePress={handleDeletePress}
                   />
                 </FadeIn>
               </Fragment>

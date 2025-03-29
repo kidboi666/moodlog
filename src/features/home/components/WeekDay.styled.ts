@@ -1,12 +1,8 @@
 import { H1, styled, XStack, YStack } from 'tamagui';
-import { FALL_STYLE, FALL_STYLE_KEY } from '@/styles/animations';
 import { LinearGradient } from 'tamagui/linear-gradient';
 
 export const WeekDayContainer = styled(YStack, {
   mb: '$4',
-  animation: 'bouncy',
-  enterStyle: FALL_STYLE,
-  animateOnly: FALL_STYLE_KEY,
 });
 
 export const OuterGradientBox = styled(LinearGradient, {

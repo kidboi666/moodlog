@@ -16,7 +16,7 @@ import {
 } from './CustomTabBarItems';
 import Animated from 'react-native-reanimated';
 import { Position } from '@/types/app.types';
-import { usePositionAnimation } from '@/core/hooks/usePositionAnimation';
+import { useAxisAnimationWithState } from '@/core/hooks/useAxisAnimationWithState';
 
 const AnimatedTabBar = Animated.createAnimatedComponent(S.TabBarContainer);
 
@@ -24,15 +24,19 @@ export const CustomTabBar = memo(() => {
   const theme = useTheme();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
-  const shouldShowTabBar = !HIDE_TAB_BAR_ROUTES.some(route =>
+  const shouldHideTabBar = HIDE_TAB_BAR_ROUTES.some(route =>
     pathname.startsWith(route),
   );
-  const { position, animatedStyle } = usePositionAnimation('vertical', {
-    condition: shouldShowTabBar,
-    initialPosition: Position.TOP,
-    nextPosition: Position.BOTTOM,
-    initialValue: 0,
-    nextValue: 140,
+  const {
+    state: position,
+    animatedStyle,
+    changeStateByCondition,
+  } = useAxisAnimationWithState('y', {
+    defaultState: Position.TOP,
+    nextState: Position.BOTTOM,
+    startValue: 0,
+    endValue: 140,
+    duration: 1000,
   });
 
   useEffect(() => {
@@ -42,6 +46,10 @@ export const CustomTabBar = memo(() => {
       );
     }
   }, [position, theme]);
+
+  useEffect(() => {
+    changeStateByCondition(shouldHideTabBar);
+  }, [pathname]);
 
   const isActive = useCallback(
     (path: string) => {

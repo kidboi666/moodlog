@@ -1,12 +1,17 @@
-import { AnimatePresence, useControllableState, useEvent } from 'tamagui';
+import { AnimatePresence } from 'tamagui';
 import { moodTheme } from '@/core/constants/themes';
 import * as S from './JournalCard.styled';
 import { ChevronLeft, ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { Nullable } from '@/types/utill.types';
 import { MoodLevel, MoodType } from '@/types/mood.types';
-import { CardPosition } from '@/types/journal.types';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useAxisAnimationWithState } from '@/core/hooks/useAxisAnimationWithState';
+import { Position } from '@/types/app.types';
+import Animated from 'react-native-reanimated';
+import { useCardGesture } from '@/core/hooks/useCardGesture';
+
+const AnimatedCard = Animated.createAnimatedComponent(S.CardContainer);
 
 interface Props {
   content: string;
@@ -29,30 +34,43 @@ export const JournalCard = memo(
     onDeletePress,
   }: Props) => {
     const router = useRouter();
-    const [cardPosition, setCardPosition] = useControllableState<CardPosition>({
-      strategy: 'most-recent-wins',
-      defaultProp: CardPosition.RIGHT,
+    const {
+      state: cardPosition,
+      animatedStyle,
+      toggleState,
+      changeStateByCondition,
+    } = useAxisAnimationWithState('x', {
+      defaultState: Position.CENTER,
+      nextState: Position.LEFT,
+      startValue: 0,
+      endValue: -80,
+      duration: 300,
     });
 
-    const handleSwipeLeft = useEvent(() => {
-      setCardPosition(CardPosition.LEFT);
-    });
+    const isOpenCard = cardPosition === Position.LEFT;
 
-    const handleSwipeRight = useEvent(() => {
-      setCardPosition(CardPosition.RIGHT);
-    });
+    const handleSwipeLeft = useCallback(() => {
+      if (cardPosition === Position.CENTER) {
+        changeStateByCondition(true);
+      }
+    }, [cardPosition, toggleState]);
 
-    const toggleSwipe = useEvent(() => {
-      setCardPosition(
-        cardPosition === CardPosition.LEFT
-          ? CardPosition.RIGHT
-          : CardPosition.LEFT,
-      );
+    const handleSwipeRight = useCallback(() => {
+      if (cardPosition === Position.LEFT) {
+        changeStateByCondition(false);
+      }
+    }, [cardPosition, toggleState]);
+
+    const { gesture, GestureWrapper } = useCardGesture({
+      onSwipeLeft: handleSwipeLeft,
+      onSwipeRight: handleSwipeRight,
+      onLongPress: () =>
+        changeStateByCondition(cardPosition === Position.CENTER),
     });
 
     const handlePress = () => {
-      if (cardPosition === CardPosition.LEFT) {
-        handleSwipeRight();
+      if (isOpenCard) {
+        toggleState();
       } else {
         router.push({
           pathname: '/journal/[id]',
@@ -75,38 +93,36 @@ export const JournalCard = memo(
             )}
           </AnimatePresence>
 
-          <S.CardContainer
-            onPress={handlePress}
-            onLongPress={handleSwipeLeft}
-            cardPosition={cardPosition}
-          >
-            <S.CardHeader>
-              <S.Content>
-                <S.MoodBar moodColor={moodTheme[moodType][moodLevel]} />
-                <S.JournalContentBox>
-                  <S.TimeText createdAt={createdAt} />
-                  <S.JournalContentText>{content}</S.JournalContentText>
-                </S.JournalContentBox>
-                <S.RightChevronButton
-                  icon={
-                    cardPosition === CardPosition.RIGHT
-                      ? ChevronRight
-                      : ChevronLeft
-                  }
-                  onPress={toggleSwipe}
-                />
-              </S.Content>
-            </S.CardHeader>
+          <GestureWrapper gesture={gesture}>
+            <AnimatedCard onPress={handlePress} style={animatedStyle}>
+              <S.CardHeader>
+                <S.Content>
+                  <S.MoodBar moodColor={moodTheme[moodType][moodLevel]} />
+                  <S.JournalContentBox>
+                    <S.TimeText createdAt={createdAt} />
+                    <S.JournalContentText>{content}</S.JournalContentText>
+                  </S.JournalContentBox>
+                  <S.RightChevronButton
+                    icon={
+                      cardPosition === Position.CENTER
+                        ? ChevronRight
+                        : ChevronLeft
+                    }
+                    onPress={() => toggleState()}
+                  />
+                </S.Content>
+              </S.CardHeader>
 
-            {imageUri && (
-              <S.CardBackground>
-                <S.JournalCoverImage source={{ uri: imageUri }} />
-                <AnimatePresence>
-                  <S.ImageCoverGradient />
-                </AnimatePresence>
-              </S.CardBackground>
-            )}
-          </S.CardContainer>
+              {imageUri && (
+                <S.CardBackground>
+                  <S.JournalCoverImage source={{ uri: imageUri }} />
+                  <AnimatePresence>
+                    <S.ImageCoverGradient />
+                  </AnimatePresence>
+                </S.CardBackground>
+              )}
+            </AnimatedCard>
+          </GestureWrapper>
         </S.Container>
       </>
     );

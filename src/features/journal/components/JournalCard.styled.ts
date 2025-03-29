@@ -24,18 +24,6 @@ export const CardContainer = styled(Card, {
   width: '100%',
   bg: '$backgroundHover',
   rounded: '$8',
-
-  variants: {
-    cardPosition: {
-      left: {
-        x: -80,
-        bg: '$background',
-      },
-      right: {
-        x: 0,
-      },
-    },
-  } as const,
 });
 
 export const CardHeader = styled(Card.Header, {

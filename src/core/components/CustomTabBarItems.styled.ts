@@ -16,7 +16,9 @@ const TabButton = styled(PressableButton, {
   } as const,
 });
 
-export const HomeButton = styled(TabButton);
+export const HomeButton = styled(TabButton, {
+  borderTopLeftRadius: '$9',
+});
 
 export const CalendarButton = styled(TabButton);
 
@@ -28,4 +30,6 @@ export const WriteInnerBox = styled(View);
 
 export const RecordButton = styled(TabButton);
 
-export const SettingsButton = styled(TabButton);
+export const SettingsButton = styled(TabButton, {
+  borderTopRightRadius: '$9',
+});

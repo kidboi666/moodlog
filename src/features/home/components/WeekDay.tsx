@@ -3,12 +3,18 @@ import { HorizontalCalendar } from '@/features/home/components/HorizontalCalenda
 import { useTranslation } from 'react-i18next';
 import { getMonthKey } from '@/utils/date';
 import * as S from './WeekDay.styled';
+import Animated, { BounceInUp, Easing } from 'react-native-reanimated';
+
+const AnimatedContainer = Animated.createAnimatedComponent(S.WeekDayContainer);
+const enteringConfig = BounceInUp.duration(700).easing(
+  Easing.inOut(Easing.quad),
+);
 
 export const WeekDay = memo(() => {
   const { t } = useTranslation();
 
   return (
-    <S.WeekDayContainer>
+    <AnimatedContainer entering={enteringConfig}>
       <S.OuterGradientBox>
         <S.InnerGradientBox>
           <S.CurrentMonthBox>
@@ -19,6 +25,6 @@ export const WeekDay = memo(() => {
           <HorizontalCalendar />
         </S.InnerGradientBox>
       </S.OuterGradientBox>
-    </S.WeekDayContainer>
+    </AnimatedContainer>
   );
 });
