@@ -20,4 +20,4 @@ export const RECORD_CARD_EXPANDED_HEIGHT_MEDIUM = 380;
 
 export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 60 : 80;
 
-export const DELETE_JOURNAL_SNAP_POINTS = [30, 20];
+export const DELETE_JOURNAL_SNAP_POINTS = [30];

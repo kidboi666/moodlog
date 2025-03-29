@@ -4,7 +4,7 @@ import * as S from './JournalCard.styled';
 import { ChevronLeft, ChevronRight, Trash } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { Nullable } from '@/types/utill.types';
-import { Mood } from '@/types/mood.types';
+import { MoodLevel, MoodType } from '@/types/mood.types';
 import { CardPosition } from '@/types/journal.types';
 import { memo } from 'react';
 
@@ -13,12 +13,21 @@ interface Props {
   id: string;
   createdAt: string;
   imageUri: Nullable<string>;
-  mood: Mood;
+  moodType: MoodType;
+  moodLevel: MoodLevel;
   onDeletePress: (id: string) => void;
 }
 
 export const JournalCard = memo(
-  ({ content, id, createdAt, imageUri, mood, onDeletePress }: Props) => {
+  ({
+    content,
+    id,
+    createdAt,
+    imageUri,
+    moodType,
+    moodLevel,
+    onDeletePress,
+  }: Props) => {
     const router = useRouter();
     const [cardPosition, setCardPosition] = useControllableState<CardPosition>({
       strategy: 'most-recent-wins',
@@ -73,7 +82,7 @@ export const JournalCard = memo(
           >
             <S.CardHeader>
               <S.Content>
-                <S.MoodBar moodColor={moodTheme[mood?.type]?.[mood?.level]} />
+                <S.MoodBar moodColor={moodTheme[moodType][moodLevel]} />
                 <S.JournalContentBox>
                   <S.TimeText createdAt={createdAt} />
                   <S.JournalContentText>{content}</S.JournalContentText>

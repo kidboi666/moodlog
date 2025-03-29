@@ -1,26 +1,20 @@
 import { useTranslation } from 'react-i18next';
 import * as S from './DeleteJournalModal.styled';
-import {
-  Dispatch,
-  memo,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Spinner } from 'tamagui';
-
-interface Props {
-  journalId: string;
-  onDelete: (id: string) => Promise<void>;
-  isLoading: boolean;
-  onDeleteSuccess?: () => void;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}
+import {
+  BottomSheetProps,
+  BottomSheetType,
+} from '@/core/store/types/bottom-sheet.types';
 
 export const DeleteJournalModal = memo(
-  ({ journalId, onDelete, isLoading, onDeleteSuccess, setOpen }: Props) => {
+  ({
+    journalId,
+    onDelete,
+    isLoading,
+    onDeleteSuccess,
+    setOpen,
+  }: BottomSheetProps[BottomSheetType.DELETE_JOURNAL]) => {
     const { t } = useTranslation();
     const [isSuccess, setIsSuccess] = useState(false);
 

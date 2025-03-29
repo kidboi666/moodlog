@@ -1,23 +1,40 @@
 import { Sheet } from '@tamagui/sheet';
-import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
+import { memo } from 'react';
 import { DELETE_JOURNAL_SNAP_POINTS } from '@/core/constants/size';
+import {
+  BottomSheetProps,
+  BottomSheetType,
+} from '@/core/store/types/bottom-sheet.types';
+import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
+import { useBottomSheet } from '@/core/store/contexts/bottom-sheet.context';
 
-interface Props {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}
+const SheetContentComponents = {
+  [BottomSheetType.DELETE_JOURNAL]: memo(
+    (props: BottomSheetProps[BottomSheetType.DELETE_JOURNAL]) => (
+      <DeleteJournalModal {...props} />
+    ),
+  ),
+};
 
-export const BottomSheet = ({
-  open,
-  setOpen,
-  children,
-}: PropsWithChildren<Props>) => {
+export const BottomSheet = memo(() => {
+  const { state, hideBottomSheet } = useBottomSheet();
+  const { isOpen, type, props } = state;
+
+  const renderContent = () => {
+    if (!type) return null;
+
+    const ContentComponent = SheetContentComponents[type];
+    if (!ContentComponent) return null;
+
+    return <ContentComponent {...props} />;
+  };
+
   return (
     <Sheet
-      forceRemoveScrollEnabled={open}
+      forceRemoveScrollEnabled={isOpen}
       modal
-      open={open}
-      onOpenChange={setOpen}
+      open={isOpen}
+      onOpenChange={hideBottomSheet}
       snapPoints={DELETE_JOURNAL_SNAP_POINTS}
       dismissOnSnapToBottom
       animation="bouncy"
@@ -32,8 +49,8 @@ export const BottomSheet = ({
 
       <Sheet.Handle scale={0.6} />
       <Sheet.Frame p="$4" justify="center" items="center" gap="$5">
-        {children}
+        {renderContent()}
       </Sheet.Frame>
     </Sheet>
   );
-};
+});

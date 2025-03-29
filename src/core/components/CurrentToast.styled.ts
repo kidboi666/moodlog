@@ -13,11 +13,11 @@ export const ToastContainer = styled(Toast, {
       ':string': preset => {
         switch (preset) {
           case 'error':
-            return { bg: '$red10' };
+            return { bg: '#e53e3e' };
           case 'notice':
-            return { bg: '$color5' };
+            return { bg: '#3182c3' };
           case 'success':
-            return { bg: '$green10' };
+            return { bg: '#38a169' };
         }
       },
     },

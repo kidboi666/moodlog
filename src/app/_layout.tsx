@@ -16,6 +16,7 @@ import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
 import '@/lib/i18n/index.js';
+import { BottomSheet } from '@/core/components/modals/BottomSheet';
 
 const FONTS = {
   'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.ttf'),
@@ -94,6 +95,7 @@ const RootLayoutNav = () => {
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="+not-found" />
         </Stack>
+        <BottomSheet />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

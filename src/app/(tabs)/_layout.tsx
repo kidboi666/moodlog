@@ -42,7 +42,7 @@ export default function Layout() {
 
   return (
     <Tabs>
-      <TabSlot />
+      <TabSlot renderFn={renderScreen} />
       <ContainerFog />
       <CustomTabBar />
       <TabList style={{ display: 'none' }}>
