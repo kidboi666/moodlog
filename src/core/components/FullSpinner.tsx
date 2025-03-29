@@ -1,10 +1,13 @@
 import { Spinner } from 'tamagui';
 import * as S from './FullSpinner.styled';
 
-export const FullSpinner = () => {
+interface Props {
+  size?: 'small' | 'large';
+}
+export const FullSpinner = ({ size = 'small' }: Props) => {
   return (
     <S.ViewContainer>
-      <Spinner />
+      <Spinner size={size} />
     </S.ViewContainer>
   );
 };
