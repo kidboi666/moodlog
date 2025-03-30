@@ -22,6 +22,16 @@ export const getMonthKey = (month: number | string) => {
 };
 
 /**
+ * ISOMonthDate(YYYY-MM) 와 date 를 받아 ISODate(YYYY-MM-DD) 로 반환
+ */
+export const getISODateFromMonthString = (
+  month: ISOMonthString,
+  day: number,
+) => {
+  return `${month}-${day.toString().padStart(2, '0')}` as ISODateString;
+};
+
+/**
  * 년, 월, 일을 받아 ISODate(YYYY-MM-DD) 를 반환
  */
 export const getISODateString = (

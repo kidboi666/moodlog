@@ -266,7 +266,8 @@ export class StatisticsService {
   ) {
     const dates = getThisWeekArray(selectedDate);
     let dayOfWeek: Record<string, string[]> = {};
-    let dayOfJournals: Record<string, string[] | Journal[]> = {};
+    let dayOfJournals: Record<string, Journal[]> = {};
+    let dayOfScoreBoard: Record<string, ScoreBoard> = {};
 
     Object.keys(WEEK_DAY).forEach((day, index) => {
       dayOfWeek[day] = indexes.byDate[dates[index]] || [];
@@ -276,6 +277,10 @@ export class StatisticsService {
       dayOfJournals[day] = ids.map(id => journals[id]) || [];
     });
 
-    return dayOfJournals;
+    Object.entries(dayOfJournals).forEach(([day, journals]) => {
+      dayOfScoreBoard[day] = this.calculateMoodScoreBoard(journals);
+    });
+
+    return dayOfScoreBoard;
   }
 }

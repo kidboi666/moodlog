@@ -5,7 +5,7 @@ export const YStackContainer = styled(YStack, {
   rounded: '$8',
   bg: '$color4',
   p: '$4',
-  gap: '$2',
+  gap: '$3',
 });
 
 export const AnimatedBox = styled(XStack, {
@@ -26,8 +26,16 @@ export const ChartItemContainer = styled(View, {
 });
 
 export const ChartItem = styled(View, {
-  width: 40,
-  height: '$2',
+  height: '$1',
   rounded: '$4',
-  bg: '$blue10',
+
+  variants: {
+    moodColor: {
+      ':string': bg => {
+        return {
+          bg,
+        };
+      },
+    },
+  } as const,
 });
