@@ -40,6 +40,7 @@ export const useMoodStats = (
       StatisticsService.getWeeklyStats(
         journals,
         indexes,
+        timeRange,
         selectedDate || CalendarUtils.getCalendarDateString(new Date()),
       ),
     [journals, indexes, selectedDate],

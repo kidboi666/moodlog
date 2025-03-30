@@ -95,7 +95,7 @@ export const getISOMonthString = (
  */
 export const getLastDate = (year: number, month: number | string): number => {
   if (typeof month === 'number') {
-    return new Date(year, month + 1, 0).getDate();
+    return new Date(year, month, 0).getDate();
   }
   return new Date(year, Object.keys(MONTHS).indexOf(month) + 1, 0).getDate();
 };
