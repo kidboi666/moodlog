@@ -10,7 +10,7 @@ import { MoodAverage } from '@/features/statistics/components/mood-average/MoodA
 import { TimeRange } from '@/types/statistic.types';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { ISOMonthString } from '@/types/date.types';
-import { MoodChart } from '@/features/statistics/components/MoodChart';
+import { WeeklyMoodChart } from '@/features/statistics/components/WeeklyMoodChart';
 
 export const StatisticsScreen = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.YEARLY);
@@ -49,11 +49,7 @@ export const StatisticsScreen = () => {
                 selectedMonth={selectedMonth || monthString}
               />
             </S.XStackContainer>
-            <MoodChart
-              timeRange={timeRange}
-              selectedYear={selectedYear}
-              selectedMonth={selectedMonth || monthString}
-            />
+            <WeeklyMoodChart selectedMonth={selectedMonth || monthString} />
           </S.YStackContainer>
         </FadeIn>
       </S.CardContainer>

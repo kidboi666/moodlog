@@ -10,6 +10,7 @@ import {
 } from '@/utils/date';
 import { JournalIndexes, MonthIndexes } from '@/core/store/types/journal.types';
 import { castArray, extractKeys } from '@/utils/common';
+import { WEEK_DAY } from '@/core/constants/date';
 
 export class StatisticsService {
   /**
@@ -261,28 +262,20 @@ export class StatisticsService {
   static getWeeklyStats(
     journals: Journals,
     indexes: JournalIndexes,
-    timeRange: TimeRange,
     selectedDate: ISODateString,
   ) {
     const dates = getThisWeekArray(selectedDate);
-    const weekDate = dates.map(date => indexes.byDate[date]) || [];
-    let eachDayJournals = {};
-    weekDate.forEach(
-      (date, index) => (eachDayJournals[index] = date.map(id => journals[id])),
-    );
+    let dayOfWeek: Record<string, string[]> = {};
+    let dayOfJournals: Record<string, string[] | Journal[]> = {};
 
-    return {
-      totalCount: weeklyJournals.length,
-      frequency: this.getJournalFrequency(indexes, timeRange, selectedDate),
-      activeDay: this.getMostActiveDay(journals),
-      moodStats: {
-        scoreBoard,
-        signatureMood: this.getSignatureMood(scoreBoard),
-      },
-      expressiveMonth: {
-        month: '0000-00' as ISOMonthString,
-        count: 0,
-      },
-    };
+    Object.keys(WEEK_DAY).forEach((day, index) => {
+      dayOfWeek[day] = indexes.byDate[dates[index]] || [];
+    });
+
+    Object.entries(dayOfWeek).forEach(([day, ids]) => {
+      dayOfJournals[day] = ids.map(id => journals[id]) || [];
+    });
+
+    return dayOfJournals;
   }
 }

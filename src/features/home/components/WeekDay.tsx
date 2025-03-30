@@ -6,15 +6,14 @@ import * as S from './WeekDay.styled';
 import Animated, { BounceInUp, Easing } from 'react-native-reanimated';
 
 const AnimatedContainer = Animated.createAnimatedComponent(S.WeekDayContainer);
-const enteringConfig = BounceInUp.duration(700).easing(
-  Easing.inOut(Easing.quad),
-);
 
 export const WeekDay = memo(() => {
   const { t } = useTranslation();
 
   return (
-    <AnimatedContainer entering={enteringConfig}>
+    <AnimatedContainer
+      entering={BounceInUp.duration(700).easing(Easing.inOut(Easing.quad))}
+    >
       <S.OuterGradientBox>
         <S.InnerGradientBox>
           <S.CurrentMonthBox>

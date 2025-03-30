@@ -141,30 +141,29 @@ export const getThisWeekIndex = (dateString: ISODateString) => {
 };
 
 /**
- * 선택한 날짜의 일주일치 ISODate(YYYY-MM-DD) 배열 반환
+ * 선택한 날짜의 일주일치 ISODate(YYYY-MM-DD) 배열 반환 (월요일 ~ 일요일)
  */
 export const getThisWeekArray = (dateString: ISODateString) => {
-  const day = new Date(dateString).getDay();
+  const date = new Date(dateString);
+  const dayOfWeek = date.getDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
+
+  // 주의 시작일(월요일)을 계산
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(date);
+  monday.setDate(date.getDate() + mondayOffset);
+
   let weekDate: ISODateString[] = [];
 
-  for (let i = 0; i <= day; i++) {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() - 1);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+  // 월요일부터 시작하여 7일 추가
+  for (let i = 0; i < 7; i++) {
+    const currentDate = new Date(monday);
+    currentDate.setDate(monday.getDate() + i);
 
-    weekDate.push(getISODateString(year, month, day));
-  }
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const dayOfMonth = currentDate.getDate();
 
-  for (let i = 0; i < day + 1 - 7; i++) {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() + 1);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    weekDate.push(getISODateString(year, month, day));
+    weekDate.push(getISODateString(year, month, dayOfMonth));
   }
 
   return weekDate;

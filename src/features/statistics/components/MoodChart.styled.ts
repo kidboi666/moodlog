@@ -11,6 +11,7 @@ export const YStackContainer = styled(YStack, {
 export const AnimatedBox = styled(XStack, {
   flex: 1,
   height: '$2',
+  justify: 'flex-start',
   items: 'center',
   gap: '$4',
 });

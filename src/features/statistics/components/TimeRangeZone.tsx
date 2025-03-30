@@ -29,14 +29,6 @@ export const TimeRangeZone = ({ timeRange, onTimeRangeChange }: Props) => {
           {t('statistics.timeRange.monthly')}
         </S.TimeRangeButton>
       </Group.Item>
-      <Group.Item>
-        <S.TimeRangeButton
-          onPress={() => onTimeRangeChange(TimeRange.WEEKLY)}
-          isSelected={timeRange === TimeRange.WEEKLY}
-        >
-          {t('statistics.timeRange.weekly')}
-        </S.TimeRangeButton>
-      </Group.Item>
     </S.XGroupBox>
   );
 };

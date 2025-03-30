@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import React, { Fragment, useCallback, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import { H3, ScrollView } from 'tamagui';
 import { FadeIn } from '@/core/components/FadeIn.styleable';
 import {
@@ -56,7 +57,7 @@ export const HomeScreen = () => {
   }, [selectJournals]);
 
   return (
-    <ScrollView overScrollMode="always">
+    <ScrollView overScrollMode="always" style={styles.container}>
       <Container edges={['top', 'bottom']} padded>
         <S.ContentHeaderContainer>
           <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
@@ -109,3 +110,9 @@ export const HomeScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

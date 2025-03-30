@@ -47,5 +47,4 @@ export enum ExpansionState {
 export enum TimeRange {
   YEARLY = 'yearly',
   MONTHLY = 'monthly',
-  WEEKLY = 'weekly',
 }

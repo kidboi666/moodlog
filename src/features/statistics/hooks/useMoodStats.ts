@@ -1,15 +1,13 @@
 import { useMemo } from 'react';
 import { StatisticsService } from '@/core/services/statistics.service';
-import { ISODateString, ISOMonthString } from '@/types/date.types';
+import { ISOMonthString } from '@/types/date.types';
 import { TimeRange } from '@/types/statistic.types';
 import { useJournal } from '@/core/store/contexts/journal.context';
-import { CalendarUtils } from 'react-native-calendars';
 
 export const useMoodStats = (
   timeRange: TimeRange,
   selectedYear: number,
   selectedMonth: ISOMonthString,
-  selectedDate?: ISODateString,
 ) => {
   const { journals, indexes, isLoading } = useJournal();
 
@@ -35,25 +33,12 @@ export const useMoodStats = (
     [journals, indexes, timeRange, selectedMonth],
   );
 
-  const weeklyStats = useMemo(
-    () =>
-      StatisticsService.getWeeklyStats(
-        journals,
-        indexes,
-        timeRange,
-        selectedDate || CalendarUtils.getCalendarDateString(new Date()),
-      ),
-    [journals, indexes, selectedDate],
-  );
-
   const initialStats = (timeRange: TimeRange) => {
     switch (timeRange) {
       case TimeRange.YEARLY:
         return yearlyStats;
       case TimeRange.MONTHLY:
         return monthlyStats;
-      case TimeRange.WEEKLY:
-        return weeklyStats;
       default:
         return yearlyStats;
     }
