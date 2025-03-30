@@ -103,7 +103,13 @@ export const getLastDate = (year: number, month: number | string): number => {
 /**
  * 특정 월의 1일의 요일의 인덱스 반환
  */
-export const getFirstDateDay = (year: number, month: string): number => {
+export const getFirstDateDay = (
+  year: number,
+  month: number | string,
+): number => {
+  if (typeof month === 'number') {
+    return new Date(year, month, 1).getDay();
+  }
   return new Date(year, Object.keys(MONTHS).indexOf(month), 1).getDay();
 };
 
@@ -114,6 +120,54 @@ export const getWeekLength = (year: number, month: any): number => {
   const lastDate = getLastDate(year, month);
   const firstDateDay = getFirstDateDay(year, month);
   return Math.ceil((lastDate + firstDateDay) / 7);
+};
+
+/**
+ * 선택한 날짜가 몇번째 주 인지 계산
+ */
+export const getThisWeekIndex = (dateString: ISODateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate(); // 현재 날짜
+  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+  const firstDayOfWeek = firstDayOfMonth.getDay();
+  const daysInFirstWeek = 7 - firstDayOfWeek;
+
+  if (day <= daysInFirstWeek) {
+    return 1;
+  }
+
+  const remainingDays = day - daysInFirstWeek;
+  return Math.ceil(remainingDays / 7 + 1);
+};
+
+/**
+ * 선택한 날짜의 일주일치 ISODate(YYYY-MM-DD) 배열 반환
+ */
+export const getThisWeekArray = (dateString: ISODateString) => {
+  const day = new Date(dateString).getDay();
+  let weekDate: ISODateString[] = [];
+
+  for (let i = 0; i <= day; i++) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate() - 1);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    weekDate.push(getISODateString(year, month, day));
+  }
+
+  for (let i = 0; i < day + 1 - 7; i++) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate() + 1);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    weekDate.push(getISODateString(year, month, day));
+  }
+
+  return weekDate;
 };
 
 /**

@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { CalendarUtils } from 'react-native-calendars';
 import { ISODateString, ISOMonthString } from '@/types/date.types';
+import { getThisWeekIndex } from '@/utils/date';
 
 export const useCalendar = () => {
   const now = new Date();
@@ -14,6 +15,9 @@ export const useCalendar = () => {
   );
   const [selectedYear, setSelectedYear] = useState<number>(
     Number(todayString.split('-')[0]),
+  );
+  const [selectedWeek, setSelectedWeek] = useState(
+    getThisWeekIndex(todayString),
   );
 
   const handleSelectedDateChange = useCallback((date: ISODateString | null) => {
@@ -31,6 +35,10 @@ export const useCalendar = () => {
     setSelectedYear(year);
   }, []);
 
+  const handleSelectedWeekChange = useCallback((date: ISODateString) => {
+    setSelectedWeek(getThisWeekIndex(date));
+  }, []);
+
   return {
     now,
     currentYear: now.getFullYear(),
@@ -44,9 +52,11 @@ export const useCalendar = () => {
     selectedDate,
     selectedMonth,
     selectedYear,
+    selectedWeek,
     onSelectedDateChange: handleSelectedDateChange,
     onSelectedMonthChange: handleSelectedMonthChange,
     onSelectedYearChange: handleSelectedYearChange,
+    onSelectedWeekChange: handleSelectedWeekChange,
 
     isToday: (date: ISODateString | null) => date === todayString,
     isSelected: (date: ISODateString) => date === selectedDate,

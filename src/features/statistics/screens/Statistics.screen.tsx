@@ -10,18 +10,15 @@ import { MoodAverage } from '@/features/statistics/components/mood-average/MoodA
 import { TimeRange } from '@/types/statistic.types';
 import { useCalendar } from '@/core/hooks/useCalendar';
 import { ISOMonthString } from '@/types/date.types';
+import { MoodChart } from '@/features/statistics/components/MoodChart';
 
 export const StatisticsScreen = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.YEARLY);
   const { selectedYear, selectedMonth, todayString } = useCalendar();
   const { t } = useTranslation();
 
-  const switchToMonthly = useCallback(() => {
-    setTimeRange(TimeRange.MONTHLY);
-  }, []);
-
-  const switchToWeekly = useCallback(() => {
-    setTimeRange(TimeRange.YEARLY);
+  const handleTimeRangeChange = useCallback((timeRange: TimeRange) => {
+    setTimeRange(timeRange);
   }, []);
 
   const monthString = selectedMonth
@@ -35,8 +32,7 @@ export const StatisticsScreen = () => {
           <H1>{t('statistics.title')}</H1>
           <TimeRangeZone
             timeRange={timeRange}
-            onWeekly={switchToWeekly}
-            onMonthly={switchToMonthly}
+            onTimeRangeChange={handleTimeRangeChange}
           />
         </S.OrderBox>
         <FadeIn delay={ANIMATION_DELAY_MS[0]}>
@@ -53,6 +49,11 @@ export const StatisticsScreen = () => {
                 selectedMonth={selectedMonth || monthString}
               />
             </S.XStackContainer>
+            <MoodChart
+              timeRange={timeRange}
+              selectedYear={selectedYear}
+              selectedMonth={selectedMonth || monthString}
+            />
           </S.YStackContainer>
         </FadeIn>
       </S.CardContainer>

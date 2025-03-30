@@ -6,6 +6,7 @@ import {
   getDayFromISODate,
   getDaysBetweenDates,
   getISOMonthString,
+  getThisWeekArray,
 } from '@/utils/date';
 import { JournalIndexes, MonthIndexes } from '@/core/store/types/journal.types';
 import { castArray, extractKeys } from '@/utils/common';
@@ -242,6 +243,37 @@ export class StatisticsService {
     return {
       totalCount: monthlyJournals.length,
       frequency: this.getJournalFrequency(indexes, timeRange, selectedMonth),
+      activeDay: this.getMostActiveDay(journals),
+      moodStats: {
+        scoreBoard,
+        signatureMood: this.getSignatureMood(scoreBoard),
+      },
+      expressiveMonth: {
+        month: '0000-00' as ISOMonthString,
+        count: 0,
+      },
+    };
+  }
+
+  /**
+   * 주간 통계 계산
+   */
+  static getWeeklyStats(
+    journals: Journals,
+    indexes: JournalIndexes,
+    timeRange: TimeRange,
+    selectedDate: ISODateString,
+  ) {
+    const dates = getThisWeekArray(selectedDate);
+    const weekDate = dates.map(date => indexes.byDate[date]) || [];
+    let eachDayJournals = {};
+    weekDate.forEach(
+      (date, index) => (eachDayJournals[index] = date.map(id => journals[id])),
+    );
+
+    return {
+      totalCount: weeklyJournals.length,
+      frequency: this.getJournalFrequency(indexes, timeRange, selectedDate),
       activeDay: this.getMostActiveDay(journals),
       moodStats: {
         scoreBoard,
