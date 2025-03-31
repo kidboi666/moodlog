@@ -129,6 +129,51 @@ export class StatisticsService {
   }
 
   /**
+   * 4개의 양의 정수를 백분율로 변환하는 함수
+   * 0이 포함된 경우도 적절히 처리합니다
+   */
+  static convertToPercentages(numbers: number[]): number[] {
+    // 0이 아닌 값만 필터링
+    const nonZeroValues = numbers.filter(num => num > 0);
+
+    // 모든 값이 0인 경우
+    if (nonZeroValues.length === 0) {
+      return numbers.map(() => 0);
+    }
+
+    // 0이 아닌 값들의 합계만 계산
+    const sum = nonZeroValues.reduce((acc, num) => acc + num, 0);
+
+    // 백분율 계산 (0인 값은 0%로 유지)
+    const percentages = numbers.map(num => (num === 0 ? 0 : (num / sum) * 100));
+
+    // 소수점 처리
+    const roundedPercentages = percentages.map(p => Math.round(p * 10) / 10);
+
+    // 반올림 후 총합 계산 (0이 아닌 값들만)
+    const totalRounded = roundedPercentages.reduce((acc, p) => acc + p, 0);
+
+    // 반올림 오차 보정
+    if (Math.abs(totalRounded - 100) > 0.01) {
+      const diff = +(100 - totalRounded).toFixed(1);
+
+      // 0이 아닌 값 중 가장 큰 값에 오차 더하기
+      const nonZeroPercentages = roundedPercentages.filter(p => p > 0);
+      if (nonZeroPercentages.length > 0) {
+        const maxValue = Math.max(...nonZeroPercentages);
+        const maxIndex = roundedPercentages.indexOf(maxValue);
+        roundedPercentages[maxIndex] = +(
+          roundedPercentages[maxIndex] + diff
+        ).toFixed(1);
+      }
+    }
+
+    return roundedPercentages;
+  }
+
+  // 사용 예시
+
+  /**
    * 일기 작성 빈도 가져오기
    */
   static getJournalFrequency(
@@ -265,22 +310,17 @@ export class StatisticsService {
     selectedDate: ISODateString,
   ) {
     const dates = getThisWeekArray(selectedDate);
-    let dayOfWeek: Record<string, string[]> = {};
-    let dayOfJournals: Record<string, Journal[]> = {};
-    let dayOfScoreBoard: Record<string, ScoreBoard> = {};
 
-    Object.keys(WEEK_DAY).forEach((day, index) => {
-      dayOfWeek[day] = indexes.byDate[dates[index]] || [];
-    });
+    return Object.keys(WEEK_DAY).reduce(
+      (scoreBoard, day, index) => {
+        const date = dates[index];
+        const ids = indexes.byDate[date] || [];
+        const dayJournals = ids.map(id => journals[id]).filter(Boolean); // undefined 필터링
 
-    Object.entries(dayOfWeek).forEach(([day, ids]) => {
-      dayOfJournals[day] = ids.map(id => journals[id]) || [];
-    });
-
-    Object.entries(dayOfJournals).forEach(([day, journals]) => {
-      dayOfScoreBoard[day] = this.calculateMoodScoreBoard(journals);
-    });
-
-    return dayOfScoreBoard;
+        scoreBoard[day] = this.calculateMoodScoreBoard(dayJournals);
+        return scoreBoard;
+      },
+      {} as Record<string, ScoreBoard>,
+    );
   }
 }

@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-export const CONTAINER_SPACING = 18;
+export const CONTAINER_HORIZONTAL_PADDING = 18;
 
 export const CONTAINER_MARGIN_TOP = 28;
 

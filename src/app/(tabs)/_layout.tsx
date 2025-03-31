@@ -1,10 +1,10 @@
-import { ContainerFog } from '@/core/components/ContainerFog';
+import { ContainerFog } from '@/core/components/shared/ContainerFog';
 import React, { useEffect } from 'react';
-import { CustomTabBar } from '@/core/components/CustomTabBar';
+import { CustomTabBar } from '@/core/components/shared/CustomTabBar';
 import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
 import { useApp } from '@/core/store/contexts/app.context';
 import { Redirect } from 'expo-router';
-import { FullSpinner } from '@/core/components/FullSpinner';
+import { FullSpinner } from '@/core/components/shared/FullSpinner';
 
 export default function Layout() {
   const { initAppData, isInitialApp, firstLaunchDate, isLoading } = useApp();
@@ -16,6 +16,7 @@ export default function Layout() {
   if (isLoading || !isInitialApp) {
     return <FullSpinner size="large" />;
   }
+
   if (!firstLaunchDate) {
     return <Redirect href="/(onboarding)/welcome" />;
   }

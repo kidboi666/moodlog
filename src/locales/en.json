@@ -107,6 +107,10 @@
       "title": "Signature Emotion",
       "description": "Your defining emotion"
     },
+    "weeklyMood": {
+      "title": "Weekly Mood Distribution",
+      "description": "Distribution chart of most frequently selected emotions by week"
+    },
     "currentMonth": {
       "title": "{{month}} Records",
       "description": "Journals this month",

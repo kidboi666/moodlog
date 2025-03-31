@@ -1,4 +1,4 @@
-import { CurrentToast } from '@/core/components/CurrentToast';
+import { CurrentToast } from '@/core/components/shared/CurrentToast';
 import { ToastProvider, ToastViewport } from '@tamagui/toast';
 import { PropsWithChildren } from 'react';
 

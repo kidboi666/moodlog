@@ -2,7 +2,7 @@ import '../../tamagui-web.css';
 import { RootProvider } from '@/core/providers/RootProvider';
 import { useFonts } from 'expo-font';
 import React, { useEffect, useMemo } from 'react';
-import { StatusBar } from '@/core/components/StatusBar';
+import { StatusBar } from '@/core/components/shared/StatusBar';
 import { Platform } from 'react-native';
 import { useTheme } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
@@ -16,7 +16,7 @@ import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
 import '@/lib/i18n/index.js';
-import { BottomSheet } from '@/core/components/modals/BottomSheet';
+import { BottomSheet } from '@/core/components/shared/modals/BottomSheet';
 
 const FONTS = {
   'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.ttf'),

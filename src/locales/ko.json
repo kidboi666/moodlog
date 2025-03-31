@@ -107,6 +107,10 @@
       "title": "대표 감정",
       "description": "나를 대표하는 감정"
     },
+    "weeklyMood": {
+      "title": "주간 감정 분포",
+      "description": "주 단위로 가장 많이 선택한 감정 분포표"
+    },
     "currentMonth": {
       "title": "{{month}}의 기록",
       "description": "이번 달 작성한 일기의 갯수",
