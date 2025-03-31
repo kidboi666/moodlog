@@ -9,7 +9,7 @@ import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
 import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import { H1, Spinner } from 'tamagui';
 import { ArrowLeft, Check } from '@tamagui/lucide-icons';
-import { Container } from '@/core/components/shared/Container.styleable';
+import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
 
 export default function Screen() {
   const { goToPrevStep, currentStep } = useStepProgress();
@@ -36,7 +36,7 @@ export default function Screen() {
   });
 
   return (
-    <Container.View edges={['bottom']}>
+    <ViewContainer edges={['bottom']}>
       <S.YStackContainer>
         <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
           <H1>{t('onboarding.signup.title')}</H1>
@@ -73,6 +73,6 @@ export default function Screen() {
           </S.ButtonContainer>
         </FadeIn>
       </S.YStackContainer>
-    </Container.View>
+    </ViewContainer>
   );
 }

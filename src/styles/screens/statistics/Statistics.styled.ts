@@ -1,7 +1,8 @@
 import { styled, XStack, YStack } from 'tamagui';
-import { Container as HOSContainer } from '@/core/components/shared/Container.styleable';
 
-export const ScrollViewContainer = styled(HOSContainer.ScrollView, {
+import { ViewContainer as HOSContainer } from '@/core/components/shared/ViewContainer.styleable';
+
+export const ViewContainer = styled(HOSContainer, {
   gap: '$4',
 });
 

@@ -9,6 +9,7 @@ import { BottomSheetType } from '@/core/store/types/bottom-sheet.types';
 import * as S from '@/styles/screens/journal/Journal.styled';
 import { JournalHeader } from '@/core/components/features/journal/components/JournalHeader';
 import { moodTheme } from '@/core/constants/themes';
+import { ScrollView } from 'tamagui';
 
 export default function Screen() {
   const { id } = useLocalSearchParams();
@@ -39,43 +40,44 @@ export default function Screen() {
   if (!selectedJournal || selectedJournal?.id !== journalId) return null;
 
   return (
-    <S.ScrollViewContainer
-      overScrollMode="always"
-      edges={['bottom']}
-      Header={
-        <JournalHeader
-          journal={selectedJournal}
-          onDeletePress={handleDeletePress}
-          onBackPress={() => router.back()}
-        />
-      }
-    >
-      <S.XStackContainer>
-        <S.MoodBar
-          moodColor={
-            moodTheme[selectedJournal.mood.type][selectedJournal.mood.level]
-          }
-        />
-        <S.ContentBox>
-          <S.MoodTextBox>
-            <S.MoodLevelText>
-              {t(`moods.levels.${selectedJournal.mood?.level}`)}
-            </S.MoodLevelText>
-            <S.MoodTypeText>
-              {t(`moods.types.${selectedJournal.mood?.type}`)}
-            </S.MoodTypeText>
-          </S.MoodTextBox>
-          {selectedJournal.imageUri && (
-            <S.ImageBox>
-              <S.Image source={{ uri: selectedJournal.imageUri }} />
-            </S.ImageBox>
-          )}
+    <ScrollView overScrollMode="always">
+      <S.ViewContainer
+        edges={['bottom']}
+        Header={
+          <JournalHeader
+            journal={selectedJournal}
+            onDeletePress={handleDeletePress}
+            onBackPress={() => router.back()}
+          />
+        }
+      >
+        <S.XStackContainer>
+          <S.MoodBar
+            moodColor={
+              moodTheme[selectedJournal.mood.type][selectedJournal.mood.level]
+            }
+          />
+          <S.ContentBox>
+            <S.MoodTextBox>
+              <S.MoodLevelText>
+                {t(`moods.levels.${selectedJournal.mood?.level}`)}
+              </S.MoodLevelText>
+              <S.MoodTypeText>
+                {t(`moods.types.${selectedJournal.mood?.type}`)}
+              </S.MoodTypeText>
+            </S.MoodTextBox>
+            {selectedJournal.imageUri && (
+              <S.ImageBox>
+                <S.Image source={{ uri: selectedJournal.imageUri }} />
+              </S.ImageBox>
+            )}
 
-          <S.ContentText fontSize={fontSize}>
-            {selectedJournal.content}
-          </S.ContentText>
-        </S.ContentBox>
-      </S.XStackContainer>
-    </S.ScrollViewContainer>
+            <S.ContentText fontSize={fontSize}>
+              {selectedJournal.content}
+            </S.ContentText>
+          </S.ContentBox>
+        </S.XStackContainer>
+      </S.ViewContainer>
+    </ScrollView>
   );
 }

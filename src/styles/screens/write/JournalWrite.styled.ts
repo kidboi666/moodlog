@@ -1,7 +1,7 @@
 import { styled, View, XStack } from 'tamagui';
-import { Container as HOSContainer } from '@/core/components/shared/Container.styleable';
+import { ViewContainer as HOSContainer } from '@/core/components/shared/ViewContainer.styleable';
 
-export const ViewContainer = styled(HOSContainer.View, {
+export const ViewContainer = styled(HOSContainer, {
   gap: '$3',
   pl: 0,
 });

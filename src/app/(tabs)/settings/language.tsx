@@ -1,7 +1,7 @@
 import { useApp } from '@/core/store/contexts/app.context';
 import { useCallback } from 'react';
 import { Languages } from '@/types/app.types';
-import { Container } from '@/core/components/shared/Container.styleable';
+import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
 import { SettingHeader } from '@/core/components/features/settings/components/SettingHeader';
 import { RadioGroup } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/shared/RadioGroupItem';
@@ -17,7 +17,7 @@ export default function Screen() {
   );
 
   return (
-    <Container.View Header={<SettingHeader />}>
+    <ViewContainer Header={<SettingHeader />}>
       <RadioGroup
         value={language}
         onValueChange={handleValueChange}
@@ -38,6 +38,6 @@ export default function Screen() {
           onValueChange={handleValueChange}
         />
       </RadioGroup>
-    </Container.View>
+    </ViewContainer>
   );
 }

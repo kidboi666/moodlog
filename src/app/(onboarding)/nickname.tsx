@@ -7,7 +7,7 @@ import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
 import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import { Input } from 'tamagui';
 import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
-import { Container } from '@/core/components/shared/Container.styleable';
+import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
 
 export default function Screen() {
   const { draftUserName, onDraftUserNameChange } = useUser();
@@ -29,7 +29,7 @@ export default function Screen() {
   };
 
   return (
-    <Container.View edges={['bottom']}>
+    <ViewContainer edges={['bottom']}>
       <S.YStackContainer>
         <FadeIn delay={ANIMATION_DELAY_SECONDS[0]}>
           <S.Title>{t('onboarding.nickname.title')}</S.Title>
@@ -59,6 +59,6 @@ export default function Screen() {
           </S.NextButton>
         </S.ButtonContainer>
       </FadeIn>
-    </Container.View>
+    </ViewContainer>
   );
 }

@@ -7,8 +7,7 @@ import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
 import { ANIMATION_DELAY_SECONDS } from '@/core/constants/time';
 import { ShakeEmoji } from '@/core/components/shared/ShakeEmoji';
 import { ArrowRight } from '@tamagui/lucide-icons';
-import React from 'react';
-import { Container } from '@/core/components/shared/Container.styleable';
+import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
 
 export default function Screen() {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ export default function Screen() {
   };
 
   return (
-    <Container.View edges={['bottom']}>
+    <ViewContainer edges={['bottom']}>
       <S.WelcomeContainer>
         <S.WelcomeContent>
           <H1>뭘봐이새끼야</H1>
@@ -52,6 +51,6 @@ export default function Screen() {
           {t('common.button.next')}
         </S.NextButton>
       </FadeIn>
-    </Container.View>
+    </ViewContainer>
   );
 }

@@ -10,6 +10,7 @@ import { GardenSection } from '@/core/components/features/entries/components/Gar
 import { JournalCard } from '@/core/components/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/core/components/features/journal/components/EmptyJournal';
 import * as S from '@/styles/screens/entries/Entries.styled';
+import { ScrollView } from 'tamagui';
 
 export default function Screen() {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =
@@ -31,36 +32,38 @@ export default function Screen() {
   }, []);
 
   return (
-    <S.ScrollViewContainer edges={['top']} padded>
-      <S.Title>{t('entries.title')}</S.Title>
-      <FadeIn delay={ANIMATION_DELAY_MS[0]}>
-        <GardenSection />
-      </FadeIn>
+    <ScrollView>
+      <S.ViewContainer edges={['top']} padded>
+        <S.Title>{t('entries.title')}</S.Title>
+        <FadeIn delay={ANIMATION_DELAY_MS[0]}>
+          <GardenSection />
+        </FadeIn>
 
-      <S.JournalBox>
-        {Array.isArray(selectedJournals) ? (
-          selectedJournals.map(journal => {
-            const { content, imageUri, id, createdAt, mood } = journal;
-            return (
-              <Fragment key={id}>
-                <JournalCard
-                  {...{
-                    id,
-                    content,
-                    imageUri,
-                    createdAt,
-                    moodType: mood.type,
-                    moodLevel: mood.level,
-                    onDeletePress: handleDeletePress,
-                  }}
-                />
-              </Fragment>
-            );
-          })
-        ) : (
-          <EmptyJournal isToday={false} />
-        )}
-      </S.JournalBox>
-    </S.ScrollViewContainer>
+        <S.JournalBox>
+          {Array.isArray(selectedJournals) ? (
+            selectedJournals.map(journal => {
+              const { content, imageUri, id, createdAt, mood } = journal;
+              return (
+                <Fragment key={id}>
+                  <JournalCard
+                    {...{
+                      id,
+                      content,
+                      imageUri,
+                      createdAt,
+                      moodType: mood.type,
+                      moodLevel: mood.level,
+                      onDeletePress: handleDeletePress,
+                    }}
+                  />
+                </Fragment>
+              );
+            })
+          ) : (
+            <EmptyJournal isToday={false} />
+          )}
+        </S.JournalBox>
+      </S.ViewContainer>
+    </ScrollView>
   );
 }

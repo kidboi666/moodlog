@@ -9,7 +9,7 @@ import {
 import { HOME_HEADER_LINE_HEIGHT } from '@/core/constants/size';
 
 export const ContentHeaderContainer = styled(YStack, {
-  gap: '$3',
+  gap: '$4',
 });
 
 export const WelcomeEmojiBox = styled(XStack, {

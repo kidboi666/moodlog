@@ -2,7 +2,7 @@ import { useApp } from '@/core/store/contexts/app.context';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import { TimeFormat } from '@/types/app.types';
-import { Container } from '@/core/components/shared/Container.styleable';
+import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
 import { SettingHeader } from '@/core/components/features/settings/components/SettingHeader';
 import { RadioGroup } from 'tamagui';
 import { RadioGroupItem } from '@/core/components/shared/RadioGroupItem';
@@ -19,7 +19,7 @@ export default function Screen() {
   );
 
   return (
-    <Container.View Header={<SettingHeader />}>
+    <ViewContainer Header={<SettingHeader />}>
       <RadioGroup
         value={timeFormat}
         onValueChange={handleValueChange}
@@ -37,6 +37,6 @@ export default function Screen() {
           onValueChange={handleValueChange}
         />
       </RadioGroup>
-    </Container.View>
+    </ViewContainer>
   );
 }

@@ -1,4 +1,3 @@
-import { Container as HOSContainer } from '@/core/components/shared/Container.styleable';
 import {
   H3,
   Image as TamaguiImage,
@@ -9,8 +8,9 @@ import {
   YStack,
 } from 'tamagui';
 import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
+import { ViewContainer as HOSContainer } from '@/core/components/shared/ViewContainer.styleable';
 
-export const ScrollViewContainer = styled(HOSContainer.ScrollView, {
+export const ViewContainer = styled(HOSContainer, {
   pl: 0,
   gap: '$6',
 });
