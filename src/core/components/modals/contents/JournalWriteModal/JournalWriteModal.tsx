@@ -11,14 +11,14 @@ import * as S from './JournalWriteModal.styled';
 import {
   EnhancedTextInput,
   EnhancedTextInputRef,
-} from '@/core/components/shared/modals/contents/JournalWriteModal/components/EnhancedTextInput';
+} from '@/core/components/modals/contents/JournalWriteModal/components/EnhancedTextInput';
 import { Form, useTheme } from 'tamagui';
 import * as ImagePicker from 'expo-image-picker';
 import { PermissionStatus } from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { moodTheme } from '@/core/constants/themes';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import { ActionButtons } from '@/core/components/shared/modals/contents/JournalWriteModal/components/ActionButtons';
+import { ActionButtons } from '@/core/components/modals/contents/JournalWriteModal/components/ActionButtons';
 
 const initialDraft: Draft = {
   content: '',

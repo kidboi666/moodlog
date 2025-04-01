@@ -4,10 +4,10 @@ import {
   BottomSheetProps,
   BottomSheetType,
 } from '@/core/store/types/bottom-sheet.types';
-import { DeleteJournalModal } from '@/core/components/shared/modals/contents/DeleteJournalModal';
+import { DeleteJournalModal } from '@/core/components/modals/contents/DeleteJournalModal';
 import { useBottomSheet } from '@/core/store/contexts/bottom-sheet.context';
-import { SelectMoodModal } from '@/core/components/shared/modals/contents/SelectMoodModal';
-import { JournalWriteModal } from '@/core/components/shared/modals/contents/JournalWriteModal/JournalWriteModal';
+import { SelectMoodModal } from '@/core/components/modals/contents/SelectMoodModal';
+import { JournalWriteModal } from '@/core/components/modals/contents/JournalWriteModal/JournalWriteModal';
 
 const SheetContentComponents = {
   [BottomSheetType.DELETE_JOURNAL]: memo(

@@ -5,7 +5,7 @@ import { MoodSelectTitle } from '@/core/components/features/write/components/Moo
 import { SelectedMoodContainer } from '@/core/components/features/write/components/SelectedMoodContainer';
 import { PickerMood } from '@/core/components/features/write/components/PickerMood';
 import { NextButton } from '@/core/components/features/write/components/NextButton';
-import * as S from '@/core/components/shared/modals/contents/SelectMoodModal.styled';
+import * as S from '@/core/components/modals/contents/SelectMoodModal.styled';
 
 interface Props {
   onPress: (mood: Mood) => void;

@@ -16,7 +16,7 @@ import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAppTheme } from '@/core/store/contexts/theme.context';
 import '@/lib/i18n/index.js';
-import { BottomSheet } from '@/core/components/shared/modals/BottomSheet';
+import { BottomSheet } from '@/core/components/modals/BottomSheet';
 
 const FONTS = {
   'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.ttf'),
