@@ -17,5 +17,5 @@ export const DaysBox = styled(YStack, {
 
 export const DayText = styled(H6, {
   fontSize: '$3',
-  color: '$gray11',
+  color: '$color10',
 });

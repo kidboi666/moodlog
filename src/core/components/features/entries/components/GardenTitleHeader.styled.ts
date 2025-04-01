@@ -5,9 +5,9 @@ export const GardenTitleHeaderContainer = styled(YStack, {
 });
 
 export const GardenTitle = styled(H3, {
-  color: '$gray12',
+  color: '$color12',
 });
 
 export const GardenDescription = styled(Paragraph, {
-  color: '$gray12',
+  color: '$color12',
 });

@@ -7,12 +7,12 @@ export const ViewContainer = styled(View, {
 export const MonthText = styled(H6, {
   fontSize: '$4',
   fontWeight: '600',
-  color: '$gray10',
+  color: '$color10',
 
   variants: {
     isSelected: {
       true: {
-        color: '$gray12',
+        color: '$color12',
       },
     },
   } as const,

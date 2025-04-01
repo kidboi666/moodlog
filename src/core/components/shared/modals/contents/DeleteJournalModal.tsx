@@ -46,12 +46,12 @@ export const DeleteJournalModal = memo(
           {t('modals.deleteJournal.description')}
         </S.ModalDescription>
         <S.ModalContentYStack>
-          <S.ConfirmButton
-            onPress={handleDelete}
-            icon={isDisabled ? () => <Spinner /> : null}
-            disabled={isDisabled}
-          >
-            {t('common.button.delete')}
+          <S.ConfirmButton onPress={handleDelete} disabled={isDisabled}>
+            {isDisabled ? (
+              <Spinner color="$color12" />
+            ) : (
+              t('common.button.delete')
+            )}
           </S.ConfirmButton>
           <S.CancelButton onPress={hideBottomSheet} disabled={isDisabled}>
             {t('common.button.cancel')}
