@@ -12,14 +12,12 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { Draft } from '@/types/journal.types';
 import { useToastController } from '@tamagui/toast';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
 
-export const WriteTab = memo(() => {
+export const WriteButtonWithEvent = memo(() => {
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
   const { addJournal, isLoading } = useJournal();
   const toast = useToastController();
   const { t } = useTranslation();
-  const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleIsSubmittedChange = useCallback((bool: boolean) => {

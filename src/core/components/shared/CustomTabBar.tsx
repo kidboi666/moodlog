@@ -16,7 +16,7 @@ import {
 import Animated from 'react-native-reanimated';
 import { Position } from '@/types/app.types';
 import { useAxisAnimationWithState } from '@/core/hooks/useAxisAnimationWithState';
-import { WriteTab } from '@/core/components/shared/WriteTab';
+import { WriteButtonWithEvent } from '@/core/components/shared/WriteButtonWithEvent';
 
 const AnimatedTabBar = Animated.createAnimatedComponent(S.TabBarContainer);
 
@@ -88,7 +88,7 @@ export const CustomTabBar = memo(() => {
           isTabActive={isCalendarActive}
           onPress={() => handleNavigate('/entries')}
         />
-        <WriteTab />
+        <WriteButtonWithEvent />
         <StatisticsTab
           isTabActive={isStatisticsActive}
           onPress={() => handleNavigate('/statistics')}

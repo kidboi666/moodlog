@@ -1,23 +1,22 @@
-import { NotebookPen, Plus } from '@tamagui/lucide-icons';
+import { NotebookPen } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
 import * as S from './EmptyJournal.styled';
 import { memo } from 'react';
-import { useRouter } from 'expo-router';
+import { WriteButtonWithEvent } from '@/core/components/shared/WriteButtonWithEvent';
 
 interface Props {
   isToday: boolean;
 }
 
 export const EmptyJournal = memo(({ isToday }: Props) => {
-  const router = useRouter();
   const { t } = useTranslation();
   const toast = useToastController();
 
   return isToday ? (
     <S.TodayContainer>
       <S.TodayTitle>{t('common.fallback.today')}</S.TodayTitle>
-      <S.WriteButton icon={Plus} onPress={() => router.push('/write')} />
+      <WriteButtonWithEvent />
     </S.TodayContainer>
   ) : (
     <S.PastDaysContainer
