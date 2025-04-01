@@ -14,7 +14,7 @@ import { useWeeklyMoodStats } from '@/core/components/features/statistics/hooks/
 import { getISODateFromMonthString } from '@/utils/date';
 import { ChartItem } from '@/core/components/features/statistics/components/ChartItem';
 import { MoodType } from '@/types/mood.types';
-import { H3, Text, XStack, YStack } from 'tamagui';
+import { H3, Text, YStack } from 'tamagui';
 import { StatisticsService } from '@/core/services/statistics.service';
 
 const AnimatedBox = Animated.createAnimatedComponent(S.AnimatedBox);
@@ -89,11 +89,10 @@ export const WeeklyMoodChart = ({ selectedMonth }: Props) => {
         {Object.keys(WEEK_DAY).map((day, index) => {
           const scoreBoard = stats[day];
           if (!scoreBoard) return null;
-
           return (
             <AnimatedBox key={index} style={animatedStyles[index]}>
               <AnimatedText>{t(`calendar.daysShort.${day}`)}</AnimatedText>
-              <XStack>
+              <S.ChartBox>
                 {Object.entries(scoreBoard).map(([type, { count }]) => (
                   <ChartItem
                     key={type}
@@ -103,7 +102,7 @@ export const WeeklyMoodChart = ({ selectedMonth }: Props) => {
                     percentage={percentages[day]?.[type] || 0}
                   />
                 ))}
-              </XStack>
+              </S.ChartBox>
             </AnimatedBox>
           );
         })}

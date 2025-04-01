@@ -117,18 +117,21 @@ export const getFirstDateDay = (
   year: number,
   month: number | string,
 ): number => {
+  let firstDay: number;
   if (typeof month === 'number') {
-    return new Date(year, month, 1).getDay();
+    firstDay = new Date(year, month, 1).getDay();
+  } else {
+    firstDay = new Date(year, Object.keys(MONTHS).indexOf(month), 1).getDay();
   }
-  return new Date(year, Object.keys(MONTHS).indexOf(month), 1).getDay();
+  return (firstDay + 6) % 7;
 };
 
 /**
  * 특정 월의 주 수 반환
  */
 export const getWeekLength = (year: number, month: any): number => {
-  const lastDate = getLastDate(year, month);
   const firstDateDay = getFirstDateDay(year, month);
+  const lastDate = getLastDate(year, month);
   return Math.ceil((lastDate + firstDateDay) / 7);
 };
 

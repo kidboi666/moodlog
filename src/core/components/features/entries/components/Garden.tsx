@@ -30,7 +30,8 @@ export const Garden = memo(
           if (dateNum <= 0 || dateNum > lastDate) {
             weekData.push(null);
           } else {
-            const dateString = `${monthDate}-${dateNum}` as ISODateString;
+            const dateString =
+              `${monthDate}-${dateNum.toString().padStart(2, '0')}` as ISODateString;
             weekData.push(getMoodForDate(dateString));
           }
         }
@@ -38,8 +39,7 @@ export const Garden = memo(
       }
 
       return data;
-    }, [weekLength, firstDateDay, lastDate, getMoodForDate]);
-
+    }, [weekLength, firstDateDay, lastDate, getMoodForDate, monthDate]);
     return (
       <S.GardenContainer>
         {moodData.map((week, weekIndex) => (

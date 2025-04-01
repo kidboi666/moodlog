@@ -9,11 +9,11 @@ interface Props extends TextProps {
 export const RenderDay = Text.styleable<Props>(
   ({ createdAt, ...props }, ref) => {
     const { t } = useTranslation();
-    const day = new Date(createdAt);
+    const day = new Date(createdAt).getDay();
 
     return (
       <Text ref={ref} {...props}>
-        {t(`calendar.days.${Object.keys(WEEK_DAY)[day.getDay()]}`)}
+        {t(`calendar.days.${Object.keys(WEEK_DAY)[(day + 6) % 7]}`)}
         {t(`common.units.day`)}
       </Text>
     );

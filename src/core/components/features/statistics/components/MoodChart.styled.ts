@@ -8,28 +8,28 @@ export const YStackContainer = styled(YStack, {
   gap: '$3',
 });
 
-export const AnimatedBox = styled(XStack, {
+export const ChartBox = styled(XStack, {
   flex: 1,
-  height: '$2',
-  justify: 'flex-start',
-  items: 'center',
+});
+
+export const AnimatedBox = styled(XStack, {
   gap: '$4',
+  height: '$2',
 });
 
 export const AnimatedText = styled(Text, {
   fontWeight: '600',
   color: '$color10',
-  minW: 30, // 텍스트 너비를 고정하여 정렬 유지
 });
 
 export const ChartItemContainer = styled(View, {
-  flex: 1, // 부모의 가용 공간을 균등하게 차지
-  items: 'center',
+  flex: 1,
 });
 
 export const ChartItem = styled(View, {
   height: '$1',
   rounded: '$4',
+  width: '100%',
 
   variants: {
     moodColor: {
