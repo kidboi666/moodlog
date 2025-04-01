@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from '@tamagui/lucide-icons';
+import { Check } from '@tamagui/lucide-icons';
 import * as S from './NextButton.styled';
 
 interface Props {
@@ -11,7 +11,7 @@ export const NextButton = ({ isSelected, onRouteChange }: Props) => {
   return (
     <S.AnimatedContainer>
       <S.NextButton
-        icon={ArrowRight}
+        icon={Check}
         disabled={!isSelected}
         onPress={onRouteChange}
       />

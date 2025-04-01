@@ -5,15 +5,13 @@ import {
   CalendarDays,
   FileChartColumnIncreasing,
   Home,
-  Plus,
   Settings,
 } from '@tamagui/lucide-icons';
-import * as S from './CustomTabBarItems.styled';
+import * as S from './CustomTabBar.styled';
 
 interface TabButtonProps {
   isTabActive: boolean;
 }
-
 export const HomeTab = memo(({ isTabActive }: TabButtonProps) => {
   return (
     <TabTrigger name="home" asChild href="/">
@@ -26,18 +24,6 @@ export const EntriesTab = memo(({ isTabActive }: TabButtonProps) => {
   return (
     <TabTrigger name="entries" asChild href="/entries">
       <S.CalendarButton isTabActive={isTabActive} icon={CalendarDays} />
-    </TabTrigger>
-  );
-});
-
-export const WriteTab = memo(({}: Omit<TabButtonProps, 'isTabActive'>) => {
-  return (
-    <TabTrigger name="write" asChild href="/write">
-      <S.WriteButton>
-        <S.WriteInnerBox>
-          <Plus size="$1" />
-        </S.WriteInnerBox>
-      </S.WriteButton>
     </TabTrigger>
   );
 });

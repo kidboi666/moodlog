@@ -18,6 +18,7 @@ import { WeekDay } from '@/core/components/features/home/components/WeekDay';
 import { JournalCard } from '@/core/components/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/core/components/features/journal/components/EmptyJournal';
 import { ViewContainer } from '@/core/components/shared/ViewContainer.styleable';
+import { DELETE_JOURNAL_SNAP_POINTS } from '@/core/constants/size';
 
 export default function Screen() {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =
@@ -30,16 +31,20 @@ export default function Screen() {
 
   const handleDeletePress = useCallback(
     (id: string) => {
-      showBottomSheet(BottomSheetType.DELETE_JOURNAL, {
-        journalId: id,
-        isLoading,
-        onDelete: removeJournal,
-        hideBottomSheet,
-        onSuccess: () => {
-          selectJournals(selectedDate);
-          toast.show(t('notifications.success.delete'));
+      showBottomSheet(
+        BottomSheetType.DELETE_JOURNAL,
+        DELETE_JOURNAL_SNAP_POINTS,
+        {
+          journalId: id,
+          isLoading,
+          onDelete: removeJournal,
+          hideBottomSheet,
+          onSuccess: () => {
+            selectJournals(selectedDate);
+            toast.show(t('notifications.success.delete'));
+          },
         },
-      });
+      );
     },
     [
       showBottomSheet,

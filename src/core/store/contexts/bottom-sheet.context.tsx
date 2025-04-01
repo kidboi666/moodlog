@@ -17,6 +17,7 @@ import { Nullable } from '@/types/utill.types';
 const initialBottomSheetState: BottomSheetState = {
   isOpen: false,
   type: null,
+  snapPoint: [0],
   props: {},
 };
 
@@ -30,10 +31,14 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const showBottomSheet = useCallback(
-    <T extends BottomSheetType>(type: T, props: BottomSheetProps[T]) => {
+    <T extends BottomSheetType>(
+      type: T,
+      snapPoint: number[] | string[],
+      props: BottomSheetProps[T],
+    ) => {
       dispatch({
         type: 'OPEN_BOTTOM_SHEET',
-        payload: { type, props },
+        payload: { type, snapPoint, props },
       });
     },
     [],

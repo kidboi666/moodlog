@@ -12,6 +12,7 @@ export const bottomSheetReducer = (
       return {
         isOpen: true,
         type: action.payload.type,
+        snapPoint: action.payload.snapPoint,
         props: action.payload.props,
       };
     case 'CLOSE_BOTTOM_SHEET':

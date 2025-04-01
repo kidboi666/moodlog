@@ -1,59 +1,100 @@
-import { useCallback, useState } from 'react';
-import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
-import { useRouter } from 'expo-router';
-import * as S from '@/styles/screens/write/MoodSelect.styled';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { MoodLevel, MoodType } from '@/types/mood.types';
+import { useTheme } from 'tamagui';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Draft } from '@/types/journal.types';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import * as S from '@/styles/screens/write/JournalWrite.styled';
 import { WriteHeader } from '@/core/components/features/write/components/WriteHeader';
-import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
-import { MoodSelectTitle } from '@/core/components/features/write/components/MoodSelectTitle';
-import { SelectedMoodContainer } from '@/core/components/features/write/components/SelectedMoodContainer';
-import { PickerMood } from '@/core/components/features/write/components/PickerMood';
-import { NextButton } from '@/core/components/features/write/components/NextButton';
-import { MoodBar } from '@/core/components/features/write/components/MoodBar';
+import { InputContainer } from '@/core/components/features/write/components/InputContainer';
+
+const initialDraft: Draft = {
+  content: '',
+  mood: undefined,
+  imageUri: '',
+};
 
 export default function Screen() {
-  const [mood, setMood] = useState<Mood>();
+  const params = useLocalSearchParams<{ type: MoodType; level: string }>();
   const router = useRouter();
+  const theme = useTheme();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [draft, setDraft] = useState<Draft>(initialDraft);
 
-  const handleMoodChange = useCallback((type: MoodType, level: MoodLevel) => {
-    setMood({ type, level });
+  const moodType = params.type as MoodType;
+  const moodLevel = params.level as MoodLevel;
+
+  const handleIsSubmittedChange = useCallback((bool: boolean) => {
+    setIsSubmitted(bool);
   }, []);
 
-  const handleRouteChange = useCallback(() => {
-    router.push({
-      pathname: '/write/journal_write',
-      params: { type: mood?.type, level: mood?.level },
-    });
-  }, [router, mood]);
+  const handleContentChange = useCallback((content: string) => {
+    setDraft(prev => ({ ...prev, content }));
+  }, []);
 
-  const isSelected = !!(!!mood?.type && mood?.level);
+  const handleImageUriChange = useCallback((uri: string) => {
+    setDraft(prev => ({ ...prev, imageUri: uri }));
+  }, []);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      router.replace('/entries');
+    }
+
+    return () => {
+      setDraft(initialDraft);
+    };
+  }, [isSubmitted]);
+
+  useEffect(() => {
+    setDraft(prev => ({
+      ...prev,
+      mood: {
+        type: moodType,
+        level: moodLevel,
+      },
+    }));
+  }, []);
+
+  const contentContainerStyle = useMemo(
+    () => ({
+      backgroundColor: theme.red5.val,
+    }),
+    [theme.red5.val],
+  );
 
   return (
-    <S.ViewContainer edges={['bottom']} Header={<WriteHeader />}>
-      <S.XStackContainer>
-        <S.YStackContainer>
-          <FadeIn>
-            <MoodSelectTitle />
-          </FadeIn>
-
-          <FadeIn flex={1}>
-            <SelectedMoodContainer
-              moodType={mood?.type}
-              moodLevel={mood?.level}
-            />
-          </FadeIn>
-
-          <FadeIn>
-            <PickerMood mood={mood} onMoodChange={handleMoodChange} />
-          </FadeIn>
-
-          <NextButton
-            isSelected={isSelected}
-            onRouteChange={handleRouteChange}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      contentContainerStyle={contentContainerStyle}
+      behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? -40 : 0}
+    >
+      <TouchableOpacity activeOpacity={1} style={StyleSheet.absoluteFill}>
+        <S.ViewContainer
+          edges={['bottom']}
+          Header={
+            <S.HeaderWrapper>
+              <WriteHeader />
+            </S.HeaderWrapper>
+          }
+        >
+          <InputContainer
+            isSubmitted={isSubmitted}
+            onIsSubmittedChange={handleIsSubmittedChange}
+            onContentChange={handleContentChange}
+            onImageUriChange={handleImageUriChange}
+            content={draft.content}
+            imageUri={draft.imageUri ?? null}
+            mood={draft?.mood}
           />
-        </S.YStackContainer>
-
-        <MoodBar mood={mood} />
-      </S.XStackContainer>
-    </S.ViewContainer>
+        </S.ViewContainer>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 }

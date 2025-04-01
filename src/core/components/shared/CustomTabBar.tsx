@@ -12,11 +12,11 @@ import {
   HomeTab,
   SettingsTab,
   StatisticsTab,
-  WriteTab,
 } from './CustomTabBarItems';
 import Animated from 'react-native-reanimated';
 import { Position } from '@/types/app.types';
 import { useAxisAnimationWithState } from '@/core/hooks/useAxisAnimationWithState';
+import { WriteTab } from '@/core/components/shared/WriteTab';
 
 const AnimatedTabBar = Animated.createAnimatedComponent(S.TabBarContainer);
 
@@ -24,9 +24,11 @@ export const CustomTabBar = memo(() => {
   const theme = useTheme();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
+
   const shouldHideTabBar = HIDE_TAB_BAR_ROUTES.some(route =>
     pathname.startsWith(route),
   );
+
   const {
     state: position,
     animatedStyle,

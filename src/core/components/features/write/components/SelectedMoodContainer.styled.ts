@@ -2,7 +2,7 @@ import { H2, styled, View, XStack } from 'tamagui';
 import { MOUNT_STYLE, MOUNT_STYLE_KEY } from '@/styles/animations';
 
 export const ViewContainer = styled(View, {
-  flex: 1,
+  height: 120,
   items: 'center',
   justify: 'center',
 });

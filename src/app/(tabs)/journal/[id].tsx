@@ -10,6 +10,7 @@ import * as S from '@/styles/screens/journal/Journal.styled';
 import { JournalHeader } from '@/core/components/features/journal/components/JournalHeader';
 import { moodTheme } from '@/core/constants/themes';
 import { ScrollView } from 'tamagui';
+import { DELETE_JOURNAL_SNAP_POINTS } from '@/core/constants/size';
 
 export default function Screen() {
   const { id } = useLocalSearchParams();
@@ -22,15 +23,19 @@ export default function Screen() {
   const { t } = useTranslation();
 
   const handleDeletePress = useCallback(() => {
-    showBottomSheet(BottomSheetType.DELETE_JOURNAL, {
-      journalId,
-      isLoading,
-      onDelete: removeJournal,
-      hideBottomSheet,
-      onSuccess: () => {
-        router.push('/entries');
+    showBottomSheet(
+      BottomSheetType.DELETE_JOURNAL,
+      DELETE_JOURNAL_SNAP_POINTS,
+      {
+        journalId,
+        isLoading,
+        onDelete: removeJournal,
+        hideBottomSheet,
+        onSuccess: () => {
+          router.push('/entries');
+        },
       },
-    });
+    );
   }, [showBottomSheet, journalId, isLoading, removeJournal, router]);
 
   useEffect(() => {
