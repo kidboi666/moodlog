@@ -8,12 +8,6 @@ export const ViewContainer = styled(View, {
   flex: 1,
   px: CONTAINER_HORIZONTAL_PADDING,
   pb: 0,
-  animation: 'lazy',
-  enterStyle: {
-    opacity: 0,
-  },
-  animateOnly: ['opacity'],
-
   variants: {
     padded: {
       true: {

@@ -1,6 +1,4 @@
-// CustomTabBarItems.tsx
 import React, { memo } from 'react';
-import { TabTrigger } from 'expo-router/ui';
 import {
   CalendarDays,
   FileChartColumnIncreasing,
@@ -11,38 +9,43 @@ import * as S from './CustomTabBar.styled';
 
 interface TabButtonProps {
   isTabActive: boolean;
+  onPress: () => void;
 }
-export const HomeTab = memo(({ isTabActive }: TabButtonProps) => {
+
+export const HomeTab = memo(({ isTabActive, onPress }: TabButtonProps) => {
   return (
-    <TabTrigger name="home" asChild href="/">
-      <S.HomeButton isTabActive={isTabActive} icon={Home} />
-    </TabTrigger>
+    <S.HomeButton isTabActive={isTabActive} icon={Home} onPress={onPress} />
   );
 });
 
-export const EntriesTab = memo(({ isTabActive }: TabButtonProps) => {
+export const EntriesTab = memo(({ isTabActive, onPress }: TabButtonProps) => {
   return (
-    <TabTrigger name="entries" asChild href="/entries">
-      <S.CalendarButton isTabActive={isTabActive} icon={CalendarDays} />
-    </TabTrigger>
+    <S.CalendarButton
+      isTabActive={isTabActive}
+      icon={CalendarDays}
+      onPress={onPress}
+    />
   );
 });
 
-export const StatisticsTab = memo(({ isTabActive }: TabButtonProps) => {
-  return (
-    <TabTrigger name="statistics" asChild href="/statistics">
+export const StatisticsTab = memo(
+  ({ isTabActive, onPress }: TabButtonProps) => {
+    return (
       <S.RecordButton
         isTabActive={isTabActive}
         icon={FileChartColumnIncreasing}
+        onPress={onPress}
       />
-    </TabTrigger>
-  );
-});
+    );
+  },
+);
 
-export const SettingsTab = memo(({ isTabActive }: TabButtonProps) => {
+export const SettingsTab = memo(({ isTabActive, onPress }: TabButtonProps) => {
   return (
-    <TabTrigger name="settings" asChild href="/settings">
-      <S.SettingsButton isTabActive={isTabActive} icon={Settings} />
-    </TabTrigger>
+    <S.SettingsButton
+      isTabActive={isTabActive}
+      icon={Settings}
+      onPress={onPress}
+    />
   );
 });

@@ -1,5 +1,5 @@
 import { useTheme } from 'tamagui';
-import { usePathname } from 'expo-router';
+import { Href, usePathname, useRouter } from 'expo-router';
 import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { TAB_BAR_HEIGHT } from '@/core/constants/size';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -24,6 +24,7 @@ export const CustomTabBar = memo(() => {
   const theme = useTheme();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const shouldHideTabBar = HIDE_TAB_BAR_ROUTES.some(route =>
     pathname.startsWith(route),
@@ -65,6 +66,13 @@ export const CustomTabBar = memo(() => {
   const isStatisticsActive = useMemo(() => isActive('/statistics'), [isActive]);
   const isSettingsActive = useMemo(() => isActive('/settings'), [isActive]);
 
+  const handleNavigate = useCallback(
+    (path: string) => {
+      router.push(path as Href);
+    },
+    [router],
+  );
+
   return (
     <AnimatedTabBar
       height={TAB_BAR_HEIGHT + insets.bottom}
@@ -72,11 +80,23 @@ export const CustomTabBar = memo(() => {
       style={animatedStyle}
     >
       <S.Container>
-        <HomeTab isTabActive={isHomeActive} />
-        <EntriesTab isTabActive={isCalendarActive} />
+        <HomeTab
+          isTabActive={isHomeActive}
+          onPress={() => handleNavigate('/')}
+        />
+        <EntriesTab
+          isTabActive={isCalendarActive}
+          onPress={() => handleNavigate('/entries')}
+        />
         <WriteTab />
-        <StatisticsTab isTabActive={isStatisticsActive} />
-        <SettingsTab isTabActive={isSettingsActive} />
+        <StatisticsTab
+          isTabActive={isStatisticsActive}
+          onPress={() => handleNavigate('/statistics')}
+        />
+        <SettingsTab
+          isTabActive={isSettingsActive}
+          onPress={() => handleNavigate('/settings')}
+        />
       </S.Container>
     </AnimatedTabBar>
   );

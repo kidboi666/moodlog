@@ -1,9 +1,8 @@
 import { ContainerFog } from '@/core/components/shared/ContainerFog';
 import React, { useEffect } from 'react';
 import { CustomTabBar } from '@/core/components/shared/CustomTabBar';
-import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
+import { Redirect, Tabs } from 'expo-router';
 import { useApp } from '@/core/store/contexts/app.context';
-import { Redirect } from 'expo-router';
 import { FullSpinner } from '@/core/components/shared/FullSpinner';
 
 export default function Layout() {
@@ -22,18 +21,29 @@ export default function Layout() {
   }
 
   return (
-    <Tabs>
-      <TabSlot />
+    <>
+      <Tabs
+        screenOptions={{
+          tabBarStyle: { display: 'none' },
+          animation: 'fade',
+          sceneStyle: { backgroundColor: 'transparent' },
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen name="index" />
+        <Tabs.Screen name="entries" />
+        <Tabs.Screen name="write" />
+        <Tabs.Screen name="statistics" />
+        <Tabs.Screen name="settings" />
+        <Tabs.Screen
+          name="journal/[id]"
+          options={{
+            href: null,
+          }}
+        />
+      </Tabs>
       <ContainerFog />
       <CustomTabBar />
-      <TabList style={{ display: 'none' }}>
-        <TabTrigger name="home" href="/" />
-        <TabTrigger name="entries" href="/entries" />
-        <TabTrigger name="write" href="/write" />
-        <TabTrigger name="statistics" href="/statistics" />
-        <TabTrigger name="settings" href="/settings" />
-        <TabTrigger name="journal" href="/journal/[id]" />
-      </TabList>
-    </Tabs>
+    </>
   );
 }
