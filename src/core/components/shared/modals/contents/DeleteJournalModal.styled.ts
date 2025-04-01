@@ -1,9 +1,8 @@
 import { H3, Paragraph, styled, YStack } from 'tamagui';
 import { PressableButton } from '@/core/components/shared/ui/PressableButton.styled';
+import { BottomSheetContainer as HOSBottomSheetContainer } from '@/core/components/shared/modals/BottomSheetContainer';
 
-export const ModalContainer = styled(YStack, {
-  gap: '$4',
-});
+export const BottomSheetContainer = styled(HOSBottomSheetContainer);
 
 export const ModalTitle = styled(H3, {
   text: 'center',

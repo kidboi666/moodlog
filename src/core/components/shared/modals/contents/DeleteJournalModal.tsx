@@ -40,7 +40,7 @@ export const DeleteJournalModal = memo(
     );
 
     return (
-      <S.ModalContainer>
+      <S.BottomSheetContainer>
         <S.ModalTitle>{t('modals.deleteJournal.title')}</S.ModalTitle>
         <S.ModalDescription>
           {t('modals.deleteJournal.description')}
@@ -57,7 +57,7 @@ export const DeleteJournalModal = memo(
             {t('common.button.cancel')}
           </S.CancelButton>
         </S.ModalContentYStack>
-      </S.ModalContainer>
+      </S.BottomSheetContainer>
     );
   },
 );

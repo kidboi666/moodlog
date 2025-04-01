@@ -1,5 +1,4 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { ScrollView } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { Nullable } from '@/types/utill.types';
 import * as S from './EnhancedTextInput.styled';
@@ -44,20 +43,16 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
     }));
 
     return (
-      <ScrollView>
-        <S.InputContainer>
-          {imageUri && <S.Image source={{ uri: imageUri }} />}
+      <S.InputContainer>
+        {imageUri && <S.Image source={{ uri: imageUri }} />}
 
-          <S.TextArea
-            value={contentValue}
-            onChangeText={onContentChange}
-            onSelectionChange={event =>
-              setSelection(event.nativeEvent.selection)
-            }
-            placeholder={t('placeholders.journal.content')}
-          />
-        </S.InputContainer>
-      </ScrollView>
+        <S.TextArea
+          value={contentValue}
+          onChangeText={onContentChange}
+          onSelectionChange={event => setSelection(event.nativeEvent.selection)}
+          placeholder={t('placeholders.journal.content')}
+        />
+      </S.InputContainer>
     );
   },
 );

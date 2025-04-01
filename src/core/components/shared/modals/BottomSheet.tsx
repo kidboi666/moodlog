@@ -7,6 +7,7 @@ import {
 import { DeleteJournalModal } from '@/core/components/shared/modals/contents/DeleteJournalModal';
 import { useBottomSheet } from '@/core/store/contexts/bottom-sheet.context';
 import { SelectMoodModal } from '@/core/components/shared/modals/contents/SelectMoodModal';
+import { JournalWriteModal } from '@/core/components/shared/modals/contents/JournalWriteModal/JournalWriteModal';
 
 const SheetContentComponents = {
   [BottomSheetType.DELETE_JOURNAL]: memo(
@@ -17,6 +18,11 @@ const SheetContentComponents = {
   [BottomSheetType.SELECT_MOOD]: memo(
     (props: BottomSheetProps[BottomSheetType.SELECT_MOOD]) => (
       <SelectMoodModal {...props} />
+    ),
+  ),
+  [BottomSheetType.JOURNAL_WRITE]: memo(
+    (props: BottomSheetProps[BottomSheetType.JOURNAL_WRITE]) => (
+      <JournalWriteModal {...props} />
     ),
   ),
 };
@@ -46,16 +52,15 @@ export const BottomSheet = memo(() => {
       zIndex={100_000}
     >
       <Sheet.Overlay
-        animation="lazy"
-        bg="$background"
+        animation="medium"
+        bg="black"
+        opacity={0.9}
         enterStyle={{ opacity: 0 }}
         exitStyle={{ opacity: 0 }}
       />
 
       <Sheet.Handle scale={0.6} />
-      <Sheet.Frame p="$4" justify="center" items="center" gap="$5">
-        {renderContent()}
-      </Sheet.Frame>
+      <Sheet.Frame>{renderContent()}</Sheet.Frame>
     </Sheet>
   );
 });

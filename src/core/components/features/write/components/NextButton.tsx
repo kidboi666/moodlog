@@ -4,17 +4,13 @@ import * as S from './NextButton.styled';
 
 interface Props {
   isSelected: boolean;
-  onRouteChange: () => void;
+  onPress: () => void;
 }
 
-export const NextButton = ({ isSelected, onRouteChange }: Props) => {
+export const NextButton = ({ isSelected, onPress }: Props) => {
   return (
     <S.AnimatedContainer>
-      <S.NextButton
-        icon={Check}
-        disabled={!isSelected}
-        onPress={onRouteChange}
-      />
+      <S.NextButton icon={Check} disabled={!isSelected} onPress={onPress} />
     </S.AnimatedContainer>
   );
 };

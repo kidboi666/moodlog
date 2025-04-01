@@ -1,9 +1,7 @@
 import { styled, XStack, YStack } from 'tamagui';
-import { ViewContainer as HOSContainer } from '@/core/components/shared/ViewContainer.styleable';
+import { BottomSheetContainer as HOSBottomSheetContainer } from '@/core/components/shared/modals/BottomSheetContainer';
 
-export const ViewContainer = styled(HOSContainer, {
-  pr: 0,
-});
+export const BottomSheetContainer = styled(HOSBottomSheetContainer);
 
 export const XStackContainer = styled(XStack, {
   flex: 1,

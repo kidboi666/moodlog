@@ -1,13 +1,8 @@
+import { BottomSheetContainer as HOSBottomSheetContainer } from '@/core/components/shared/modals/BottomSheetContainer';
 import { styled, View, XStack } from 'tamagui';
-import { ViewContainer as HOSContainer } from '@/core/components/shared/ViewContainer.styleable';
 
-export const ViewContainer = styled(HOSContainer, {
-  gap: '$3',
+export const BottomSheetContainer = styled(HOSBottomSheetContainer, {
   pl: 0,
-});
-
-export const HeaderWrapper = styled(View, {
-  pl: '$4',
 });
 
 export const XStackContainer = styled(XStack, {
@@ -17,7 +12,7 @@ export const XStackContainer = styled(XStack, {
 
 const MoodBarBase = styled(View, {
   width: '3%',
-  height: '100%',
+  height: 640,
   borderTopRightRadius: '$4',
   borderBottomRightRadius: '$4',
 });

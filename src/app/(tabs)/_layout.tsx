@@ -32,7 +32,6 @@ export default function Layout() {
       >
         <Tabs.Screen name="index" />
         <Tabs.Screen name="entries" />
-        <Tabs.Screen name="write" />
         <Tabs.Screen name="statistics" />
         <Tabs.Screen name="settings" />
         <Tabs.Screen

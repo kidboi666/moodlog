@@ -1,8 +1,11 @@
 import { Nullable } from '@/types/utill.types';
+import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
+import { Draft } from '@/types/journal.types';
 
 export enum BottomSheetType {
   DELETE_JOURNAL = 'DELETE_JOURNAL',
   SELECT_MOOD = 'SELECT_MOOD',
+  JOURNAL_WRITE = 'JOURNAL_WRITE',
 }
 
 export type BottomSheetProps = {
@@ -13,7 +16,16 @@ export type BottomSheetProps = {
     onSuccess?: () => void;
     hideBottomSheet: () => void;
   };
-  [BottomSheetType.SELECT_MOOD]: {};
+  [BottomSheetType.SELECT_MOOD]: {
+    onPress: (mood: Mood) => void;
+  };
+  [BottomSheetType.JOURNAL_WRITE]: {
+    moodType: MoodType;
+    moodLevel: MoodLevel;
+    onSubmit: (draft: Draft) => void;
+    isLoading: boolean;
+    isSubmitted: boolean;
+  };
 };
 
 export type BottomSheetState = {

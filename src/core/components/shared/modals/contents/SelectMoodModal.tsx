@@ -1,32 +1,32 @@
 import { useCallback, useState } from 'react';
 import { Mood, MoodLevel, MoodType } from '@/types/mood.types';
-import { useRouter } from 'expo-router';
-import * as S from '@/styles/screens/write/MoodSelect.styled';
 import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
 import { MoodSelectTitle } from '@/core/components/features/write/components/MoodSelectTitle';
 import { SelectedMoodContainer } from '@/core/components/features/write/components/SelectedMoodContainer';
 import { PickerMood } from '@/core/components/features/write/components/PickerMood';
 import { NextButton } from '@/core/components/features/write/components/NextButton';
+import * as S from '@/core/components/shared/modals/contents/SelectMoodModal.styled';
 
-export const SelectMoodModal = () => {
+interface Props {
+  onPress: (mood: Mood) => void;
+}
+
+export const SelectMoodModal = ({ onPress }: Props) => {
   const [mood, setMood] = useState<Mood>();
-  const router = useRouter();
 
   const handleMoodChange = useCallback((type: MoodType, level: MoodLevel) => {
     setMood({ type, level });
   }, []);
 
-  const handleRouteChange = useCallback(() => {
-    router.push({
-      pathname: '/write',
-      params: { type: mood?.type, level: mood?.level },
-    });
-  }, [router, mood]);
+  const handlePress = useCallback(() => {
+    if (!mood) return null;
+    onPress(mood);
+  }, [onPress, mood]);
 
   const isSelected = !!(!!mood?.type && mood?.level);
 
   return (
-    <S.XStackContainer>
+    <S.BottomSheetContainer>
       <S.YStackContainer>
         <FadeIn>
           <MoodSelectTitle />
@@ -43,8 +43,8 @@ export const SelectMoodModal = () => {
           <PickerMood mood={mood} onMoodChange={handleMoodChange} />
         </FadeIn>
 
-        <NextButton isSelected={isSelected} onRouteChange={handleRouteChange} />
+        <NextButton isSelected={isSelected} onPress={handlePress} />
       </S.YStackContainer>
-    </S.XStackContainer>
+    </S.BottomSheetContainer>
   );
 };

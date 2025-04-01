@@ -23,3 +23,5 @@ export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 60 : 80;
 export const DELETE_JOURNAL_SNAP_POINTS = [30];
 
 export const SELECT_MOOD_SNAP_POINTS = [80];
+
+export const JOURNAL_WRITE_SNAP_POINTS = [90];
