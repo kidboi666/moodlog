@@ -1,7 +1,13 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Nullable } from '@/types/utill.types';
 import * as S from './EnhancedTextInput.styled';
+import { Input } from 'tamagui';
 
 interface Props {
   imageUri?: Nullable<string>;
@@ -12,11 +18,13 @@ interface Props {
 
 export interface EnhancedTextInputRef {
   insertCurrentTime: () => void;
+  focus: () => void;
 }
 
 export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
   ({ contentValue, onContentChange, imageUri }, ref) => {
     const { t } = useTranslation();
+    const inputRef = useRef<Input>(null);
     const [selection, setSelection] = useState({ start: 0, end: 0 });
 
     const getCurrentTime = () => {
@@ -24,6 +32,12 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       return `${hours}:${minutes}`;
+    };
+
+    const handleFocus = () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     };
 
     const insertCurrentTime = () => {
@@ -36,9 +50,12 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
       const newPosition = selection.start + currentTime.length;
       setSelection({ start: newPosition, end: newPosition });
       onContentChange(newContent);
+
+      setTimeout(() => handleFocus(), 0);
     };
 
     useImperativeHandle(ref, () => ({
+      focus: handleFocus,
       insertCurrentTime,
     }));
 
@@ -47,6 +64,7 @@ export const EnhancedTextInput = forwardRef<EnhancedTextInputRef, Props>(
         {imageUri && <S.Image source={{ uri: imageUri }} />}
 
         <S.TextArea
+          ref={inputRef}
           value={contentValue}
           onChangeText={onContentChange}
           onSelectionChange={event => setSelection(event.nativeEvent.selection)}

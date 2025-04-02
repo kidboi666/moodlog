@@ -12,6 +12,7 @@ import { useJournal } from '@/core/store/contexts/journal.context';
 import { Draft } from '@/types/journal.types';
 import { useToastController } from '@tamagui/toast';
 import { useTranslation } from 'react-i18next';
+import { Keyboard } from 'react-native';
 
 export const WriteButtonWithEvent = memo(() => {
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
@@ -32,6 +33,7 @@ export const WriteButtonWithEvent = memo(() => {
         preset: 'success',
       });
       handleIsSubmittedChange(true);
+      Keyboard.dismiss();
     },
     [toast, addJournal, handleIsSubmittedChange],
   );

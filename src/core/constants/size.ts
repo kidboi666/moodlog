@@ -20,8 +20,8 @@ export const RECORD_CARD_EXPANDED_HEIGHT_MEDIUM = 380;
 
 export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 60 : 80;
 
-export const DELETE_JOURNAL_SNAP_POINTS = [30];
+export const DELETE_JOURNAL_SNAP_POINTS = Platform.OS === 'ios' ? [30] : [26];
 
-export const SELECT_MOOD_SNAP_POINTS = [80];
+export const SELECT_MOOD_SNAP_POINTS = Platform.OS === 'ios' ? [80] : [70];
 
-export const JOURNAL_WRITE_SNAP_POINTS = [90];
+export const JOURNAL_WRITE_SNAP_POINTS = Platform.OS === 'ios' ? [90] : [86];

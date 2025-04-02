@@ -128,22 +128,29 @@ export const JournalWriteModal = ({
     }),
     [theme.red5.val],
   );
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  }, []);
+
   return (
     <S.BottomSheetContainer>
-      <S.XStackContainer>
-        {draft.mood ? (
-          <S.ColoredMoodBar
-            moodColor={moodTheme[draft.mood.type][draft.mood.level]}
-          />
-        ) : (
-          <S.UncoloredMoodBar />
-        )}
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          contentContainerStyle={contentContainerStyle}
-          behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? -40 : 0}
-        >
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        contentContainerStyle={contentContainerStyle}
+        behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}
+      >
+        <S.XStackContainer>
+          {draft.mood ? (
+            <S.ColoredMoodBar
+              moodColor={moodTheme[draft.mood.type][draft.mood.level]}
+            />
+          ) : (
+            <S.UncoloredMoodBar />
+          )}
           <Form flex={1} onSubmit={() => onSubmit(draft)}>
             <EnhancedTextInput
               ref={inputRef}
@@ -161,8 +168,8 @@ export const JournalWriteModal = ({
               />
             </S.ButtonsViewBox>
           </Form>
-        </KeyboardAvoidingView>
-      </S.XStackContainer>
+        </S.XStackContainer>
+      </KeyboardAvoidingView>
     </S.BottomSheetContainer>
   );
 };

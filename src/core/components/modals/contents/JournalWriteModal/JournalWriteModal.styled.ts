@@ -12,7 +12,7 @@ export const XStackContainer = styled(XStack, {
 
 const MoodBarBase = styled(View, {
   width: '3%',
-  height: 640,
+  height: '90%',
   borderTopRightRadius: '$4',
   borderBottomRightRadius: '$4',
 });

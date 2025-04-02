@@ -45,10 +45,10 @@ export const CustomTabBar = memo(() => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       NavigationBar.setBackgroundColorAsync(
-        position ? theme.background.val : theme.gray4.val,
+        position ? theme.background.val : theme.color5.val,
       );
     }
-  }, [position, theme]);
+  }, [position, theme, pathname]);
 
   useEffect(() => {
     changeStateByCondition(shouldHideTabBar);

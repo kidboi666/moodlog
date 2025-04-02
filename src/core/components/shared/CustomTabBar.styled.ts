@@ -6,7 +6,7 @@ export const TabBarContainer = styled(XStack, {
   b: 0,
   l: 0,
   r: 0,
-  bg: '$gray4',
+  bg: '$color5',
   elevation: 10,
   borderTopRightRadius: '$12',
   borderTopLeftRadius: '$12',
@@ -79,18 +79,6 @@ export const IconBox = styled(View, {
       },
     },
   } as const,
-});
-
-export const JournalWriteButton = styled(TabButton, {
-  size: '$3',
-  color: '$color1',
-  bg: '$color12',
-});
-
-export const SelectMoodButton = styled(TabButton, {
-  size: '$3',
-  color: '$color1',
-  bg: '$color12',
 });
 
 export const HomeButton = styled(TabButton, {
