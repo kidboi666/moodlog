@@ -92,7 +92,7 @@ export const WeeklyMoodChart = ({ selectedMonth }: Props) => {
           const signatureMood = Object.entries(scoreBoard).filter(
             ([type, { count }]) => count !== 0,
           );
-          console.log(signatureMood);
+          // TODO
           return (
             <AnimatedBox key={index} style={animatedStyles[index]}>
               <AnimatedText>{t(`calendar.daysShort.${day}`)}</AnimatedText>
