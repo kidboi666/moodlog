@@ -6,7 +6,7 @@ export const AI_SYSTEM_CONTEXT = `
 `;
 
 export const AI_DAILY_PROMPT = `
-  오늘 하루를 보내는 사용자에게 영감을 줄 수 있는 짧은 메시지나 명언을 제시해주세요.
+  오늘 하루를 보내는 사용자에게 영감을 줄 수 있는 짧은 한 줄의 메시지나 명언을 제시해주세요.
 `;
 
 export const generateComfortPrompt = (diaryContent: string) => {

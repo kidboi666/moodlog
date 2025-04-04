@@ -1,19 +1,17 @@
 import { Button, Form, Input, Paragraph, Spinner, View } from 'tamagui';
 import { useEffect, useState } from 'react';
-import { GeminiService } from '@/core/services/ai.service';
-
-const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY || '';
+import { getGemini } from '@/lib/gemini';
 
 export const AiPromptZone = () => {
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState('');
-  const genAi = new GeminiService(apiKey);
+  const gemini = getGemini();
 
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const result = await genAi.getComfortPrompt(text);
+      const result = await gemini.getComfortPrompt(text);
       setAiResponse(result.text || '');
     } catch (err) {
       console.error(err);
@@ -23,7 +21,7 @@ export const AiPromptZone = () => {
   };
 
   useEffect(() => {
-    genAi.initialize();
+    gemini.initialize();
   }, []);
 
   return (
