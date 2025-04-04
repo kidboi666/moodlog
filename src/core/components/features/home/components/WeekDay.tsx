@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { getMonthKey } from '@/utils/date';
 import * as S from './WeekDay.styled';
 import Animated, { BounceInUp, Easing } from 'react-native-reanimated';
+import { YStack } from 'tamagui';
 
-const AnimatedContainer = Animated.createAnimatedComponent(S.WeekDayContainer);
+const AnimatedContainer = Animated.createAnimatedComponent(YStack);
 
 export const WeekDay = memo(() => {
   const { t } = useTranslation();

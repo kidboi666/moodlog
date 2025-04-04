@@ -1,9 +1,5 @@
-import { H1, styled, XStack, YStack } from 'tamagui';
+import { H1, styled, XStack } from 'tamagui';
 import { LinearGradient } from 'tamagui/linear-gradient';
-
-export const WeekDayContainer = styled(YStack, {
-  mb: '$4',
-});
 
 export const OuterGradientBox = styled(LinearGradient, {
   p: '$1.5',

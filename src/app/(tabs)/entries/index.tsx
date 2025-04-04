@@ -9,9 +9,9 @@ import { ANIMATION_DELAY_MS } from '@/core/constants/time';
 import { GardenSection } from '@/core/components/features/entries/components/GardenSection';
 import { JournalCard } from '@/core/components/features/journal/components/JournalCard';
 import { EmptyJournal } from '@/core/components/features/journal/components/EmptyJournal';
-import * as S from '@/styles/screens/entries/Entries.styled';
 import { ScrollView } from 'tamagui';
 import { DELETE_JOURNAL_SNAP_POINTS } from '@/core/constants/size';
+import * as S from '@/styles/screens/entries/Entries.styled';
 
 export default function Screen() {
   const { selectedJournals, selectJournals, isLoading, removeJournal } =

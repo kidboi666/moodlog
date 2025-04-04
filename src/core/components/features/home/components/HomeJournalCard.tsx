@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import * as S from '@/styles/screens/home/Home.styled';
 import { FadeIn } from '@/core/components/shared/FadeIn.styleable';
 import {
   ANIMATION_DELAY_MS,
@@ -27,7 +26,6 @@ export const HomeJournalCard = ({
       const { id, content, createdAt, mood, imageUri } = journal;
       return (
         <Fragment key={journal.id}>
-          {index > 0 && <S.Separator />}
           <FadeIn
             delay={ANIMATION_DELAY_MS[index % ANIMATION_DELAY_SECONDS.length]}
           >
